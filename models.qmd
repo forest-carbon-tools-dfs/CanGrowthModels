@@ -1,0 +1,25 @@
+---
+title: "Models"
+---
+
+```{r}
+library(readr)
+library(dplyr)
+library(knitr)
+
+models <- read_csv(
+  "derived/models_web.csv",
+  show_col_types = FALSE
+)
+
+models |>
+  select(
+    model_name,
+    developer_organization,
+    model_type,
+    status,
+    verification_status
+  ) |>
+  arrange(model_name) |>
+  kable()
+```

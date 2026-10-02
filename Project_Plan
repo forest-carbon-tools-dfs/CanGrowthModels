@@ -1,0 +1,177 @@
+The goal of this project is to create a repository of Forest Growth and Yield Models in Canada.
+I would like the project to reside on Github.
+I would like for collaborators to be able to add information pertaining to their GY models or models that they are aware of and which are "in use".
+I would like for this project to be private at first, but the intention is to have a public version.
+I would like for the project to allow users to perform queries based characteristics of the GY models.
+I would like to also have an interactive map which displays Canada (simple) and area (defined by Provincial Boundaries) where each GY model is applicable.
+
+The folder that holds the project is located here: C:\CanGrowthModels
+
+To start, i have two CSVs which are currently minimally populated: models_schema_definition.csv and models_template.csv
+I also have R scripts that would serve to validate the information about the models (e.g., flag errors in species names and provide corrections)
+I also have pdf and word files. Do not look at these unless i give permission. I will convert them to markdown files and ask an ai agent to scan them. 
+Those pdf and word files are located here: C:\CanGrowthModels\GYmodelPDFmanuals
+Information drawn from those pdf and word files will be used to help populate the models_template.csv.
+I also have some quatro files that would be the basis of the website for this project. 
+
+The map coverage would be something like this:
+                 CANADIAN GROWTH & YIELD MODEL REGISTRY
+
+   [Species] [Province] [Forest type] [Management] [Model type]
+
+                         ┌───────────────┐
+                         │               │
+                         │     CANADA    │
+                         │               │
+                         │      MAP      │
+                         │               │
+                         └───────────────┘
+
+                  Models applicable here:
+
+              TIPSY
+              PrognosisBC
+              VDYP
+              Model X
+              Model Y
+
+        Click a model → open detailed model card
+	
+	
+Or like this:
+CANADIAN FOREST GROWTH & YIELD MODELS
+
+A curated registry of forest growth, yield and stand
+projection models developed for Canadian forests.
+
+------------------------------------------------------
+
+                 [ EXPLORE THE MAP ]
+
+------------------------------------------------------
+
+Search models
+[________________________________]
+
+Species       Province       Model type       Management
+
+------------------------------------------------------
+
+MODEL DATABASE
+
+187 documented models
+23 jurisdictions / regions
+38 tree species
+62 models with management scenarios
+41 open implementations
+
+
+The rough plan would be:
+STEP 1
+Populate CSVs
+
+      ↓
+
+STEP 2
+Create private GitHub repo
+
+      ↓
+
+STEP 3
+Put CSVs in /data
+
+      ↓
+
+STEP 4
+Create R project
+
+      ↓
+
+STEP 5
+Create validate_models.R
+
+      ↓
+
+STEP 6
+Create build_data.R
+
+      ↓
+
+STEP 7
+Install Quarto
+
+      ↓
+
+STEP 8
+Create _quarto.yml
+
+      ↓
+
+STEP 9
+Create index.qmd
+
+      ↓
+
+STEP 10
+Create models.qmd
+
+      ↓
+
+STEP 11
+Run "quarto preview"
+
+      ↓
+
+STEP 12
+Confirm website works locally
+
+      ↓
+
+STEP 13
+Push everything to GitHub
+
+      ↓
+
+STEP 14
+Add GitHub Actions
+
+      ↓
+
+STEP 15
+Publish to GitHub Pages
+
+      ↓
+
+STEP 16
+Add interactive map
+
+      ↓
+
+STEP 17
+Add model filtering/search
+
+      ↓
+
+STEP 18
+Add individual model pages
+
+Potential GitHub Structure:
+canadian-forest-growth-yield/
+│
+├── data/
+│   ├── models.csv
+│   └── models_schema_definition.csv
+│
+├── R/
+│   └── validate_models.R
+│
+├── docs/
+│
+├── README.md
+│
+└── .gitignore
+
+
+Please help me plan and implement this project. Check back with me before burning through AI credits. 
+Suggest changes (including major workflow/application changes) where appropriate.
+Be efficient in your use of AI credits. You need to deligate to cheaper/lower cost models wherever appropriate.

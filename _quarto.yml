@@ -1,0 +1,22 @@
+project:
+  type: website
+
+website:
+  title: "Canadian Forest Growth & Yield Model Registry"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: models.qmd
+        text: Models
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+
+editor: visual
+

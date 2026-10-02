@@ -1,0 +1,21 @@
+# R session and IDE state
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# Quarto output and caches
+.quarto/
+_site/
+_freeze/
+*_cache/
+
+# Generated registry outputs
+derived/
+
+# Excluded source manuals
+/GYmodelPDFmanuals/
+
+# Operating system files
+Thumbs.db
+.DS_Store

@@ -1,0 +1,27 @@
+---
+title: "Canadian Forest Growth & Yield Model Registry"
+---
+
+# Canadian Forest Growth & Yield Model Registry
+
+A registry of forest growth and yield models developed for
+or applicable to Canadian forests.
+
+```{r}
+library(readr)
+library(knitr)
+
+models <- read_csv(
+  "derived/models_web.csv",
+  show_col_types = FALSE
+)
+
+models |>
+  select(
+    model_name,
+    developer_organization,
+    model_type,
+    status
+  ) |>
+  kable()
+```
