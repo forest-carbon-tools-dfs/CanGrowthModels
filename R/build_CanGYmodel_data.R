@@ -19,23 +19,8 @@ models <- read_csv(
 # 2. Create derived summary fields
 # ------------------------------------------------------------
 
-models_web <- models |>
-  mutate(
-    management_scenarios =
-      paste(
-        c(
-          ifelse(commercial_thinning == "yes",
-                 "Commercial thinning", NA),
-          ifelse(precommercial_thinning == "yes",
-                 "Precommercial thinning", NA),
-          ifelse(fertilization == "yes",
-                 "Fertilization", NA),
-          ifelse(pruning == "yes",
-                 "Pruning", NA)
-        ),
-        collapse = "; "
-      )
-  )
+# Per-source rows are passed through; consolidation by model_id comes later.
+models_web <- models
 
 # ------------------------------------------------------------
 # 3. Create output directory

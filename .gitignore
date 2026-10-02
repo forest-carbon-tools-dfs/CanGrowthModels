@@ -15,6 +15,7 @@ derived/
 
 # Excluded source manuals
 /GYmodelPDFmanuals/
+/GYmodels_manual_md/
 
 # Operating system files
 Thumbs.db

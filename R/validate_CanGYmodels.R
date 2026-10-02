@@ -20,13 +20,10 @@ models <- read_csv(
 # ------------------------------------------------------------
 
 required_columns <- c(
+  "record_id",
   "model_id",
   "model_name",
-  "developer_organization",
-  "model_type",
-  "outputs",
-  "status",
-  "last_verified",
+  "source_file",
   "verification_status"
 )
 
@@ -43,17 +40,17 @@ if (length(missing_columns) > 0) {
 }
 
 # ------------------------------------------------------------
-# 3. Check for duplicate model IDs
+# 3. Check for duplicate record IDs (model_id may repeat across sources)
 # ------------------------------------------------------------
 
 duplicate_ids <- models |>
-  count(model_id) |>
+  count(record_id) |>
   filter(n > 1)
 
 if (nrow(duplicate_ids) > 0) {
   stop(
-    "Duplicate model_id values found: ",
-    paste(duplicate_ids$model_id, collapse = ", ")
+    "Duplicate record_id values found: ",
+    paste(duplicate_ids$record_id, collapse = ", ")
   )
 }
 
@@ -71,7 +68,7 @@ valid_model_types <- c(
 )
 
 bad_model_types <- setdiff(
-  unique(models$model_type),
+  unique(na.omit(models$model_type)),
   valid_model_types
 )
 
@@ -91,7 +88,7 @@ valid_status <- c(
 )
 
 bad_status <- setdiff(
-  unique(models$status),
+  unique(na.omit(models$status)),
   valid_status
 )
 
@@ -103,14 +100,29 @@ if (length(bad_status) > 0) {
 }
 
 # ------------------------------------------------------------
-# 5. Check model IDs are not blank
+# 5. Check IDs are not blank and verification_status is valid
 # ------------------------------------------------------------
 
 blank_ids <- models |>
-  filter(is.na(model_id) | model_id == "")
+  filter(
+    is.na(record_id) | record_id == "" |
+      is.na(model_id) | model_id == ""
+  )
 
 if (nrow(blank_ids) > 0) {
-  stop("One or more records have a blank model_id")
+  stop("One or more records have a blank record_id or model_id")
+}
+
+bad_verification <- setdiff(
+  unique(models$verification_status),
+  c("unverified", "verified")
+)
+
+if (length(bad_verification) > 0) {
+  stop(
+    "Invalid verification_status values: ",
+    paste(bad_verification, collapse = ", ")
+  )
 }
 
 # ------------------------------------------------------------
@@ -118,7 +130,8 @@ if (nrow(blank_ids) > 0) {
 # ------------------------------------------------------------
 
 cat("\nValidation complete.\n")
-cat("Number of models:", nrow(models), "\n")
+cat("Number of records:", nrow(models), "\n")
+cat("Number of distinct models:", n_distinct(models$model_id), "\n")
 
 cat("\nModels by status:\n")
 

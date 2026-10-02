@@ -7,7 +7,8 @@ A curated registry of forest growth and yield models developed for or applicable
 - Record model claims only from public or otherwise approved sources. Preserve citations and verification details with each record, following the schema.
 - Do not guess model status, species coverage, geographic applicability, or other facts. Use the schema's documented unknown or unverified values where evidence is incomplete.
 - Do not commit credentials, access tokens, private source material, or local processing artifacts. Use environment variables for any future integrations that require credentials.
-- Treat `GYmodelPDFmanuals/` as excluded source material. Do not inspect, process, convert, copy, or commit its contents as part of this project workflow.
+- Treat `GYmodelPDFmanuals/` and `GYmodels_manual_md/` as local-only source material (git-ignored). Do not copy or commit their contents; AI scanning is limited to Markdown files you explicitly choose.
+- Create one registry row per scanned source file; `model_id` repeats across rows for the same model and rows are consolidated and cross-checked later.
 - Keep source data and source code under version control. Treat Quarto output and files under `derived/` as generated artifacts.
 - Review changes to registry records for source quality, accuracy, and licensing before accepting them.
 

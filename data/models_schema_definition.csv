@@ -1,37 +1,18 @@
 field_name,data_type,required,description,allowed_values,example
-model_id,text,yes,Stable unique identifier for the model; do not change once assigned.,,vdyp7
-model_name,text,yes,Common name or acronym used for the model.,,VDYP7
-full_name,text,no,Formal or expanded model name.,,Variable Density Yield Projection System
-developer,text,no,"Named individual developer(s), when documented.",,
-developer_organization,text,yes,Organization primarily responsible for model development.,,BC Ministry of Forests
-development_year,integer,no,Approximate year the model/system was first developed.,,1980
-jurisdictions,text,yes,"Province(s), territory/territories, or other jurisdictional scope associated with the model.",BC|AB|SK|MB|ON|QC|NB|NS|PE|NL|YT|NT|NU|Canada|other,BC
-model_type,text,yes,Broad model class.,whole_stand|individual_tree|diameter_class|hybrid|other|unknown,whole_stand
-model_structure,text,no,"More specific structural description, such as empirical, mechanistic, semi-empirical, distance-independent, or distance-dependent.",,empirical
-forest_types,text,no,Forest or stand types for which the model was developed or documented.,,even-aged conifer stands
-species,text,yes,Species or species groups covered by the model. Use standard species codes where possible; multiple values separated by ';'.,,Pli;Fdi;Sx
-calibration_region,text,no,Geographic area represented by the calibration/development data; detailed polygons belong in the coverage dataset.,,British Columbia
-validation_region,text,no,"Geographic area represented by independent validation/testing, when documented.",,
-application_region,text,no,Region explicitly identified by the developer for intended application.,,
-inputs,text,no,Important model inputs. Multiple values separated by ';'.,,age;site index;stems per ha
-outputs,text,yes,Important model outputs. Multiple values separated by ';'.,,volume;basal area;DBH;height
-mortality,controlled,no,Whether mortality is represented.,yes|no|partial|unknown,yes
-regeneration,controlled,no,Whether regeneration is represented or projected.,yes|no|partial|unknown,unknown
-commercial_thinning,controlled,no,Whether commercial thinning can be represented; distinguish capability from validated thinning response in notes or a later management table.,yes|no|partial|unknown,yes
-precommercial_thinning,controlled,no,Whether precommercial thinning can be represented.,yes|no|partial|unknown,unknown
-fertilization,controlled,no,Whether fertilization scenarios/response can be represented.,yes|no|partial|unknown,unknown
-pruning,controlled,no,Whether pruning scenarios/response can be represented.,yes|no|partial|unknown,unknown
-disturbance,text,no,"Major disturbances represented or supported, such as fire, insects, wind, or harvest; multiple values separated by ';'.",,
-climate_response,controlled,no,Whether climate variables or climate-driven responses are explicitly represented.,yes|no|partial|unknown,no
-implementation_language,text,no,Programming language(s) or implementation technology used by the native model.,,Fortran
-interface,text,no,"How users interact with the model, such as R package, executable, GUI, spreadsheet, web app, or API.",,executable;GUI
-source_available,controlled,no,Whether source code is publicly available.,yes|no|partial|unknown,no
-source_url,url,no,"Public URL to source code or repository, when available.",,
-manual_available,controlled,no,Whether model documentation/manual is publicly available.,yes|no|partial|unknown,yes
-manual_url,url,no,Public URL to the principal model manual/documentation.,,
-primary_reference,text,yes,Primary publication or technical reference supporting the model.,,
-documentation_language,text,no,Language(s) of the principal model documentation.,English|French|English;French|other|unknown,English
-status,controlled,yes,Current lifecycle/status of the model in the registry.,active|maintained|legacy|archived|unknown,active
-last_verified,date,yes,Date on which the registry record was last checked against its sources.,YYYY-MM-DD,2026-10-01
-verification_status,controlled,yes,How completely the record has been verified.,verified|partially_verified|unverified,verified
-notes,text,no,"Additional qualifications, limitations, ambiguities, or interpretation notes.",,
+record_id,text,yes,Unique ID for this row (one row per scanned source); use model_id plus source suffix.,,vdyp7__vdyp7_manual
+model_id,text,yes,Lowercase slug identifying the model; repeated across rows for the same model. Used later to consolidate.,,vdyp7
+model_name,text,yes,Common name or acronym of the model.,,VDYP7
+developer_organization,text,no,Organization(s) responsible for development; separate multiple values with ';'.,,BC Ministry of Forests
+jurisdictions,text,no,Provinces/territories where the source says the model applies; separate multiple values with ';'.,BC|AB|SK|MB|ON|QC|NB|NS|PE|NL|YT|NT|NU|Canada|other,BC
+model_type,controlled,no,Broad model class as stated in the source.,whole_stand|individual_tree|diameter_class|hybrid|other|unknown,whole_stand
+species,text,no,Species or species groups covered; separate multiple values with ';'.,,Pli;Fdi;Sx
+inputs,text,no,Key model inputs; separate multiple values with ';'.,,age;site index
+outputs,text,no,Key model outputs; separate multiple values with ';'.,,volume;basal area
+management_options,text,no,Management actions the source says the model can represent (e.g. thinning; fertilization; pruning); separate multiple values with ';'. Leave blank if not stated.,,thinning;fertilization
+other_features,text,no,Other features the source says are represented (e.g. mortality; regeneration; climate; disturbance); separate multiple values with ';'. Leave blank if not stated.,,mortality;climate
+status,controlled,no,Lifecycle status if the source states it.,active|maintained|legacy|archived|unknown,unknown
+source_file,text,yes,File name of the scanned source document.,,vdyp7_manual.md
+source_citation,text,no,Citation (authors; year; title) of the scanned source.,,
+source_year,integer,no,Publication year of the scanned source.,,2020
+verification_status,controlled,yes,Review state of this row.,unverified|verified,unverified
+notes,text,no,Uncertainties or ambiguities; do not guess values the source does not state.,,
