@@ -1,6 +1,7 @@
 # R session and IDE state
 .Rhistory
 .RData
+.Renviron
 .Ruserdata
 .Rproj.user/
 
