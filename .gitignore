@@ -1,7 +1,6 @@
 # R session and IDE state
 .Rhistory
 .RData
-.Renviron
 .Ruserdata
 .Rproj.user/
 
@@ -21,3 +20,6 @@ derived/
 # Operating system files
 Thumbs.db
 .DS_Store
+
+# api key
+api_key.txt

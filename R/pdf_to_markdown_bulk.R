@@ -1,7 +1,7 @@
 library(httr)
 library(jsonlite)
 
-api_key <- Sys.getenv("LLAMAINDEX_API_KEY")
+api_key <- readLines("api_key.txt")
 
 if (api_key == "") {
   stop("LLAMAINDEX_API_KEY is not set.")
