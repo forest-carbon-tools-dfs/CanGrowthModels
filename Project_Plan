@@ -1,177 +1,62 @@
-The goal of this project is to create a repository of Forest Growth and Yield Models in Canada.
-I would like the project to reside on Github.
-I would like for collaborators to be able to add information pertaining to their GY models or models that they are aware of and which are "in use".
-I would like for this project to be private at first, but the intention is to have a public version.
-I would like for the project to allow users to perform queries based characteristics of the GY models.
-I would like to also have an interactive map which displays Canada (simple) and area (defined by Provincial Boundaries) where each GY model is applicable.
+CANADIAN FOREST GROWTH & YIELD MODEL REGISTRY
 
-The folder that holds the project is located here: C:\CanGrowthModels
+## Goal
 
-To start, i have two CSVs which are currently minimally populated: models_schema_definition.csv and models_template.csv
-I also have R scripts that would serve to validate the information about the models (e.g., flag errors in species names and provide corrections)
-I also have pdf and word files. Do not look at these unless i give permission. I will convert them to markdown files and ask an ai agent to scan them. 
-Those pdf and word files are located here: C:\CanGrowthModels\GYmodelPDFmanuals
-Information drawn from those pdf and word files will be used to help populate the models_template.csv.
-I also have some quatro files that would be the basis of the website for this project. 
+Maintain a private-first, source-traceable registry of Canadian forest growth and yield models. Researchers should be able to filter models by species, stand conditions, and geography, inspect supporting sources, and use an interactive map to see model applicability. Public release requires maintainer approval.
 
-The map coverage would be something like this:
-                 CANADIAN GROWTH & YIELD MODEL REGISTRY
+## Current Status (2026-10-06)
 
-   [Species] [Province] [Forest type] [Management] [Model type]
+Completed and pushed to the private GitHub repository (`811a94c`):
 
-                         ┌───────────────┐
-                         │               │
-                         │     CANADA    │
-                         │               │
-                         │      MAP      │
-                         │               │
-                         └───────────────┘
+- Repository and project structure: `data/`, `R/`, `tests/`, README, `.gitignore`, R project, and root-level Quarto files exist.
+- Model registry: simplified source-level schema/template and starter records are in `data/models.csv`. Rows are unverified working records; several need source filenames, citations, and review.
+- Stand origin: `stand_origin` distinguishes natural-origin, managed/post-harvest, both, and unknown. Managed/post-harvest includes planted or naturally regenerated stands.
+- Coverage data: `data/model_coverage.csv` records model-jurisdiction claims, coverage basis, regional qualifiers, stand/species scope, and validation evidence. Pilot entries cover MGM, TASS, and GYPSY. North-eastern BC is retained as a subregional qualifier rather than represented as all of BC.
+- Model links: `data/model_links.csv` holds multiple typed links per model; the supplied MGM, TASS, and GYPSY URLs are present and marked unverified.
+- R validation scripts exist for model records, coverage records, and model links. The three validators pass on the current starter data.
+- Manual and API-key safeguards are represented in `.gitignore`. Do not inspect or process `GYmodelPDFmanuals/`; only use sources the maintainer explicitly approves.
 
-                  Models applicable here:
+Not yet completed: the Quarto pages are still basic table placeholders; the map, interactive filters/model pages, CI, contributor workflow, and public release are not implemented. No boundary data has been selected or downloaded.
 
-              TIPSY
-              PrognosisBC
-              VDYP
-              Model X
-              Model Y
+## Implementation Roadmap
 
-        Click a model → open detailed model card
-	
-	
-Or like this:
-CANADIAN FOREST GROWTH & YIELD MODELS
+### 1. Stabilize the data contract and pilot records
 
-A curated registry of forest growth, yield and stand
-projection models developed for Canadian forests.
+- Review the model, coverage, and link schemas together; keep model identity, source-specific claims, geographic coverage, and links distinct.
+- Add validation for required nonblank values, schema-controlled vocabularies, dates, model-to-coverage/link references, and URL validity. Keep link reachability checks separate from structural validation.
+- Resolve the outstanding GYPSY model source filename/citation and review the provisional records. Keep unsupported facts unknown and records unverified until documented.
+- Confirm how subregional claims such as North-eastern BC should be displayed when the map geometry is only provincial.
 
-------------------------------------------------------
+### 2. Build the static catalogue
 
-                 [ EXPLORE THE MAP ]
+- Update the data-build step to join model, coverage, and link records without flattening multiple links or coverage claims into ambiguous cells.
+- Replace placeholder Quarto tables with a readable catalogue, filters for model type, species, stand origin/scope, and jurisdiction, and model detail pages with source links.
+- Render locally and verify that unknown/unverified information is visible and that filters do not imply unsupported precision.
 
-------------------------------------------------------
+### 3. Add the map
 
-Search models
-[________________________________]
+- Begin with provincial/territorial boundaries for jurisdiction-level coverage.
+- Add an ecological-region layer only where model sources support a documented regional match. Ecozones/ecoregions are display units, not automatic evidence of model validity.
+- Use cited, appropriately licensed boundary data. Keep subregional qualifiers in the details/tooltip where geometry does not support a defensible polygon.
+- Connect map selections to the same coverage records used by the catalogue filters.
 
-Species       Province       Model type       Management
+### 4. Automate and invite contributions
 
-------------------------------------------------------
+- Add CI to run all validators and render the Quarto site on changes.
+- Add contributor guidance and issue/PR templates for proposing models, sources, coverage claims, and corrections.
+- Test the workflow with a contributor-style change before broad data entry.
 
-MODEL DATABASE
+### 5. Publish when approved
 
-187 documented models
-23 jurisdictions / regions
-38 tree species
-62 models with management scenarios
-41 open implementations
+- Keep GitHub private while the data, licensing, and review process mature.
+- Enable GitHub Pages only after maintainer approval and a successful CI-rendered build. Treat public release as an explicit decision, not an automatic consequence of merging.
 
+## Immediate Next Step
 
-The rough plan would be:
-STEP 1
-Populate CSVs
+Complete a local Quarto render of the current placeholder site, then replace the table-only pages with the first useful catalogue view backed by the model, coverage, and link tables. Keep this static and small; do not download boundary data or process manuals yet. Once catalogue joins and filters work, select a licensed provincial/territorial boundary source for the first map layer.
 
-      ↓
+## Scope and Cost Controls
 
-STEP 2
-Create private GitHub repo
-
-      ↓
-
-STEP 3
-Put CSVs in /data
-
-      ↓
-
-STEP 4
-Create R project
-
-      ↓
-
-STEP 5
-Create validate_models.R
-
-      ↓
-
-STEP 6
-Create build_data.R
-
-      ↓
-
-STEP 7
-Install Quarto
-
-      ↓
-
-STEP 8
-Create _quarto.yml
-
-      ↓
-
-STEP 9
-Create index.qmd
-
-      ↓
-
-STEP 10
-Create models.qmd
-
-      ↓
-
-STEP 11
-Run "quarto preview"
-
-      ↓
-
-STEP 12
-Confirm website works locally
-
-      ↓
-
-STEP 13
-Push everything to GitHub
-
-      ↓
-
-STEP 14
-Add GitHub Actions
-
-      ↓
-
-STEP 15
-Publish to GitHub Pages
-
-      ↓
-
-STEP 16
-Add interactive map
-
-      ↓
-
-STEP 17
-Add model filtering/search
-
-      ↓
-
-STEP 18
-Add individual model pages
-
-Potential GitHub Structure:
-canadian-forest-growth-yield/
-│
-├── data/
-│   ├── models.csv
-│   └── models_schema_definition.csv
-│
-├── R/
-│   └── validate_models.R
-│
-├── docs/
-│
-├── README.md
-│
-└── .gitignore
-
-
-Please help me plan and implement this project. Check back with me before burning through AI credits. 
-Suggest changes (including major workflow/application changes) where appropriate.
-Be efficient in your use of AI credits. You need to deligate to cheaper/lower cost models wherever appropriate.
+- Do not open or process files under `GYmodelPDFmanuals/`. Ask before any bulk manual processing, large boundary-data download, paid service, or public deployment.
+- Prefer small pilot records and local validation/render checks before bulk population or elaborate mapping.
+- Do not commit credentials, local-only manuals, or generated Quarto output.
