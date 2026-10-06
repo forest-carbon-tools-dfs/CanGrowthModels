@@ -1,0 +1,10 @@
+field_name,data_type,required,description,allowed_values,example
+link_id,text,yes,Unique stable identifier for this link record.,,mgm_official_website
+model_id,text,yes,Stable model identifier matching data/models.csv.,,mgm
+record_id,text,no,Optional source record identifier when this link applies to one specific source row.,,mgm__manual_2024
+link_type,controlled,yes,Kind of model-related resource linked.,official_website|manual|software|source_code|publication|other,official_website
+title,text,yes,Human-readable hyperlink text.,,MGM official website
+url,url,yes,Public HTTP or HTTPS URL.,,https://mgm.ualberta.ca/
+accessed_date,date,no,Date the link was last checked.,YYYY-MM-DD,2026-10-06
+verification_status,controlled,yes,Whether the link has been checked by a maintainer.,unverified|verified,unverified
+notes,text,no,Link context or verification notes.,,URL supplied by registry maintainer

@@ -24,7 +24,8 @@ required_columns <- c(
   "model_id",
   "model_name",
   "source_file",
-  "verification_status"
+  "verification_status",
+  "stand_origin"
 )
 
 missing_columns <- setdiff(
@@ -99,6 +100,25 @@ if (length(bad_status) > 0) {
   )
 }
 
+valid_stand_origins <- c(
+  "natural_origin",
+  "managed",
+  "both",
+  "unknown"
+)
+
+bad_stand_origins <- setdiff(
+  unique(na.omit(models$stand_origin)),
+  valid_stand_origins
+)
+
+if (length(bad_stand_origins) > 0) {
+  stop(
+    "Invalid stand_origin values: ",
+    paste(bad_stand_origins, collapse = ", ")
+  )
+}
+
 # ------------------------------------------------------------
 # 5. Check IDs are not blank and verification_status is valid
 # ------------------------------------------------------------
@@ -111,6 +131,13 @@ blank_ids <- models |>
 
 if (nrow(blank_ids) > 0) {
   stop("One or more records have a blank record_id or model_id")
+}
+
+blank_stand_origins <- models |>
+  filter(is.na(stand_origin) | stand_origin == "")
+
+if (nrow(blank_stand_origins) > 0) {
+  stop("One or more records have a blank stand_origin")
 }
 
 bad_verification <- setdiff(

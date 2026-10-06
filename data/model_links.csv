@@ -1,0 +1,4 @@
+link_id,model_id,record_id,link_type,title,url,accessed_date,verification_status,notes
+gypsy_official,gypsy,,official_website,GYPSY - Alberta growth and yield projection system,https://www.alberta.ca/growth-and-yield-projection-system,,unverified,User-provided URL; not yet checked.
+tass_official,tass,,official_website,TASS - Tree and Stand Simulator,https://www2.gov.bc.ca/gov/content/industry/forestry/managing-our-forest-resources/forest-inventory/growth-and-yield-modelling/tree-and-stand-simulator-tass,,unverified,User-provided URL; not yet checked.
+mgm_official,mgm,,official_website,MGM - Mixedwood Growth Model,https://mgm.ualberta.ca/,,unverified,User-provided URL; not yet checked.
