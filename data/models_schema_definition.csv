@@ -16,3 +16,4 @@ source_citation,text,no,Citation (authors; year; title) of the scanned source.,,
 source_year,integer,no,Publication year of the scanned source.,,2020
 verification_status,controlled,yes,Review state of this row.,unverified|verified,unverified
 notes,text,no,Uncertainties or ambiguities; do not guess values the source does not state.,,
+stand_type,controlled,yes,Whether the model applies to natural-origin stands managed stands or both.,natural_origin|managed|both|unknown,managed
