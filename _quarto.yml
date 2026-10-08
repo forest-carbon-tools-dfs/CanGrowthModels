@@ -7,6 +7,7 @@ project:
     - Rscript R/validate_CanGYmodels.R
     - Rscript R/validate_model_coverage.R
     - Rscript R/validate_model_links.R
+    - Rscript R/validate_model_sources.R
     - Rscript R/build_CanGYmodel_data.R
 
 website:

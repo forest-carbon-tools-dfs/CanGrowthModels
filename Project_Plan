@@ -42,6 +42,8 @@ Not yet completed: source verification and complete data-contract tests, a map, 
 - Add an ecological-region layer only where model sources support a documented regional match. Ecozones/ecoregions are display units, not automatic evidence of model validity.
 - Use cited, appropriately licensed boundary data. Keep subregional qualifiers in the details/tooltip where geometry does not support a defensible polygon.
 - Connect map selections to the same coverage records used by the catalogue filters.
+- Distinguish testing-only or explicitly not-recommended calibrations from
+  models suitable for planning; a jurisdiction match alone is not an endorsement.
 
 ### 4. Automate and invite contributions
 
