@@ -6,35 +6,30 @@ Maintain a private-first, source-traceable registry of Canadian forest growth an
 
 ## Current Status (2026-10-08)
 
-Previously completed and pushed to the private GitHub repository (`811a94c`):
+Completed and pushed to the private GitHub repository through `70ec16c`:
 
-- Repository and project structure: `data/`, `R/`, `tests/`, README, `.gitignore`, R project, and root-level Quarto files exist.
-- Model registry: simplified source-level schema/template and starter records are in `data/models.csv`. Rows are unverified working records; several need source filenames, citations, and review.
-- Stand origin: `stand_origin` distinguishes natural-origin, managed/post-harvest, both, and unknown. Managed/post-harvest includes planted or naturally regenerated stands.
-- Coverage data: `data/model_coverage.csv` records model-jurisdiction claims, coverage basis, regional qualifiers, stand/species scope, and validation evidence. Pilot entries cover MGM, TASS, and GYPSY. North-eastern BC is retained as a subregional qualifier rather than represented as all of BC.
-- Model links: `data/model_links.csv` holds multiple typed links per model; the supplied MGM, TASS, and GYPSY URLs are present and marked unverified.
-- R validation scripts exist for model records, coverage records, and model links. The three validators pass on the current starter data.
-- Manual and API-key safeguards are represented in `.gitignore`. Do not inspect or process `GYmodelPDFmanuals/`; only use sources the maintainer explicitly approves.
+- The pilot contains 13 model rows, 21 coverage claims, 26 typed links, and six maintainer-supplied Markdown filename associations. Model links include websites, downloads, code repositories, and related publications; the filename associations do not establish which claims a document supports.
+- TASS II/III and VDYP7/8 each share one version-qualified model card. TADAM has three distinct BC plantation variants. OSM includes Acadian coverage and an NL calibration explicitly marked testing-only and **not recommended** for management decisions. ARTEMIS and FVS Ontario have qualified provincial calibration claims; FVS Ontario's published calibration species are not asserted to be its complete species coverage.
+- Quarto renders only `index.qmd` and `models.qmd`, excluding local manuals. Pre-render runs four R validators and rebuilds separate website-ready model, coverage, and link files. Browser-side filters cover model type, stand origin, jurisdiction, and species keywords; model details retain unknown and unverified values.
+- The restricted render and validators pass on the pilot data. The repository remains private. No manual contents or generated site output are committed.
 
-Locally implemented (not yet reviewed or pushed): Quarto renders only `index.qmd` and `models.qmd`, excluding local manual Markdown. The pre-render step validates the three pilot datasets and rebuilds separate website-ready model, coverage, and link tables. The pilot catalogue displays source-specific records, coverage qualifications, and unverified links, with browser-side model type, stand origin, jurisdiction, and species-keyword filters. Model detail sections are on the catalogue page rather than separate pages.
-
-Not yet completed: source verification and complete data-contract tests, a map, a downloadable query database, CI, contributor workflow, separate model pages, and public release. No boundary data has been selected or downloaded.
+Still outstanding: most model and link facts remain unverified; `source_file` is required by the schema despite blank values in provisional model rows. Programming language and open-source/licensing fields are not yet structured. Automated data-contract tests, a map, a downloadable query database, CI, contributor workflow, and public release are not implemented. No boundary data has been selected or downloaded.
 
 ## Implementation Roadmap
 
 ### 1. Stabilize the data contract and pilot records
 
-- Review the model, coverage, and link schemas together; keep model identity, source-specific claims, geographic coverage, and links distinct.
+- Review the model, coverage, link, and document-association schemas together. Keep source-file associations distinct from evidence for individual claims; claim-by-claim provenance is deferred.
 - Add source-backed programming language and open-source/licensing fields; do not infer either from the presence of a software or source-code link.
-- Add validation for required nonblank values, schema-controlled vocabularies, dates, model-to-coverage/link references, and URL validity. Keep link reachability checks separate from structural validation.
-- Resolve the outstanding GYPSY model source filename/citation and review the provisional records. Keep unsupported facts unknown and records unverified until documented.
+- Resolve the provisional-row `source_file` rule without inventing scanned documents. Complete validation for required values, vocabularies, dates, references, and URL format, with automated tests. Keep link reachability separate from structural validation.
+- Review provisional records and external links before public release; keep unsupported facts unknown and records unverified until checked. Do not require claim-level manual tracing for the current pilot.
 - Confirm how subregional claims such as North-eastern BC should be displayed when the map geometry is only provincial.
 
-### 2. Build the static catalogue
+### 2. Build the static catalogue (pilot complete)
 
-- Update the data-build step to join model, coverage, and link records without flattening multiple links or coverage claims into ambiguous cells.
-- Replace placeholder Quarto tables with a readable catalogue, filters for model type, species, stand origin/scope, and jurisdiction, and model detail pages with source links.
-- Render locally and verify that unknown/unverified information is visible and that filters do not imply unsupported precision.
+- Keep model rows, coverage claims, and typed links separate in the data build and render one model card with grouped links and qualified coverage details.
+- Retain the working browser filters and visible unknown/unverified states. Species lists may be partial, and jurisdiction matches do not imply province-wide suitability or a recommendation for planning.
+- Consider separate model detail pages only if the growing catalogue warrants them; they are not needed for the pilot.
 
 ### 3. Add the map
 
@@ -58,7 +53,7 @@ Not yet completed: source verification and complete data-contract tests, a map, 
 
 ## Immediate Next Step
 
-Review and verify the pilot catalogue and its source claims, then complete data-contract validation and tests before adding more records. Add evidenced programming-language and open-source fields. Decide whether the public query interface should expose a downloadable SQLite snapshot alongside browser filters. For the first map layer, select a licensed provincial/territorial boundary source and agree on how to show subregional claims without implying province-wide coverage. Do not download boundary data or process manuals without approval.
+Continue carefully scoped pilot data and link entry while resolving the `source_file` rule for provisional rows and adding data-contract tests. Add programming-language, code-access, and licensing fields only as evidence is supplied; freely available code is not automatically open source. Claim-by-claim tracing to local manuals can wait. Decide whether a downloadable SQLite snapshot is needed alongside browser filters. Before mapping, choose a licensed boundary source and a display rule for subregions and testing-only/not-recommended calibrations. Do not download boundary data, process manuals, or deploy publicly without approval.
 
 ## Scope and Cost Controls
 
