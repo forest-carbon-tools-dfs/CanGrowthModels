@@ -2,26 +2,19 @@
 title: "Canadian Forest Growth & Yield Model Registry"
 ---
 
-# Canadian Forest Growth & Yield Model Registry
+# Explore Canadian forest growth and yield models
 
-A registry of forest growth and yield models developed for
-or applicable to Canadian forests.
+This private-first pilot catalogue lists models alongside source-specific
+records, geographic coverage claims, and links. Browse the
+[model catalogue](models.qmd) to filter by model type, species keyword,
+stand origin, and province or territory.
 
-```{r}
-library(readr)
-library(knitr)
+**Pilot data are not authoritative.** Records and links marked unverified
+have not been checked against their cited sources. A province-level filter
+can include a claim limited to a named subregion; read each coverage
+qualifier before using a model for a location. Missing information is
+shown as "Not recorded", not inferred from other fields or links.
 
-models <- read_csv(
-  "derived/models_web.csv",
-  show_col_types = FALSE
-)
-
-models |>
-  select(
-    model_name,
-    developer_organization,
-    model_type,
-    status
-  ) |>
-  kable()
-```
+The map and downloadable query database are not yet available. No
+geographic polygon should be interpreted as calibration or validation
+evidence until it is explicitly supported by a coverage claim.

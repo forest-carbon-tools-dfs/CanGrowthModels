@@ -4,9 +4,9 @@ CANADIAN FOREST GROWTH & YIELD MODEL REGISTRY
 
 Maintain a private-first, source-traceable registry of Canadian forest growth and yield models. Researchers should be able to filter models by species, stand conditions, and geography, inspect supporting sources, and use an interactive map to see model applicability. Public release requires maintainer approval.
 
-## Current Status (2026-10-06)
+## Current Status (2026-10-08)
 
-Completed and pushed to the private GitHub repository (`811a94c`):
+Previously completed and pushed to the private GitHub repository (`811a94c`):
 
 - Repository and project structure: `data/`, `R/`, `tests/`, README, `.gitignore`, R project, and root-level Quarto files exist.
 - Model registry: simplified source-level schema/template and starter records are in `data/models.csv`. Rows are unverified working records; several need source filenames, citations, and review.
@@ -16,13 +16,16 @@ Completed and pushed to the private GitHub repository (`811a94c`):
 - R validation scripts exist for model records, coverage records, and model links. The three validators pass on the current starter data.
 - Manual and API-key safeguards are represented in `.gitignore`. Do not inspect or process `GYmodelPDFmanuals/`; only use sources the maintainer explicitly approves.
 
-Not yet completed: the Quarto pages are still basic table placeholders; the map, interactive filters/model pages, CI, contributor workflow, and public release are not implemented. No boundary data has been selected or downloaded.
+Locally implemented (not yet reviewed or pushed): Quarto renders only `index.qmd` and `models.qmd`, excluding local manual Markdown. The pre-render step validates the three pilot datasets and rebuilds separate website-ready model, coverage, and link tables. The pilot catalogue displays source-specific records, coverage qualifications, and unverified links, with browser-side model type, stand origin, jurisdiction, and species-keyword filters. Model detail sections are on the catalogue page rather than separate pages.
+
+Not yet completed: source verification and complete data-contract tests, a map, a downloadable query database, CI, contributor workflow, separate model pages, and public release. No boundary data has been selected or downloaded.
 
 ## Implementation Roadmap
 
 ### 1. Stabilize the data contract and pilot records
 
 - Review the model, coverage, and link schemas together; keep model identity, source-specific claims, geographic coverage, and links distinct.
+- Add source-backed programming language and open-source/licensing fields; do not infer either from the presence of a software or source-code link.
 - Add validation for required nonblank values, schema-controlled vocabularies, dates, model-to-coverage/link references, and URL validity. Keep link reachability checks separate from structural validation.
 - Resolve the outstanding GYPSY model source filename/citation and review the provisional records. Keep unsupported facts unknown and records unverified until documented.
 - Confirm how subregional claims such as North-eastern BC should be displayed when the map geometry is only provincial.
@@ -53,7 +56,7 @@ Not yet completed: the Quarto pages are still basic table placeholders; the map,
 
 ## Immediate Next Step
 
-Complete a local Quarto render of the current placeholder site, then replace the table-only pages with the first useful catalogue view backed by the model, coverage, and link tables. Keep this static and small; do not download boundary data or process manuals yet. Once catalogue joins and filters work, select a licensed provincial/territorial boundary source for the first map layer.
+Review and verify the pilot catalogue and its source claims, then complete data-contract validation and tests before adding more records. Add evidenced programming-language and open-source fields. Decide whether the public query interface should expose a downloadable SQLite snapshot alongside browser filters. For the first map layer, select a licensed provincial/territorial boundary source and agree on how to show subregional claims without implying province-wide coverage. Do not download boundary data or process manuals without approval.
 
 ## Scope and Cost Controls
 

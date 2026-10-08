@@ -1,5 +1,13 @@
 project:
   type: website
+  render:
+    - index.qmd
+    - models.qmd
+  pre-render:
+    - Rscript R/validate_CanGYmodels.R
+    - Rscript R/validate_model_coverage.R
+    - Rscript R/validate_model_links.R
+    - Rscript R/build_CanGYmodel_data.R
 
 website:
   title: "Canadian Forest Growth & Yield Model Registry"
@@ -15,8 +23,6 @@ format:
     theme:
       - cosmo
       - brand
-    css: styles.css
     toc: true
 
 editor: visual
-

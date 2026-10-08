@@ -1,3 +1,8 @@
+# Validate required link fields, unique link IDs, controlled values,
+# HTTP(S) URL format, and references to model IDs. When a record ID
+# is supplied, verify that it belongs to the linked model. This does
+# not check URL reachability or whether a link supports model claims.
+
 library(readr)
 
 links <- read_csv("data/model_links.csv", show_col_types = FALSE)

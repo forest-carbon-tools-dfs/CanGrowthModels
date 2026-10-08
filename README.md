@@ -16,19 +16,31 @@ A curated registry of forest growth and yield models developed for or applicable
 
 - `data/models_schema_definition.csv`: field definitions and current data rules.
 - `data/models_template.csv`: header template for registry records.
-- `data/models.csv`: intended canonical registry dataset; it will be established during the starter-dataset stage.
+- `data/models.csv`, `data/model_coverage.csv`, `data/model_links.csv`: pilot
+  source records, separate geographic claims, and typed model links.
 - `R/`: validation, data-build, and coverage utilities. Run these from the project root because their paths are project-root-relative.
 - `tests/`: automated checks for the data contract and validation behavior.
-- `_quarto.yml`, `index.qmd`, `models.qmd`: Quarto site configuration and source pages.
+- `_quarto.yml`, `index.qmd`, `models.qmd`: the static Quarto catalogue.
+  Only these two pages are rendered; local manual Markdown is excluded.
 - `derived/`: generated website-ready data; do not edit or commit generated output.
 
 ## Local Checks
 
-After `data/models.csv` has been created, run the scripts from the project root:
+With R (including `readr`, `dplyr`, and `htmltools`) and Quarto installed,
+run from the project root with `Rscript` and `quarto` on your PATH:
 
 ```powershell
 Rscript R/validate_CanGYmodels.R
+Rscript R/validate_model_coverage.R
+Rscript R/validate_model_links.R
 Rscript R/build_CanGYmodel_data.R
+quarto render
 ```
 
-The current validator covers only part of the schema. Complete validation rules and automated tests will be added with the data-contract stage. Site rendering and publishing instructions will be added in their respective stages.
+Quarto automatically runs the three validators and the data build before
+rendering. The catalogue filters in the browser without a server; a
+province match may represent only a subregion, as qualified on the model
+card. Programming language and open-source status are not yet part of the
+schema and are shown as not recorded. There is no map or public deployment.
+Validation still covers only part of the schema; complete rules and
+automated tests remain for the data-contract stage.

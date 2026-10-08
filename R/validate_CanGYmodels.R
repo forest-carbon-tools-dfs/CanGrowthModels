@@ -1,6 +1,8 @@
 # ============================================================
 # Canadian Forest Growth & Yield Model Registry
-# validate_models.R
+# Validate selected required columns, record IDs, and controlled values
+# in data/models.csv. This does not verify source claims or compare
+# model fields with coverage and link records.
 # ============================================================
 
 library(readr)

@@ -1,3 +1,9 @@
+# Validate required coverage fields, unique coverage IDs, and
+# jurisdiction, coverage-basis, and review-status values.
+# Missing model IDs in data/models.csv produce a warning here;
+# the data-build script treats them as an error. This script does not
+# verify that geographic or species claims agree with model sources.
+
 library(readr)
 library(dplyr)
 

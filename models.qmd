@@ -2,24 +2,180 @@
 title: "Models"
 ---
 
+Filter this pilot catalogue by **model type**, **stand origin**, **province
+or territory**, or a **species keyword**. The species search matches text,
+not a standardized species taxonomy. Jurisdiction matches refer only to
+explicit coverage claims, including claims limited to a subregion. Read
+each claim before interpreting a match as geographic applicability.
+All claims retain their review status and source reference.
+
+```{=html}
+<div class="row g-2 mb-3" id="catalogue-filters">
+  <div class="col-md-3">
+    <label for="model-type-filter">Model type</label>
+    <select id="model-type-filter" class="form-select"><option value="">All types</option></select>
+  </div>
+  <div class="col-md-3">
+    <label for="stand-origin-filter">Stand origin</label>
+    <select id="stand-origin-filter" class="form-select"><option value="">All origins</option></select>
+  </div>
+  <div class="col-md-3">
+    <label for="jurisdiction-filter">Coverage jurisdiction</label>
+    <select id="jurisdiction-filter" class="form-select"><option value="">All jurisdictions</option></select>
+  </div>
+  <div class="col-md-3">
+    <label for="species-filter">Species keyword</label>
+    <input id="species-filter" class="form-control" type="search" placeholder="e.g., spruce">
+  </div>
+</div>
+<p id="catalogue-count" role="status" aria-live="polite"></p>
+```
+
 ```{r}
+#| echo: false
+#| results: asis
+
 library(readr)
-library(dplyr)
-library(knitr)
+library(htmltools)
 
-models <- read_csv(
-  "derived/models_web.csv",
-  show_col_types = FALSE
-)
+models <- read_csv("derived/models_web.csv", show_col_types = FALSE)
+coverage <- read_csv("derived/model_coverage_web.csv", show_col_types = FALSE)
+links <- read_csv("derived/model_links_web.csv", show_col_types = FALSE)
 
-models |>
-  select(
-    model_name,
-    developer_organization,
-    model_type,
-    status,
-    verification_status
-  ) |>
-  arrange(model_name) |>
-  kable()
+shown <- function(value) {
+  if (length(value) == 0 || is.na(value) || !nzchar(trimws(value))) {
+    "Not recorded"
+  } else {
+    value
+  }
+}
+
+field <- function(label, value) {
+  tags$li(tags$strong(paste0(label, ": ")), shown(value))
+}
+
+model_cards <- lapply(split(models, models$model_id), function(records) {
+  id <- records$model_id[[1]]
+  claims <- coverage[coverage$model_id == id, , drop = FALSE]
+  resources <- links[links$model_id == id, , drop = FALSE]
+
+  record_details <- lapply(seq_len(nrow(records)), function(i) {
+    record <- records[i, ]
+    tags$details(
+      tags$summary(paste("Source record", record$record_id, "-", shown(record$source_file))),
+      tags$ul(
+        field("Name", record$model_name),
+        field("Developer", record$developer_organization),
+        field("Model type", record$model_type),
+        field("Species", record$species),
+        field("Stand origin", record$stand_origin),
+        field("Lifecycle status", record$status),
+        field("Source citation", record$source_citation),
+        field("Review status", record$verification_status),
+        field("Notes", record$notes)
+      )
+    )
+  })
+
+  claim_details <- lapply(seq_len(nrow(claims)), function(i) {
+    claim <- claims[i, ]
+    tags$li(
+      tags$strong(paste(
+        shown(claim$jurisdiction_code),
+        if (!is.na(claim$region_detail) && nzchar(claim$region_detail)) {
+          paste0(" (", claim$region_detail, ")")
+        } else {
+          ""
+        },
+        "-", gsub(";", ", ", claim$coverage_basis, fixed = TRUE)
+      )),
+      tags$ul(
+        field("Stand scope", claim$stand_scope),
+        field("Species scope", claim$species_scope),
+        field("Validation evidence", claim$validation_evidence),
+        field("Source", claim$source_reference),
+        field("Review status", claim$verification_status),
+        field("Notes", claim$notes)
+      )
+    )
+  })
+
+  resource_details <- lapply(seq_len(nrow(resources)), function(i) {
+    resource <- resources[i, ]
+    tags$li(
+      tags$a(href = resource$url, resource$title, rel = "noopener noreferrer"),
+      paste0(" (", resource$link_type, "; ", resource$verification_status, ")"),
+      if (!is.na(resource$record_id) && nzchar(resource$record_id)) {
+        paste(" - source record:", resource$record_id)
+      }
+    )
+  })
+
+  tags$article(
+    class = "card mb-3 model-card",
+    `data-type` = paste(unique(na.omit(records$model_type)), collapse = "|"),
+    `data-origin` = paste(unique(na.omit(records$stand_origin)), collapse = "|"),
+    `data-jurisdiction` = paste(unique(claims$jurisdiction_code[
+      !is.na(claims$jurisdiction_code) & claims$jurisdiction_code != "unknown"
+    ]), collapse = "|"),
+    `data-species` = paste(na.omit(c(records$species, claims$species_scope)), collapse = " "),
+    tags$div(
+      class = "card-body",
+      tags$h2(class = "card-title", id = id, shown(records$model_name[[1]])),
+      tags$p("Model ID: ", id, " | Source records: ", nrow(records)),
+      tags$h3("Source-specific model information"),
+      tagList(record_details),
+      tags$h3("Geographic coverage claims"),
+      if (nrow(claims) > 0) tags$ul(tagList(claim_details)) else tags$p("Not recorded"),
+      tags$h3("Model links"),
+      if (nrow(resources) > 0) tags$ul(tagList(resource_details)) else tags$p("Not recorded"),
+      tags$p("Programming language: Not recorded | Open-source status: Not recorded")
+    )
+  )
+})
+
+cat("```{=html}\n", as.character(tagList(model_cards)), "\n```\n", sep = "")
+```
+
+```{=html}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = [...document.querySelectorAll(".model-card")];
+  const type = document.getElementById("model-type-filter");
+  const origin = document.getElementById("stand-origin-filter");
+  const jurisdiction = document.getElementById("jurisdiction-filter");
+  const species = document.getElementById("species-filter");
+  const count = document.getElementById("catalogue-count");
+
+  for (const [select, key] of [
+    [type, "type"], [origin, "origin"], [jurisdiction, "jurisdiction"]
+  ]) {
+    const values = new Set(cards.flatMap(card => card.dataset[key].split("|").filter(Boolean)));
+    for (const value of [...values].sort()) {
+      select.add(new Option(value.replaceAll("_", " "), value));
+    }
+  }
+
+  function filterCards() {
+    let visible = 0;
+    for (const card of cards) {
+      const matches = [
+        [type, "type"], [origin, "origin"], [jurisdiction, "jurisdiction"]
+      ].every(([select, key]) =>
+        !select.value || card.dataset[key].split("|").includes(select.value)
+      );
+      const speciesMatch = card.dataset.species.toLocaleLowerCase()
+        .includes(species.value.trim().toLocaleLowerCase());
+      card.hidden = !(matches && speciesMatch);
+      if (!card.hidden) visible++;
+    }
+    count.textContent = `${visible} of ${cards.length} models shown`;
+  }
+
+  for (const input of [type, origin, jurisdiction, species]) {
+    input.addEventListener("input", filterCards);
+  }
+  filterCards();
+});
+</script>
 ```

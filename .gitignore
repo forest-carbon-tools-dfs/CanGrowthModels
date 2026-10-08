@@ -23,3 +23,5 @@ Thumbs.db
 
 # api key
 api_key.txt
+/.quarto/
+**/*.quarto_ipynb
