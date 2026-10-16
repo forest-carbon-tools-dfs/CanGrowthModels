@@ -1,6 +1,13 @@
 # Canadian Forest Growth & Yield Model Registry
 
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![License: GPL-3.0-only](https://img.shields.io/badge/license-GPL--3.0--only-blue.svg)](LICENSE)
+[![Version: 0.1.0](https://img.shields.io/badge/version-0.1.0-blue.svg)](#citation)
+
 A curated registry of forest growth and yield models developed for or applicable to Canadian forests. The project is private-first; any public release requires an explicit decision by the maintainers.
+
+Developed by Derek Sattler as work undertaken at Natural Resources Canada (NRCan).
+Contact: [derek.sattler@nrcan-rncan.gc.ca](mailto:derek.sattler@nrcan-rncan.gc.ca).
 
 ## Project Rules
 
@@ -76,3 +83,20 @@ a missing search match does not establish that a model excludes a species.
 There is no map or public deployment.
 Validation still covers only part of the schema; complete rules and
 automated tests remain for the data-contract stage.
+
+## Copyright and License
+
+Copyright (C) 2026 His Majesty the King in Right of Canada, as represented by
+the Minister of Natural Resources.
+
+The project-authored software is licensed under the GNU General Public License,
+version 3 only (`GPL-3.0-only`). See [LICENSE](LICENSE) for the full terms.
+The software is provided without warranty, as described in the license.
+Referenced models, third-party software, and source materials retain their own
+copyrights and licensing terms; this license does not grant rights to them.
+
+## Citation
+
+Sattler, D (2026). CanGrowthModels: A registry to explore forest growth and yield
+models in Canada. Registry software (version 0.1.0).
+<https://github.com/forest-carbon-tools-dfs/CanGrowthModels>.
