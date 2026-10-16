@@ -43,8 +43,11 @@ Contact: [derek.sattler@nrcan-rncan.gc.ca](mailto:derek.sattler@nrcan-rncan.gc.c
   column definitions, validation coverage, and the publishing workflow.
 - `R/`: validation, data-build, and coverage utilities. Run these from the project root because their paths are project-root-relative.
 - `tests/`: automated checks for the data contract and validation behavior.
-- `_quarto.yml`, `index.qmd`, `models.qmd`: the static Quarto catalogue.
-  Only these two pages are rendered; local manual Markdown is excluded.
+- `_quarto.yml`, `index.qmd`, `models.qmd`, `map.qmd`: the static Quarto
+  catalogue and jurisdiction-level coverage map. Map logic is an R code chunk
+  in `map.qmd`; local manual Markdown is excluded.
+- `data/geospatial/canada/`: the Canada boundary shapefile and its Simplemaps
+  CC BY 4.0 license notice.
 - `derived/`: generated website-ready data; do not edit or commit generated output.
 
 `CanGrowthModelsWikiPage.csv` is a retired, git-ignored seed file, not a pipeline
@@ -56,8 +59,9 @@ and review status without depending on that local CSV.
 For routine CSV edits, adding models, and renaming columns, see the
 [CSV update workflow](CSV_UPDATE_WORKFLOW.md).
 
-With R (including `readr`, `dplyr`, `htmltools`, and `rlang`) and Quarto installed,
-run from the project root with `Rscript` and `quarto` on your PATH:
+With R (including `readr`, `dplyr`, `htmltools`, `rlang`, `sf`, and `leaflet`)
+and Quarto installed, run from the project root with `Rscript` and `quarto` on
+your PATH:
 
 ```powershell
 Rscript R/validate_CanGYmodels.R
@@ -68,11 +72,19 @@ Rscript R/build_CanGYmodel_data.R
 quarto render
 ```
 
+To change the map, edit the R code chunk in `map.qmd`. In RStudio, open
+`CanGrowthModels.Rproj` and use the page's **Render** button, or run
+`quarto render map.qmd` in the RStudio Terminal for a focused map render.
+Both use the project pre-render steps to validate the source data and rebuild
+the generated coverage file. Run `quarto render` to render the full site.
+
 Quarto automatically runs the four validators and the data build before
-rendering. The catalogue filters in the browser without a server; a
-province match may represent only a subregion, as qualified on the model
-card. A calibration claim can also describe a testing-only variant and does
-not by itself mean the model is recommended for planning or decisions.
+rendering. The catalogue filters in the browser without a server. The map
+colors a province or territory when one or more coverage claims are recorded
+and opens those claims on click; the fill is not an exact model footprint. A
+province match may represent only a subregion, as qualified on the model card
+and map popup. A calibration claim can also describe a testing-only variant
+and does not by itself mean the model is recommended for planning or decisions.
 Programming language and open-source status are not yet part of the
 schema; related details may appear in source-record notes, but code access
 alone does not establish an open-source licence. Model details show developers,
@@ -80,7 +92,7 @@ supporting organizations, species, minimum inputs, outputs, and silvicultural in
 coverage claims retain coastal/interior
 qualifiers where supplied. Some species lists are explicitly partial, so
 a missing search match does not establish that a model excludes a species.
-There is no map or public deployment.
+There is no public deployment.
 Validation still covers only part of the schema; complete rules and
 automated tests remain for the data-contract stage.
 

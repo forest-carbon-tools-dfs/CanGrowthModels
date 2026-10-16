@@ -73,6 +73,22 @@ separately. In the **RStudio Terminal** (not the R console), run:
 quarto render
 ```
 
+### Updating or Previewing the Map
+
+The map's R code is embedded in `map.qmd`; there is no separate map-update R
+script to source. Open `CanGrowthModels.Rproj` in RStudio, edit the code chunk
+in `map.qmd`, then use its **Render** button. For a focused render, run this in
+the **RStudio Terminal** from the project root:
+
+```powershell
+quarto render map.qmd
+```
+
+To rebuild and render the entire site, use `quarto render`. Both commands run
+the project pre-render validators and data build, so the map uses the latest
+`data/model_coverage.csv`. The map requires the `sf` and `leaflet` R packages
+in the R library used by Quarto.
+
 The project configuration in `_quarto.yml` automatically runs this sequence:
 
 1. `R/validate_CanGYmodels.R` checks model summaries.
@@ -80,7 +96,7 @@ The project configuration in `_quarto.yml` automatically runs this sequence:
 3. `R/validate_model_links.R` checks resource links.
 4. `R/validate_model_sources.R` checks document associations.
 5. `R/build_CanGYmodel_data.R` regenerates the website CSVs in `derived/`.
-6. Quarto renders `index.qmd` and `models.qmd` into `_site/`.
+6. Quarto renders `index.qmd`, `models.qmd`, and `map.qmd` into `_site/`.
 
 If a step fails, rendering stops. Fix the reported issue in the source files,
 save, and run `quarto render` again. Later errors may only appear after the
@@ -111,7 +127,8 @@ data-build script is not a substitute for validation.
 ## 4. Review the Result
 
 After a successful render, open `_site/index.html` in a browser, then visit
-the Models page. Check the edited model details, coverage, links, and filters.
+the Models and Coverage map pages. Check the edited model details, coverage,
+links, and filters. On the map, click Alberta and confirm its listed claims.
 Reload the page after subsequent renders to avoid viewing an old copy.
 
 ## Renaming or Adding a Column
@@ -133,8 +150,8 @@ and pipeline documentation.
 ## If R or Quarto Cannot Be Found
 
 The Terminal command needs both `Rscript` and `quarto` on its PATH. If either
-is unavailable, try RStudio's Render button with `models.qmd` open for a
-catalogue preview. Resolve the Terminal PATH before using the full-project
+is unavailable, try RStudio's Render button with `map.qmd` or `models.qmd` open
+for a page preview. Resolve the Terminal PATH before using the full-project
 command above. An R package/DLL loading error is an environment problem,
 not a reason to change CSV values; use the R version compatible with your
 installed packages. This workflow was successfully rendered with R 4.5.3.

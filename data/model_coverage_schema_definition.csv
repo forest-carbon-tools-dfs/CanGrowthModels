@@ -1,13 +1,13 @@
-field_name,data_type,required,description,allowed_values,example
-coverage_id,text,yes,Unique identifier for this model coverage record.,,mgm_ab
-model_id,text,yes,Stable model identifier matching data/models.csv when the model record exists.,,mgm
-model_name,text,yes,Model display name retained for review and map results.,,MGM
-jurisdiction_code,controlled,yes,Province/territory code for the applicability claim; use unknown when validation evidence has no stated geography.,AB|BC|SK|MB|ON|QC|NB|NS|PE|NL|YT|NT|NU|unknown,AB
-region_detail,text,no,Sub-provincial or ecological qualifier; do not imply province-wide coverage when a smaller region is stated.,,North-eastern BC
-coverage_basis,controlled,yes,One or more supported coverage relationships separated by ';'.,calibrated_for|intended_for|validated_in,calibrated_for;intended_for
-stand_scope,text,no,Stand conditions stated for the model and jurisdiction.,,Pure and mixed-species stands
-species_scope,text,no,Species or groups stated for this coverage record.,,Lodgepole pine;white spruce
-validation_evidence,text,no,Validation datasets or projects associated with this geographic claim.,,Alberta PSPs
-source_reference,text,yes,Provenance for the coverage claim; replace user-summary references with documentary citations when available.,,User-provided summary (2026-10-06)
-verification_status,controlled,yes,Review state of the coverage claim.,unverified|verified,unverified
-notes,text,no,Qualifications, unresolved geography, or scope details.,,WESBOGY PSP geography not specified; do not map this row
+field_name,data_type,required,description,allowed_values,example,,
+coverage_id,text,yes,Unique identifier for this model coverage record.,,mgm_ab,,
+model_id,text,yes,Stable model identifier matching data/models.csv when the model record exists.,,mgm,,
+model_name,text,yes,Model display name retained for review and map results.,,MGM,,
+jurisdiction_code,controlled,yes,Province/territory code for the applicability claim; use unknown when validation evidence has no stated geography.,AB|BC|SK|MB|ON|QC|NB|NS|PE|NL|YT|NT|NU|unknown,AB,,
+region_detail,text,no,Sub-provincial or ecological qualifier; do not imply province-wide coverage when a smaller region is stated.,,North-eastern BC,,
+coverage_basis,controlled,yes,One or more supported coverage relationships separated by ';'.,calibrated_for|intended_for|validated_in,calibrated_for;intended_for,,
+stand_scope,text,no,Stand conditions stated for the model and jurisdiction.,,Pure and mixed-species stands,,
+species_scope,text,no,Species or groups stated for this coverage record.,,Lodgepole pine;white spruce,,
+validation_evidence,text,no,Validation datasets or projects associated with this geographic claim.,,Alberta PSPs,,
+source_reference,text,yes,Provenance for the coverage claim; replace user-summary references with documentary citations when available.,,User-provided summary (2026-10-06),,
+verification_status,controlled,yes,Review state of the coverage claim.,unverified|verified,unverified,,
+notes,text,no,Qualifications,unresolved geography, or scope details.,,WESBOGY PSP geography not specified; do not map this row

@@ -1,0 +1,132 @@
+---
+title: "Coverage map"
+---
+
+Click a province or territory to view the registry's coverage claims. A filled
+jurisdiction has at least one claim; the fill does not show an exact model
+footprint or imply a recommendation. Read subregional qualifiers, review status,
+and notes in each popup.
+
+```{=html}
+<style>
+.leaflet-container {
+  background: #edf2ef;
+}
+</style>
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(sf)
+library(leaflet)
+library(readr)
+library(htmltools)
+
+canada <- st_read("data/geospatial/canada/ca.shp", quiet = TRUE)
+coverage <- read_csv("derived/model_coverage_web.csv", show_col_types = FALSE)
+
+canada$jurisdiction_code <- substring(canada$id, 3L)
+if (any(!grepl("^CA[A-Z]{2}$", canada$id)) || anyDuplicated(canada$jurisdiction_code)) {
+  stop("Unexpected province or territory IDs in the Canada boundary file.")
+}
+
+shown <- function(value, fallback = "Not recorded") {
+  if (length(value) == 0 || is.na(value) || !nzchar(trimws(value))) {
+    fallback
+  } else {
+    as.character(value)
+  }
+}
+
+popup_for <- function(jurisdiction_code, jurisdiction_name) {
+  claims <- coverage[
+    coverage$jurisdiction_code == jurisdiction_code,
+    ,
+    drop = FALSE
+  ]
+
+  if (nrow(claims) == 0) {
+    return(as.character(tags$div(
+      tags$h4(jurisdiction_name),
+      tags$p("No coverage claims recorded.")
+    )))
+  }
+
+  claim_items <- lapply(seq_len(nrow(claims)), function(i) {
+    claim <- claims[i, ]
+    details <- c(
+      paste0(
+        "Basis: ",
+        gsub(";", ", ", shown(claim$coverage_basis), fixed = TRUE)
+      ),
+      if (!is.na(claim$region_detail) && nzchar(claim$region_detail)) {
+        paste0("Region: ", claim$region_detail)
+      },
+      paste0("Review status: ", shown(claim$verification_status))
+    )
+
+    tags$li(
+      tags$strong(shown(claim$model_name)),
+      tags$br(),
+      paste(details, collapse = " | "),
+      if (!is.na(claim$notes) && nzchar(claim$notes)) {
+        tags$p(class = "mb-1 mt-1", claim$notes)
+      }
+    )
+  })
+
+  as.character(tags$div(
+    tags$h4(jurisdiction_name),
+    tags$p("Jurisdiction-level claims; qualifiers apply."),
+    tags$ul(class = "mb-0", tagList(claim_items))
+  ))
+}
+
+coverage_codes <- unique(coverage$jurisdiction_code)
+canada$has_claims <- canada$jurisdiction_code %in% coverage_codes
+canada$model_count <- vapply(canada$jurisdiction_code, function(code) {
+  length(unique(coverage$model_id[coverage$jurisdiction_code == code]))
+}, integer(1))
+canada$fill_color <- ifelse(canada$has_claims, "#477b70", "#d8dedb")
+canada$click_label <- paste0(
+  canada$name,
+  " - ",
+  canada$model_count,
+  ifelse(canada$model_count == 1, " model with claims", " models with claims")
+)
+popups <- vapply(seq_len(nrow(canada)), function(i) {
+  popup_for(canada$jurisdiction_code[[i]], canada$name[[i]])
+}, character(1))
+
+leaflet(canada, options = leafletOptions(minZoom = 2, maxZoom = 7)) |>
+  setView(lng = -96, lat = 59, zoom = 3) |>
+  addPolygons(
+    layerId = ~jurisdiction_code,
+    label = ~click_label,
+    popup = popups,
+    popupOptions = popupOptions(maxWidth = 420, minWidth = 240),
+    color = "#ffffff",
+    weight = 1,
+    opacity = 1,
+    fillColor = ~fill_color,
+    fillOpacity = 0.85,
+    highlightOptions = highlightOptions(
+      weight = 2,
+      color = "#263d38",
+      fillOpacity = 0.95,
+      bringToFront = TRUE
+    )
+  ) |>
+  addLegend(
+    position = "bottomleft",
+    colors = c("#477b70", "#d8dedb"),
+    labels = c("Coverage claim recorded", "No claim recorded"),
+    title = "Registry coverage",
+    opacity = 0.85
+  )
+```
+
+Boundary data: [Simplemaps](https://simplemaps.com), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
