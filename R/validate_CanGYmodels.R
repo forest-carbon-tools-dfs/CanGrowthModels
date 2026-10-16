@@ -29,7 +29,7 @@ required_columns <- c(
   "minimum_inputs",
   "source_file",
   "verification_status",
-  "stand_origin"
+  "management_context"
 )
 
 missing_columns <- setdiff(
@@ -106,22 +106,22 @@ if (length(bad_status) > 0) {
   )
 }
 
-valid_stand_origins <- c(
-  "natural_origin",
+valid_management_contexts <- c(
+  "unmanaged",
   "managed",
-  "both",
+  "unmanaged_managed",
   "unknown"
 )
 
-bad_stand_origins <- setdiff(
-  unique(na.omit(models$stand_origin)),
-  valid_stand_origins
+bad_management_contexts <- setdiff(
+  unique(na.omit(models$management_context)),
+  valid_management_contexts
 )
 
-if (length(bad_stand_origins) > 0) {
+if (length(bad_management_contexts) > 0) {
   stop(
-    "Invalid stand_origin values: ",
-    paste(bad_stand_origins, collapse = ", ")
+    "Invalid management_context values: ",
+    paste(bad_management_contexts, collapse = ", ")
   )
 }
 
@@ -136,11 +136,11 @@ if (nrow(blank_ids) > 0) {
   rlang::abort("one or more models have a blank `model_id`")
 }
 
-blank_stand_origins <- models |>
-  filter(is.na(stand_origin) | stand_origin == "")
+blank_management_contexts <- models |>
+  filter(is.na(management_context) | management_context == "")
 
-if (nrow(blank_stand_origins) > 0) {
-  stop("One or more records have a blank stand_origin")
+if (nrow(blank_management_contexts) > 0) {
+  stop("One or more records have a blank management_context")
 }
 
 bad_verification <- setdiff(

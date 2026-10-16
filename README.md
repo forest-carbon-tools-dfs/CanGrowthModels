@@ -46,6 +46,9 @@ and review status without depending on that local CSV.
 
 ## Local Checks
 
+For routine CSV edits, adding models, and renaming columns, see the
+[CSV update workflow](CSV_UPDATE_WORKFLOW.md).
+
 With R (including `readr`, `dplyr`, `htmltools`, and `rlang`) and Quarto installed,
 run from the project root with `Rscript` and `quarto` on your PATH:
 

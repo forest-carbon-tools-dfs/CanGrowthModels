@@ -30,4 +30,4 @@ fvs_bc_essa,fvs_bc,official_website,Forest Vegetation Simulator - ESSA,https://w
 mist_ontario_mistr,mist_ontario,source_code,MISTR source code,https://github.com/ptompalski/MISTR.git,,unverified,Maintainer-supplied MISTR repository for MIST; URL and repository contents not yet independently checked; licence not reviewed.
 artemis_cfsstandgrowth4r,artemis,other,CFSStandGrowth4R related repository,https://github.com/CWFC-CCFB/CFSStandGrowth4R.git,,unverified,Maintainer-supplied related repository; listed as a related resource rather than model source code. URL and repository contents not yet independently checked; licence not reviewed.
 osm_contributors_github,osm,other,OSM-Contributors GitHub organization,https://github.com/OSM-Contributors,,unverified,Maintainer-supplied related GitHub organization; URL and organization contents not yet independently checked.
-sortie_rsortie_github,sortie,other,RSORTIE,https://aclason.github.io/rsortie/index.html,,,
+sortie_rsortie_github,sortie,other,RSORTIE,https://aclason.github.io/rsortie/index.html,,unverified,

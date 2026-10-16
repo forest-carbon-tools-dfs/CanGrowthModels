@@ -16,4 +16,4 @@ source_citation,text,no,Citation (authors; year; title) of the scanned source.,,
 source_year,integer,no,Publication year of the scanned source.,,2020
 verification_status,controlled,yes,Review state of this row.,unverified|verified,unverified
 notes,text,no,Uncertainties or ambiguities; do not guess values the source does not state.,,
-stand_origin,controlled,yes,"Stand context represented: natural_origin or post-harvest managed stands; managed includes planting or natural regeneration after harvest.",natural_origin|managed|both|unknown,managed
+management_context,controlled,yes,"Management context represented: unmanaged or post-harvest managed stands; managed includes planting or natural regeneration after harvest; unmanaged_managed covers both contexts.",unmanaged|managed|unmanaged_managed|unknown,managed

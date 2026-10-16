@@ -2,7 +2,7 @@
 title: "Models"
 ---
 
-Filter this pilot catalogue by **model type**, **stand origin**, **province
+Filter this pilot catalogue by **model type**, **management context**, **province
 or territory**, or a **species keyword**. The species search matches text,
 not a standardized species taxonomy; some species lists are only examples,
 so no match does not prove a model excludes a species. Jurisdiction matches refer only to
@@ -21,8 +21,8 @@ not mean a variant is recommended for management decisions.
     <select id="model-type-filter" class="form-select"><option value="">All types</option></select>
   </div>
   <div class="col-md-3">
-    <label for="stand-origin-filter">Stand origin</label>
-    <select id="stand-origin-filter" class="form-select"><option value="">All origins</option></select>
+    <label for="management-context-filter">Management context</label>
+    <select id="management-context-filter" class="form-select"><option value="">All contexts</option></select>
   </div>
   <div class="col-md-3">
     <label for="jurisdiction-filter">Coverage jurisdiction</label>
@@ -91,7 +91,7 @@ model_cards <- lapply(order(models$model_id), function(i) {
       field("Outputs", model$outputs),
       field("Silvicultural interventions", model$management_options),
       field("Other features", model$other_features),
-      field("Stand origin", model$stand_origin),
+      field("Management context", model$management_context),
       field("Lifecycle status", model$status),
       field("Source document", model$source_file),
       field("Source citation", model$source_citation),
@@ -126,7 +126,7 @@ model_cards <- lapply(order(models$model_id), function(i) {
   tags$article(
     class = "card mb-3 model-card",
     `data-type` = paste(na.omit(model$model_type), collapse = "|"),
-    `data-origin` = paste(na.omit(model$stand_origin), collapse = "|"),
+    `data-context` = paste(na.omit(model$management_context), collapse = "|"),
     `data-jurisdiction` = paste(unique(claims$jurisdiction_code[
       !is.na(claims$jurisdiction_code) & claims$jurisdiction_code != "unknown"
     ]), collapse = "|"),
@@ -164,13 +164,13 @@ cat("```{=html}\n", as.character(tagList(model_cards)), "\n```\n", sep = "")
 document.addEventListener("DOMContentLoaded", () => {
   const cards = [...document.querySelectorAll(".model-card")];
   const type = document.getElementById("model-type-filter");
-  const origin = document.getElementById("stand-origin-filter");
+  const context = document.getElementById("management-context-filter");
   const jurisdiction = document.getElementById("jurisdiction-filter");
   const species = document.getElementById("species-filter");
   const count = document.getElementById("catalogue-count");
 
   for (const [select, key] of [
-    [type, "type"], [origin, "origin"], [jurisdiction, "jurisdiction"]
+    [type, "type"], [context, "context"], [jurisdiction, "jurisdiction"]
   ]) {
     const values = new Set(cards.flatMap(card => card.dataset[key].split("|").filter(Boolean)));
     for (const value of [...values].sort()) {
@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let visible = 0;
     for (const card of cards) {
       const matches = [
-        [type, "type"], [origin, "origin"], [jurisdiction, "jurisdiction"]
+        [type, "type"], [context, "context"], [jurisdiction, "jurisdiction"]
       ].every(([select, key]) =>
         !select.value || card.dataset[key].split("|").includes(select.value)
       );
@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
     count.textContent = `${visible} of ${cards.length} models shown`;
   }
 
-  for (const input of [type, origin, jurisdiction, species]) {
+  for (const input of [type, context, jurisdiction, species]) {
     input.addEventListener("input", filterCards);
   }
   filterCards();
