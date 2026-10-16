@@ -28,6 +28,7 @@ script yet enforces, this is called out explicitly.
 | `data/model_coverage.csv` | Geographic applicability claims, one row per model × jurisdiction claim | Maintainers | Yes |
 | `data/model_links.csv` | Web resources (websites, manuals, software, publications), one row per link | Maintainers | Yes |
 | `data/model_sources.csv` | Associations between a model and local Markdown source documents | Maintainers | Yes |
+| `data/geospatial/canada/` | Canada province/territory boundary shapefile and Simplemaps license notice | Maintainers | Yes |
 | `data/*_schema_definition.csv` | Column definitions, data types, required flags, allowed values, examples | Maintainers | Yes |
 | `data/*_template.csv` | Empty header rows for starting a new file or record | Maintainers | Yes |
 | `derived/models_web.csv` | Website copy of `models.csv` | `build_CanGYmodel_data.R` | No (git-ignored) |
@@ -261,6 +262,7 @@ flowchart TD
         C["model_coverage.csv"]
         L["model_links.csv"]
         S["model_sources.csv"]
+        G["geospatial/canada/ca.shp<br/>province/territory boundaries"]
     end
 
     SCHEMA -.->|"guides"| REVIEW
@@ -290,10 +292,12 @@ flowchart TD
 
     subgraph SITE["Quarto website"]
         Q["models.qmd<br/>one card per model_id"]
+      MAP["map.qmd<br/>Leaflet coverage map"]
         OUT["_site/ (rendered HTML)"]
     end
 
     DM & DC & DL --> Q --> OUT
+    DC & G --> MAP --> OUT
 ```
 
 Dashed arrows are manual steps or planned connections, not scripted ones.
@@ -315,11 +319,17 @@ Dashed arrows are manual steps or planned connections, not scripted ones.
    refer to known models, then copies the three website files into `derived/`.
    `model_sources.csv` is validated but not published.
 5. **Render.** `models.qmd` reads the `derived/` files and produces one card
-   per model row. Each card shows the model summary, separate developers and
-   organization fields, provenance, coverage claims, and links, with review
-   status. Browser-side filters
-  use `model_type`, `management_context`, `jurisdiction_code`, and a keyword search
-   over `species` and `species_scope`.
+  per model row. Each card shows the model summary, separate developers and
+  organization fields, provenance, coverage claims, and links, with review
+  status. Browser-side filters use `model_type`, `management_context`,
+  `jurisdiction_code`, and a keyword search over `species` and `species_scope`.
+  `map.qmd` reads the Canada boundary shapefile and derived coverage claims to
+  render a static Leaflet map. Clicking a province or territory opens its
+  recorded claims, including their basis, review status, regional qualifier,
+  and notes. A filled jurisdiction indicates at least one claim, not an exact
+  model footprint or recommendation. The map's R code is embedded in
+  `map.qmd`; edit that page and render it through RStudio or Quarto rather
+  than sourcing a separate map script.
 
 To run the pipeline from the project root:
 
@@ -342,7 +352,7 @@ All scripts use paths relative to the project root.
 
 ---
 
-## 5. What each R script does
+## 5. What each R script and page does
 
 | Script | Reads | Writes | Run by | Purpose |
 | --- | --- | --- | --- | --- |
@@ -351,8 +361,9 @@ All scripts use paths relative to the project root.
 | `validate_model_links.R` | `model_links.csv`, `models.csv` | Console summary | Quarto pre-render | Checks required columns and values, unique `link_id`, `link_type`, URL scheme, and known `model_id` |
 | `validate_model_sources.R` | `model_sources.csv`, `models.csv` | Console summary | Quarto pre-render | Checks required values, unique model–document pairs, Markdown filenames without paths, and known `model_id`; does not open the documents |
 | `build_CanGYmodel_data.R` | `models.csv`, `model_coverage.csv`, `model_links.csv` | `derived/*_web.csv` | Quarto pre-render | Stops on unknown `model_id` in coverage or links; copies files unchanged |
+| `map.qmd` | `data/geospatial/canada/ca.shp`, `derived/model_coverage_web.csv` | `_site/map.html` | Quarto render | Reads the province/territory polygons with `sf`, associates claims by jurisdiction code, and renders clickable Leaflet popups |
 | `pdf_to_markdown_bulk.R` | `GYmodelPDFmanuals/*.pdf`, `api_key.txt` | `GYmodelPDFmanuals/*.md` | Manual | Converts PDF manuals to Markdown via a cloud service |
-| `coverage_type.R` | Expects in-memory objects `regions` and `model_coverage` | `data/model_coverage.geojson` | Not run | Unfinished map prototype; see [section 7](#7-known-gaps) |
+| `coverage_type.R` | Expects in-memory objects `regions` and `model_coverage` | `data/model_coverage.geojson` | Not run | Legacy unfinished prototype; not used by `map.qmd` |
 | `pdf_to_markdown_magplot.R` | A MAGPlot data dictionary PDF in another project | Markdown beside that PDF | Manual | Local PDF-to-Markdown conversion for a different project; not part of this pipeline |
 
 ---
@@ -387,9 +398,9 @@ Other unchecked rules:
 
 ## 7. Known gaps
 
-- **Map prototype incomplete.** `coverage_type.R` depends on objects that no
-  script creates, joins on a `region` column that `model_coverage.csv` does not
-  have, and is not in the pre-render list.
+- **Map geography is jurisdiction-level.** The map uses provincial and
+  territorial polygons; subregional qualifications remain in claim details
+  and are not drawn as model footprints. Eco-region mapping is not implemented.
 - **Unquoted comma in a schema file.** The `notes` row in
   `model_coverage_schema_definition.csv` has an unquoted comma in its
   description (`Qualifications, unresolved geography, or scope details.`), so
