@@ -1,6 +1,6 @@
 # ============================================================
 # Canadian Forest Growth & Yield Model Registry
-# Validate selected required columns, record IDs, and controlled values
+# Validate selected required columns, unique model IDs, and controlled values
 # in data/models.csv. This does not verify source claims or compare
 # model fields with coverage and link records.
 # ============================================================
@@ -22,9 +22,11 @@ models <- read_csv(
 # ------------------------------------------------------------
 
 required_columns <- c(
-  "record_id",
   "model_id",
   "model_name",
+  "developers",
+  "organization",
+  "minimum_inputs",
   "source_file",
   "verification_status",
   "stand_origin"
@@ -43,17 +45,19 @@ if (length(missing_columns) > 0) {
 }
 
 # ------------------------------------------------------------
-# 3. Check for duplicate record IDs (model_id may repeat across sources)
+# 3. Check that each model has one row
 # ------------------------------------------------------------
 
 duplicate_ids <- models |>
-  count(record_id) |>
+  count(model_id) |>
   filter(n > 1)
 
 if (nrow(duplicate_ids) > 0) {
-  stop(
-    "Duplicate record_id values found: ",
-    paste(duplicate_ids$record_id, collapse = ", ")
+  rlang::abort(
+    paste0(
+      "duplicate `model_id` values found: ",
+      paste(duplicate_ids$model_id, collapse = ", ")
+    )
   )
 }
 
@@ -126,13 +130,10 @@ if (length(bad_stand_origins) > 0) {
 # ------------------------------------------------------------
 
 blank_ids <- models |>
-  filter(
-    is.na(record_id) | record_id == "" |
-      is.na(model_id) | model_id == ""
-  )
+  filter(is.na(model_id) | trimws(model_id) == "")
 
 if (nrow(blank_ids) > 0) {
-  stop("One or more records have a blank record_id or model_id")
+  rlang::abort("one or more models have a blank `model_id`")
 }
 
 blank_stand_origins <- models |>
@@ -159,8 +160,7 @@ if (length(bad_verification) > 0) {
 # ------------------------------------------------------------
 
 cat("\nValidation complete.\n")
-cat("Number of records:", nrow(models), "\n")
-cat("Number of distinct models:", n_distinct(models$model_id), "\n")
+cat("Number of models:", nrow(models), "\n")
 
 cat("\nModels by status:\n")
 

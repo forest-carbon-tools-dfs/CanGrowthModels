@@ -8,9 +8,9 @@ not a standardized species taxonomy; some species lists are only examples,
 so no match does not prove a model excludes a species. Jurisdiction matches refer only to
 explicit coverage claims, including claims limited to a subregion. Read
 each claim before interpreting a match as geographic applicability.
-All claims retain their review status and source reference. When one card
-combines model versions, a filter match may describe only one version;
-check the source-record notes before applying it to another version.
+All claims retain their review status and source reference. When an entry
+covers multiple model versions, a filter match may describe only one version;
+check the model notes and link titles before applying it to another version.
 The presence of a testing-only calibration in a jurisdiction filter does
 not mean a variant is recommended for management decisions.
 
@@ -64,16 +64,14 @@ link_details <- function(resources) {
     resource <- resources[i, ]
     tags$li(
       tags$a(href = resource$url, resource$title, rel = "noopener noreferrer"),
-      paste0(" (", resource$link_type, "; ", resource$verification_status, ")"),
-      if (!is.na(resource$record_id) && nzchar(resource$record_id)) {
-        paste(" - source record:", resource$record_id)
-      }
+      paste0(" (", resource$link_type, "; ", resource$verification_status, ")")
     )
   })
 }
 
-model_cards <- lapply(split(models, models$model_id), function(records) {
-  id <- records$model_id[[1]]
+model_cards <- lapply(order(models$model_id), function(i) {
+  model <- models[i, ]
+  id <- model$model_id[[1]]
   claims <- coverage[coverage$model_id == id, , drop = FALSE]
   resources <- links[links$model_id == id, , drop = FALSE]
   is_website_or_download <- resources$link_type %in% c(
@@ -82,27 +80,25 @@ model_cards <- lapply(split(models, models$model_id), function(records) {
   websites <- resources[is_website_or_download, , drop = FALSE]
   related <- resources[!is_website_or_download, , drop = FALSE]
 
-  record_details <- lapply(seq_len(nrow(records)), function(i) {
-    record <- records[i, ]
-    tags$details(
-      tags$summary(paste("Source record", record$record_id, "-", shown(record$source_file))),
-      tags$ul(
-        field("Name", record$model_name),
-        field("Developer", record$developer_organization),
-        field("Model type", record$model_type),
-        field("Species", record$species),
-        field("Inputs", record$inputs),
-        field("Outputs", record$outputs),
-        field("Silvicultural interventions", record$management_options),
-        field("Other features", record$other_features),
-        field("Stand origin", record$stand_origin),
-        field("Lifecycle status", record$status),
-        field("Source citation", record$source_citation),
-        field("Review status", record$verification_status),
-        field("Notes", record$notes)
-      )
+  model_details <- tags$details(
+    tags$summary("Model details and provenance"),
+    tags$ul(
+      field("Developers", model$developers),
+      field("Organization", model$organization),
+      field("Model type", model$model_type),
+      field("Species", model$species),
+      field("Minimum inputs", model$minimum_inputs),
+      field("Outputs", model$outputs),
+      field("Silvicultural interventions", model$management_options),
+      field("Other features", model$other_features),
+      field("Stand origin", model$stand_origin),
+      field("Lifecycle status", model$status),
+      field("Source document", model$source_file),
+      field("Source citation", model$source_citation),
+      field("Review status", model$verification_status),
+      field("Notes", model$notes)
     )
-  })
+  )
 
   claim_details <- lapply(seq_len(nrow(claims)), function(i) {
     claim <- claims[i, ]
@@ -129,18 +125,18 @@ model_cards <- lapply(split(models, models$model_id), function(records) {
 
   tags$article(
     class = "card mb-3 model-card",
-    `data-type` = paste(unique(na.omit(records$model_type)), collapse = "|"),
-    `data-origin` = paste(unique(na.omit(records$stand_origin)), collapse = "|"),
+    `data-type` = paste(na.omit(model$model_type), collapse = "|"),
+    `data-origin` = paste(na.omit(model$stand_origin), collapse = "|"),
     `data-jurisdiction` = paste(unique(claims$jurisdiction_code[
       !is.na(claims$jurisdiction_code) & claims$jurisdiction_code != "unknown"
     ]), collapse = "|"),
-    `data-species` = paste(na.omit(c(records$species, claims$species_scope)), collapse = " "),
+    `data-species` = paste(na.omit(c(model$species, claims$species_scope)), collapse = " "),
     tags$div(
       class = "card-body",
-      tags$h2(class = "card-title", id = id, shown(records$model_name[[1]])),
-      tags$p("Model ID: ", id, " | Source records: ", nrow(records)),
-      tags$h3("Source-specific model information"),
-      tagList(record_details),
+      tags$h2(class = "card-title", id = id, shown(model$model_name)),
+      tags$p("Model ID: ", id),
+      tags$h3("Model information"),
+      model_details,
       tags$h3("Geographic coverage claims"),
       if (nrow(claims) > 0) tags$ul(tagList(claim_details)) else tags$p("Not recorded"),
       tags$h3("Model websites and downloads"),
@@ -155,7 +151,7 @@ model_cards <- lapply(split(models, models$model_id), function(records) {
       } else {
         tags$p("Not recorded")
       },
-      tags$p("Programming language and open-source status are not yet structured fields; see source-specific notes where available.")
+      tags$p("Programming language and open-source status are not yet structured fields; see model notes where available.")
     )
   )
 })

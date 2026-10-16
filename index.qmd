@@ -4,8 +4,8 @@ title: "Canadian Forest Growth & Yield Model Registry"
 
 # Explore Canadian forest growth and yield models
 
-This private-first pilot catalogue lists models alongside source-specific
-records, geographic coverage claims, and links. Browse the
+This private-first pilot catalogue has one entry per model, with
+geographic coverage claims, source information, and links. Browse the
 [model catalogue](models.qmd) to filter by model type, species keyword,
 stand origin, and province or territory.
 

@@ -1,6 +1,6 @@
 # ============================================================
 # Canadian Forest Growth & Yield Model Registry
-# Copy model source records, coverage claims, and links into separate
+# Copy model summaries, coverage claims, and links into separate
 # website-ready CSV files. Reject references to missing model IDs,
 # but do not reconcile claims across the three datasets.
 # ============================================================
@@ -49,7 +49,7 @@ dir.create(
 )
 
 # ------------------------------------------------------------
-# 4. Keep source rows, coverage claims, and links separate
+# 4. Keep model summaries, coverage claims, and links separate
 # ------------------------------------------------------------
 
 write_csv(

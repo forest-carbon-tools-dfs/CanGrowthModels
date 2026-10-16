@@ -1,7 +1,6 @@
 # Validate required link fields, unique link IDs, controlled values,
-# HTTP(S) URL format, and references to model IDs. When a record ID
-# is supplied, verify that it belongs to the linked model. This does
-# not check URL reachability or whether a link supports model claims.
+# HTTP(S) URL format, and references to model IDs. This does not check
+# URL reachability or whether a link supports model claims.
 
 library(readr)
 
@@ -83,18 +82,6 @@ if (length(unknown_models) > 0) {
     "Links reference unknown model_id values: ",
     paste(unknown_models, collapse = ", ")
   )
-}
-
-has_record_id <- !is.na(links$record_id) & links$record_id != ""
-
-if (any(has_record_id)) {
-  model_for_record <- setNames(models$model_id, models$record_id)
-  linked_record_models <- unname(model_for_record[links$record_id[has_record_id]])
-
-  if (any(is.na(linked_record_models)) ||
-      any(linked_record_models != links$model_id[has_record_id])) {
-    stop("A record_id link is missing or belongs to a different model_id")
-  }
 }
 
 cat("Model link validation complete. Links:", nrow(links), "\n")

@@ -24,7 +24,7 @@ script yet enforces, this is called out explicitly.
 
 | File | Role | Edited by | Version-controlled |
 | --- | --- | --- | --- |
-| `data/models.csv` | Model information, **one row per model per scanned source document** | Maintainers | Yes |
+| `data/models.csv` | Model summaries, **one row per model**, keyed by `model_id` | Maintainers | Yes |
 | `data/model_coverage.csv` | Geographic applicability claims, one row per model × jurisdiction claim | Maintainers | Yes |
 | `data/model_links.csv` | Web resources (websites, manuals, software, publications), one row per link | Maintainers | Yes |
 | `data/model_sources.csv` | Associations between a model and local Markdown source documents | Maintainers | Yes |
@@ -33,12 +33,13 @@ script yet enforces, this is called out explicitly.
 | `derived/models_web.csv` | Website copy of `models.csv` | `build_CanGYmodel_data.R` | No (git-ignored) |
 | `derived/model_coverage_web.csv` | Website copy of `model_coverage.csv` | `build_CanGYmodel_data.R` | No (git-ignored) |
 | `derived/model_links_web.csv` | Website copy of `model_links.csv` | `build_CanGYmodel_data.R` | No (git-ignored) |
-| `GYmodels_manual_md/CanGrowthModelsWikiPage.csv` | Model table transcribed from the Wikipedia *Forest growth models of Canada* page | — | No (local-only folder) |
 
 `model_sources.csv` has a schema definition but no template file.
 
-The wiki CSV is **not yet part of the pipeline**. No script reads it, and it
-uses a different column structure from the registry files.
+`CanGrowthModelsWikiPage.csv` was a one-off seed file and is **retired**, not a
+pipeline input or a planned integration. It is git-ignored wherever it occurs.
+Previously imported information retains its Wikipedia provenance, citations,
+and review status without referring to the local CSV as a source document.
 
 ---
 
@@ -48,33 +49,28 @@ uses a different column structure from the registry files.
 
 | Key | Defined in | Unique? | Meaning |
 | --- | --- | --- | --- |
-| `model_id` | `models.csv` | **No** — repeats once per source record | The logical model. All files join on this value. |
-| `record_id` | `models.csv` | Yes | One model-information row derived from one source document |
+| `model_id` | `models.csv` | Yes | One model. All other files reference this stable identifier. |
 | `coverage_id` | `model_coverage.csv` | Yes | One geographic applicability claim |
 | `link_id` | `model_links.csv` | Yes | One web resource |
 | `(model_id, source_file)` | `model_sources.csv` | Yes, as a pair | One model-to-document association |
 
-There is no separate table with one row per model. The set of distinct
-`model_id` values in `models.csv` acts as the master list of models, and each
-model is rendered as one card on the website.
+`models.csv` is the master model list, with one row and one website card per
+`model_id`. IDs do not contain source-record suffixes. A model can have multiple
+coverage claims, links, and document associations in the other files.
 
 ### Relationship diagram
 
 ```mermaid
 erDiagram
-    MODEL ||--|{ MODELS : "described by (1+ source records)"
-    MODEL ||--o{ MODEL_COVERAGE : "has coverage claims"
-    MODEL ||--o{ MODEL_LINKS : "has web resources"
-    MODEL ||--o{ MODEL_SOURCES : "associated with local documents"
-    MODELS |o--o{ MODEL_LINKS : "optionally tied to one record (record_id)"
+    MODELS ||--o{ MODEL_COVERAGE : "has coverage claims"
+    MODELS ||--o{ MODEL_LINKS : "has web resources"
+    MODELS ||--o{ MODEL_SOURCES : "associated with local documents"
 
-    MODEL {
-        text model_id "logical key: distinct model_id values in models.csv"
-    }
     MODELS {
-        text record_id PK
-        text model_id FK
+        text model_id PK
         text model_name
+        text developers
+        text organization
         text source_file
         controlled verification_status
         controlled stand_origin
@@ -91,7 +87,6 @@ erDiagram
     MODEL_LINKS {
         text link_id PK
         text model_id FK
-        text record_id FK "optional"
         controlled link_type
         url url
         controlled verification_status
@@ -102,8 +97,8 @@ erDiagram
     }
 ```
 
-`MODEL` is a logical entity only; it is not a file. The diagram shows key and
-required columns; full column lists are in [section 3](#3-column-definitions).
+The diagram shows keys and selected fields; full column lists are in
+[section 3](#3-column-definitions).
 
 ### Relationship rules
 
@@ -111,7 +106,6 @@ required columns; full column lists are in [section 3](#3-column-definitions).
 | --- | --- | --- | --- |
 | `model_coverage.model_id` → `models.model_id` | Many claims to one model | `validate_model_coverage.R`; `build_CanGYmodel_data.R` | **Warning** in the validator; **error** in the build |
 | `model_links.model_id` → `models.model_id` | Many links to one model | `validate_model_links.R`; `build_CanGYmodel_data.R` | Error |
-| `model_links.record_id` → `models.record_id` | Optional; many links to one source record | `validate_model_links.R` | Error if the record is missing **or** belongs to a different `model_id` |
 | `model_sources.model_id` → `models.model_id` | Many documents to one model | `validate_model_sources.R` | Error |
 | `model_coverage.model_name` ↔ `models.model_name` | Duplicated display value | Not enforced | Values can drift apart |
 | `model_sources.source_file` ↔ `models.source_file` | Same kind of value (Markdown filename) | Not enforced, by design | An association does not populate or verify `models.source_file` |
@@ -121,9 +115,14 @@ required columns; full column lists are in [section 3](#3-column-definitions).
 - **Claims stay separate.** Model capabilities (`models.csv`), geographic
   applicability (`model_coverage.csv`), and links (`model_links.csv`) are
   kept in separate files and are not reconciled against one another.
-- **One row per source.** `models.csv` keeps each source document's
-  description of a model as its own row so that disagreements between
-  sources remain visible. Consolidation is a later, manual step.
+- **One row per model.** Maintainers update a single summary in `models.csv`.
+  Preserve citations, uncertainties, disagreements, and version-specific
+  qualifications in the source fields and notes rather than creating duplicate
+  model rows. Associate additional documents in `model_sources.csv`.
+- **People and organizations are separate.** `developers` lists documented
+  individual contributors; `organization` lists documented supporting
+  organizations. Publication authors and publishers do not, by themselves,
+  establish these roles.
 - **Association is not verification.** A row in `model_sources.csv` records
   that a document relates to a model; it does not state which claims, if any,
   the document supports.
@@ -143,27 +142,34 @@ Conventions used in all files:
 - `verification_status` is always either `unverified` (entered but not yet
   checked by a maintainer) or `verified` (checked by a maintainer).
 
+At the maintainer's direction, species lists in both `models.species` and
+`model_coverage.species_scope` expand `Eastern SPF` to
+`Balsam fir;black spruce;red spruce;white spruce;jack pine` and `Western SPF`
+to `Spruce;Pine;Fir`. Other species entries and the original review status
+are retained; expanding a label does not independently verify a claim.
+
 ### 3.1 `data/models.csv`
 
-One row per model per scanned source document.
+One summary row per model. Source fields can identify a main supporting document;
+additional local document associations belong in `model_sources.csv`.
 
 | Column | Type | Required | Definition | Allowed values | Example |
 | --- | --- | --- | --- | --- | --- |
-| `record_id` | text | Yes | Unique identifier for this row. Built from `model_id`, two underscores, and a short source suffix. | — | `vdyp7__vdyp7_manual` |
-| `model_id` | text | Yes | Lowercase identifier (slug) for the model. Repeats on every row describing the same model; used to join all other files. | — | `vdyp7` |
+| `model_id` | text | Yes | Unique, stable lowercase identifier (slug) for the model; used to join all other files. No source-record suffix. | — | `vdyp` |
 | `model_name` | text | Yes | Common name or acronym of the model. | — | `VDYP7` |
-| `developer_organization` | text | No | Organization(s) that developed the model. Multi-value. | — | `BC Ministry of Forests` |
+| `developers` | text | No | Individuals documented as contributing to model development. Multi-value; blank if not documented. | — | `Mathieu Fortin; Luc Langevin` |
+| `organization` | text | No | Organization(s) documented as supporting model development. Multi-value; blank if not documented. | — | `Direction de la recherche forestière (DRF), Gouvernement du Québec` |
 | `jurisdictions` | text | No | Provinces or territories where **this source** says the model applies. Multi-value. Separate from the structured claims in `model_coverage.csv`. | `BC`, `AB`, `SK`, `MB`, `ON`, `QC`, `NB`, `NS`, `PE`, `NL`, `YT`, `NT`, `NU`, `Canada`, `other` | `BC` |
 | `model_type` | controlled | No | Broad model class, as stated in the source. | `whole_stand`, `individual_tree`, `diameter_class`, `hybrid`, `other`, `unknown` | `whole_stand` |
 | `species` | text | No | Species or species groups covered. Multi-value. Free text, not a standardized taxonomy. | — | `Pli;Fdi;Sx` |
-| `inputs` | text | No | Key model inputs. Multi-value. | — | `age;site index` |
+| `minimum_inputs` | text | No | Minimum inputs needed to initialize or run the model, rather than all optional parameters. Multi-value; blank if not documented. | — | `site index;species;stem density` |
 | `outputs` | text | No | Key model outputs. Multi-value. | — | `volume;basal area` |
 | `management_options` | text | No | Silvicultural interventions the source says the model can represent. Multi-value. Blank if the source does not say. | — | `thinning;fertilization` |
 | `other_features` | text | No | Other processes the source says are represented, such as mortality, regeneration, climate, or disturbance. Multi-value. Blank if not stated. | — | `mortality;climate` |
 | `status` | controlled | No | Lifecycle status, only if the source states it. | `active`, `maintained`, `legacy`, `archived`, `unknown` | `unknown` |
-| `source_file` | text | Yes | Filename of the scanned source document. | — | `vdyp7_manual.md` |
-| `source_citation` | text | No | Citation (authors, year, title) of the scanned source. | — | — |
-| `source_year` | integer | No | Publication year of the scanned source. | — | `2020` |
+| `source_file` | text | No | Optional filename of a supporting local Markdown document. Use `model_sources.csv` for additional documents. | — | `vdyp7_manual.md` |
+| `source_citation` | text | No | Citation (authors, year, title) supporting the model summary. | — | — |
+| `source_year` | integer | No | Publication year of the cited source. | — | `2020` |
 | `verification_status` | controlled | Yes | Review state of this row. | `unverified`, `verified` | `unverified` |
 | `notes` | text | No | Uncertainties or ambiguities. Values the source does not state must not be guessed. | — | — |
 | `stand_origin` | controlled | Yes | Stand context the model represents. `managed` covers post-harvest stands regenerated by planting or natural regeneration. | `natural_origin`, `managed`, `both`, `unknown` | `managed` |
@@ -195,13 +201,12 @@ One row per web resource.
 | --- | --- | --- | --- | --- | --- |
 | `link_id` | text | Yes | Unique identifier for this link. | — | `mgm_official_website` |
 | `model_id` | text | Yes | Model identifier; must match `models.model_id`. | — | `mgm` |
-| `record_id` | text | No | Set only when the link applies to one specific source record, e.g. one model version. Must belong to the same `model_id`. | — | `mgm__manual_2024` |
 | `link_type` | controlled | Yes | Kind of resource. On the website, `official_website`, `software`, and `source_code` are listed under *Model websites and downloads*; the others under *Related documents and webpages*. | `official_website`, `manual`, `software`, `source_code`, `publication`, `other` | `official_website` |
 | `title` | text | Yes | Text shown for the hyperlink. | — | `MGM official website` |
 | `url` | url | Yes | Public address beginning with `http://` or `https://`. | — | `https://mgm.ualberta.ca/` |
 | `accessed_date` | date | No | Date the link was last checked. | `YYYY-MM-DD` | `2026-10-06` |
 | `verification_status` | controlled | Yes | Whether a maintainer has checked the link. | `unverified`, `verified` | `unverified` |
-| `notes` | text | No | Link context or verification notes. | — | `URL supplied by registry maintainer` |
+| `notes` | text | No | Link context, including any version-specific applicability, and verification notes. | — | `URL supplied by registry maintainer` |
 
 ### 3.4 `data/model_sources.csv`
 
@@ -231,27 +236,6 @@ column in the data file they describe.
 Each derived file has exactly the same columns as its `data/` counterpart.
 The build script copies rows without transforming them.
 
-### 3.7 `GYmodels_manual_md/CanGrowthModelsWikiPage.csv` (not yet integrated)
-
-| Column | Definition (as used on the wiki page) |
-| --- | --- |
-| `Model Name` | Model or yield-table name |
-| `Type` | Model class, e.g. stand yield, stand table, or tree list model |
-| `Province` | Province(s) where the model is used |
-| `Forest Region` | Forest Region(s) of Canada (NRCan classification) |
-| `Species` | Species groups, e.g. *Eastern SPF*, *Tolerant hardwoods* |
-| `Regime` | Stand age structure: even-aged, uneven-aged, or both |
-| `Silviculture` | Managed versus unmanaged stands and treatment types |
-| `Yields` | Output categories coded 1–7 (tree, stand, biomass/carbon, ecophysiological, wood products, ecological, economic) |
-| `Climate inputs` | Whether the model uses climate variables as inputs (`Yes`/`No`) |
-| `Regeneration` | Whether the model projects natural regeneration (`Yes`/`No`) |
-| `References and Notes` | Citations and notes; some continue on rows with a blank `Model Name` |
-
-Some cells contain placeholder text copied from the page (e.g. `Type`,
-`Species`, `Forest Region`). These should be treated as unknown, not as values.
-
----
-
 ## 4. Pipeline workflow
 
 ```mermaid
@@ -260,7 +244,6 @@ flowchart TD
         PDF["GYmodelPDFmanuals/*.pdf"]
         PDFMD["GYmodelPDFmanuals/*.md"]
         MD["GYmodels_manual_md/*.md"]
-        WIKI["GYmodels_manual_md/CanGrowthModelsWikiPage.csv"]
     end
 
     PDF -->|"R/pdf_to_markdown_bulk.R<br/>(uploads to LlamaIndex cloud parser)"| PDFMD
@@ -271,7 +254,6 @@ flowchart TD
     end
 
     MD --> REVIEW
-    WIKI -.->|"not yet integrated"| REVIEW
 
     subgraph DATA["data/ (version-controlled)"]
         SCHEMA["*_schema_definition.csv<br/>*_template.csv"]
@@ -323,16 +305,19 @@ Dashed arrows are manual steps or planned connections, not scripted ones.
    returned Markdown beside the PDF. Moving the files into
    `GYmodels_manual_md/` is a manual step.
 2. **Curate.** A maintainer reads explicitly chosen Markdown documents and
-   records findings in the four `data/` files, following the schema
-   definitions. New rows start as `unverified`.
+   updates one summary row per model, with separate coverage claims, links,
+   and document associations in the four `data/` files. Follow the schema
+   definitions and retain provenance. New summaries, claims, and links start
+   as `unverified`; document associations do not establish verification.
 3. **Validate.** `quarto render` first runs the four validators. Any error
    stops the render.
 4. **Build.** `build_CanGYmodel_data.R` re-checks that coverage and link rows
    refer to known models, then copies the three website files into `derived/`.
    `model_sources.csv` is validated but not published.
 5. **Render.** `models.qmd` reads the `derived/` files and produces one card
-   per `model_id`. Each card shows every source record, every coverage claim,
-   and every link for that model, with review status. Browser-side filters
+   per model row. Each card shows the model summary, separate developers and
+   organization fields, provenance, coverage claims, and links, with review
+   status. Browser-side filters
    use `model_type`, `stand_origin`, `jurisdiction_code`, and a keyword search
    over `species` and `species_scope`.
 
@@ -361,9 +346,9 @@ All scripts use paths relative to the project root.
 
 | Script | Reads | Writes | Run by | Purpose |
 | --- | --- | --- | --- | --- |
-| `validate_CanGYmodels.R` | `models.csv` | Console summary | Quarto pre-render | Checks required columns, unique `record_id`, non-blank IDs and `stand_origin`, and controlled values; prints counts by `status` and `model_type` |
+| `validate_CanGYmodels.R` | `models.csv` | Console summary | Quarto pre-render | Checks required columns including `developers`, `organization`, and `minimum_inputs`, unique and non-blank `model_id`, non-blank `stand_origin`, and controlled values; prints model count and counts by `status` and `model_type` |
 | `validate_model_coverage.R` | `model_coverage.csv`, `models.csv` | Console summary | Quarto pre-render | Checks required columns and values, unique `coverage_id`, and controlled values; warns about unknown `model_id` |
-| `validate_model_links.R` | `model_links.csv`, `models.csv` | Console summary | Quarto pre-render | Checks required columns and values, unique `link_id`, `link_type`, URL scheme, known `model_id`, and that any `record_id` belongs to the same model |
+| `validate_model_links.R` | `model_links.csv`, `models.csv` | Console summary | Quarto pre-render | Checks required columns and values, unique `link_id`, `link_type`, URL scheme, and known `model_id` |
 | `validate_model_sources.R` | `model_sources.csv`, `models.csv` | Console summary | Quarto pre-render | Checks required values, unique model–document pairs, Markdown filenames without paths, and known `model_id`; does not open the documents |
 | `build_CanGYmodel_data.R` | `models.csv`, `model_coverage.csv`, `model_links.csv` | `derived/*_web.csv` | Quarto pre-render | Stops on unknown `model_id` in coverage or links; copies files unchanged |
 | `pdf_to_markdown_bulk.R` | `GYmodelPDFmanuals/*.pdf`, `api_key.txt` | `GYmodelPDFmanuals/*.md` | Manual | Converts PDF manuals to Markdown via a cloud service |
@@ -380,16 +365,17 @@ All scripts use paths relative to the project root.
 | --- | --- | --- | --- | --- |
 | Required columns present | ✅ | ✅ | ✅ | ✅ |
 | Required values non-blank | Partial | ✅ | ✅ | ✅ |
-| Primary key unique | ✅ `record_id` | ✅ `coverage_id` | ✅ `link_id` | ✅ pair |
+| Primary key unique | ✅ `model_id` | ✅ `coverage_id` | ✅ `link_id` | ✅ pair |
 | Controlled values valid | ✅ `model_type`, `status`, `stand_origin`, `verification_status` | ✅ `jurisdiction_code`, `coverage_basis`, `verification_status` | ✅ `link_type`, `verification_status` | n/a |
 | `model_id` exists in `models.csv` | n/a | ⚠️ validator, ✅ build | ✅ | ✅ |
 | Format checks | — | — | ✅ URL scheme | ✅ `.md`, no path |
 
 Details for `models.csv`:
 
-- Blank values are rejected for `record_id`, `model_id`, `stand_origin`, and
-  `verification_status`. Blank `model_name` and `source_file` are not checked,
-  although the schema marks them required.
+- Blank values are rejected for `model_id`, `stand_origin`, and
+  `verification_status`. Blank `model_name` is not checked, although the schema
+  marks it required. `developers`, `organization`, `minimum_inputs`, and
+  `source_file` must exist as columns but may have blank values.
 - `jurisdictions` allowed values and `source_year` integer type are not checked.
 
 Other unchecked rules:
@@ -401,8 +387,6 @@ Other unchecked rules:
 
 ## 7. Known gaps
 
-- **Wiki table not integrated.** `CanGrowthModelsWikiPage.csv` has no
-  schema definition, validator, or mapping to the registry columns.
 - **Map prototype incomplete.** `coverage_type.R` depends on objects that no
   script creates, joins on a `region` column that `model_coverage.csv` does not
   have, and is not in the pre-render list.

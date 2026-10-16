@@ -1,17 +1,17 @@
 field_name,data_type,required,description,allowed_values,example
-record_id,text,yes,Unique ID for this row (one row per scanned source); use model_id plus source suffix.,,vdyp7__vdyp7_manual
-model_id,text,yes,Lowercase slug identifying the model; repeated across rows for the same model. Used later to consolidate.,,vdyp7
+model_id,text,yes,Unique stable lowercase slug identifying the model; one row per model.,,vdyp
 model_name,text,yes,Common name or acronym of the model.,,VDYP7
-developer_organization,text,no,Organization(s) responsible for development; separate multiple values with ';'.,,BC Ministry of Forests
+developers,text,no,Individuals documented as contributing to model development; separate multiple names with ';'. Leave blank if not documented.,,Mathieu Fortin; Luc Langevin
+organization,text,no,Organization(s) documented as supporting model development; separate multiple values with ';'. Leave blank if not documented.,,BC Ministry of Forests
 jurisdictions,text,no,Provinces/territories where the source says the model applies; separate multiple values with ';'.,BC|AB|SK|MB|ON|QC|NB|NS|PE|NL|YT|NT|NU|Canada|other,BC
 model_type,controlled,no,Broad model class as stated in the source.,whole_stand|individual_tree|diameter_class|hybrid|other|unknown,whole_stand
-species,text,no,Species or species groups covered; separate multiple values with ';'.,,Pli;Fdi;Sx
-inputs,text,no,Key model inputs; separate multiple values with ';'.,,age;site index
+species,text,no,Species or species groups covered; separate multiple values with ';'. Use expanded lists instead of Eastern SPF or Western SPF.,,Balsam fir;black spruce;red spruce;white spruce;jack pine
+minimum_inputs,text,no,Minimum inputs needed to initialize or run the model; separate multiple values with ';'. Leave blank if not documented.,,site index;species;stem density
 outputs,text,no,Key model outputs; separate multiple values with ';'.,,volume;basal area
 management_options,text,no,Management actions the source says the model can represent (e.g. thinning; fertilization; pruning); separate multiple values with ';'. Leave blank if not stated.,,thinning;fertilization
 other_features,text,no,Other features the source says are represented (e.g. mortality; regeneration; climate; disturbance); separate multiple values with ';'. Leave blank if not stated.,,mortality;climate
 status,controlled,no,Lifecycle status if the source states it.,active|maintained|legacy|archived|unknown,unknown
-source_file,text,yes,File name of the scanned source document.,,vdyp7_manual.md
+source_file,text,no,Optional filename of a supporting local Markdown document; use model_sources.csv to associate multiple documents.,,vdyp7_manual.md
 source_citation,text,no,Citation (authors; year; title) of the scanned source.,,
 source_year,integer,no,Publication year of the scanned source.,,2020
 verification_status,controlled,yes,Review state of this row.,unverified|verified,unverified
