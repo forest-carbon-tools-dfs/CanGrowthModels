@@ -4,17 +4,20 @@ title: "Canadian Forest Growth & Yield Model Registry"
 
 # Explore Canadian forest growth and yield models
 
-This private-first pilot catalogue has one entry per model, with
-geographic coverage claims, source information, and links. Browse the
-[model catalogue](models.qmd) to filter by model type, species keyword,
-stand origin, and province or territory.
+This private-first catalogue has one entry per model, with a short summary,
+the jurisdictions where it is used, and links to the model's website and
+repository. Browse the [model catalogue](models.qmd) to filter by model type,
+management context, species keyword, and province or territory, or use the
+[coverage map](map.qmd) to see which models are recorded for each jurisdiction.
 
-**Pilot data are not authoritative.** Records and links marked unverified
-have not been checked against their cited sources. A province-level filter
-can include a claim limited to a named subregion; read each coverage
-qualifier before using a model for a location. Missing information is
-shown as "Not recorded", not inferred from other fields or links.
+**This registry is a starting point, not the authoritative source.** Models
+evolve (new species, new coverage areas, new versions) and this registry is
+updated only periodically. Use the links on each entry to the model's website
+and repository for current details. A province-level filter can include a model
+used in only part of that province, or in an adjoining US state; read each
+coverage entry's region before using a model for a location. Missing
+information is shown as "Not recorded", not inferred from other fields or links.
 
-The map and downloadable query database are not yet available. No
-geographic polygon should be interpreted as calibration or validation
-evidence until it is explicitly supported by a coverage claim.
+The map is jurisdiction-level only, and a downloadable query database is not
+yet available. A filled province or territory is not a model footprint, a
+calibration or validation statement, or a recommendation.

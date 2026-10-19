@@ -2,17 +2,7 @@
 title: "Models"
 ---
 
-Filter this pilot catalogue by **model type**, **management context**, **province
-or territory**, or a **species keyword**. The species search matches text,
-not a standardized species taxonomy; some species lists are only examples,
-so no match does not prove a model excludes a species. Jurisdiction matches refer only to
-explicit coverage claims, including claims limited to a subregion. Read
-each claim before interpreting a match as geographic applicability.
-All claims retain their review status and source reference. When an entry
-covers multiple model versions, a filter match may describe only one version;
-check the model notes and link titles before applying it to another version.
-The presence of a testing-only calibration in a jurisdiction filter does
-not mean a variant is recommended for management decisions.
+Filter this catalogue by **model type**, **management context**, **province or territory**, or a **species keyword**. This registry is a starting point, not the authoritative source: models change over time and entries here are updated only periodically, so use the model website and repository links to confirm current details. The species search matches text, not a standardized species taxonomy; species lists are general summaries, so no match does not prove a model excludes a species. Jurisdiction matches refer only to recorded coverage, which can be limited to a region, ecosystem, or US state noted for that jurisdiction; read each coverage entry before interpreting a match as geographic applicability. When an entry covers multiple model versions, a filter match may describe only one version; check the model notes and link titles before applying it to another version.
 
 ```{=html}
 <div class="row g-2 mb-3" id="catalogue-filters">
@@ -40,31 +30,20 @@ not mean a variant is recommended for management decisions.
 #| echo: false
 #| results: asis
 
-library(readr)
 library(htmltools)
+source("R/registry.R")
+source("R/site_helpers.R")
 
-models <- read_csv("derived/models_web.csv", show_col_types = FALSE)
-coverage <- read_csv("derived/model_coverage_web.csv", show_col_types = FALSE)
-links <- read_csv("derived/model_links_web.csv", show_col_types = FALSE)
-
-shown <- function(value) {
-  if (length(value) == 0 || is.na(value) || !nzchar(trimws(value))) {
-    "Not recorded"
-  } else {
-    value
-  }
-}
-
-field <- function(label, value) {
-  tags$li(tags$strong(paste0(label, ": ")), shown(value))
-}
+models <- read_registry_table("models")
+coverage <- read_registry_table("model_coverage")
+links <- read_registry_table("model_links")
 
 link_details <- function(resources) {
   lapply(seq_len(nrow(resources)), function(i) {
     resource <- resources[i, ]
     tags$li(
       tags$a(href = resource$url, resource$title, rel = "noopener noreferrer"),
-      paste0(" (", resource$link_type, "; ", resource$verification_status, ")")
+      paste0(" (", gsub("_", " ", resource$link_type), ")")
     )
   })
 }
@@ -74,52 +53,38 @@ model_cards <- lapply(order(models$model_id), function(i) {
   id <- model$model_id[[1]]
   claims <- coverage[coverage$model_id == id, , drop = FALSE]
   resources <- links[links$model_id == id, , drop = FALSE]
-  is_website_or_download <- resources$link_type %in% c(
-    "official_website", "software", "source_code"
-  )
-  websites <- resources[is_website_or_download, , drop = FALSE]
-  related <- resources[!is_website_or_download, , drop = FALSE]
 
   model_details <- tags$details(
-    tags$summary("Model details and provenance"),
+    tags$summary("Model details"),
     tags$ul(
       field("Developers", model$developers),
+      field("Contributors", model$contributors),
       field("Organization", model$organization),
       field("Model type", model$model_type),
+      field("Programming language", model$programming_language),
       field("Species", model$species),
       field("Minimum inputs", model$minimum_inputs),
       field("Outputs", model$outputs),
       field("Silvicultural interventions", model$management_options),
       field("Other features", model$other_features),
       field("Management context", model$management_context),
-      field("Lifecycle status", model$status),
-      field("Source document", model$source_file),
-      field("Source citation", model$source_citation),
-      field("Review status", model$verification_status),
-      field("Notes", model$notes)
+      field("Notes", model$notes),
+      field("Last reviewed", model$last_reviewed)
     )
   )
 
   claim_details <- lapply(seq_len(nrow(claims)), function(i) {
     claim <- claims[i, ]
     tags$li(
-      tags$strong(paste(
+      tags$strong(paste0(
         shown(claim$jurisdiction_code),
         if (!is.na(claim$region_detail) && nzchar(claim$region_detail)) {
           paste0(" (", claim$region_detail, ")")
         } else {
           ""
-        },
-        "-", gsub(";", ", ", claim$coverage_basis, fixed = TRUE)
+        }
       )),
-      tags$ul(
-        field("Stand scope", claim$stand_scope),
-        field("Species scope", claim$species_scope),
-        field("Validation evidence", claim$validation_evidence),
-        field("Source", claim$source_reference),
-        field("Review status", claim$verification_status),
-        field("Notes", claim$notes)
-      )
+      tags$ul(field("Stand scope", claim$stand_scope))
     )
   })
 
@@ -128,30 +93,23 @@ model_cards <- lapply(order(models$model_id), function(i) {
     `data-type` = paste(na.omit(model$model_type), collapse = "|"),
     `data-context` = paste(na.omit(model$management_context), collapse = "|"),
     `data-jurisdiction` = paste(unique(claims$jurisdiction_code[
-      !is.na(claims$jurisdiction_code) & claims$jurisdiction_code != "unknown"
+      !is.na(claims$jurisdiction_code)
     ]), collapse = "|"),
-    `data-species` = paste(na.omit(c(model$species, claims$species_scope)), collapse = " "),
+    `data-species` = paste(na.omit(model$species), collapse = " "),
     tags$div(
       class = "card-body",
       tags$h2(class = "card-title", id = id, shown(model$model_name)),
       tags$p("Model ID: ", id),
       tags$h3("Model information"),
       model_details,
-      tags$h3("Geographic coverage claims"),
+      tags$h3("Geographic coverage"),
       if (nrow(claims) > 0) tags$ul(tagList(claim_details)) else tags$p("Not recorded"),
-      tags$h3("Model websites and downloads"),
-      if (nrow(websites) > 0) {
-        tags$ul(tagList(link_details(websites)))
+      tags$h3("Model websites, related documents/tools and downloads"),
+      if (nrow(resources) > 0) {
+        tags$ul(tagList(link_details(resources)))
       } else {
         tags$p("Not recorded")
-      },
-      tags$h3("Related documents and webpages"),
-      if (nrow(related) > 0) {
-        tags$ul(tagList(link_details(related)))
-      } else {
-        tags$p("Not recorded")
-      },
-      tags$p("Programming language and open-source status are not yet structured fields; see model notes where available.")
+      }
     )
   )
 })

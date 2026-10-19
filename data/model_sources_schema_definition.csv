@@ -1,3 +1,0 @@
-field_name,data_type,required,description,allowed_values,example
-model_id,text,yes,Model identifier matching data/models.csv.,,mgm
-source_file,text,yes,Filename only of a local Markdown document associated with the model; association does not verify any model claim.,,MGM21_Best_Practices_Feb_28_22.md

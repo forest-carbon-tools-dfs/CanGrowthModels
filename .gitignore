@@ -11,12 +11,11 @@ _site/
 _freeze/
 *_cache/
 
-# Generated registry outputs
-derived/
-
-# Excluded source manuals
+# Local-only source manuals live outside the repository
+# (C:/CanGrowthModels_sources); keep accidental copies out of git.
 /GYmodelPDFmanuals/
 /GYmodels_manual_md/
+/*.pdf
 CanGrowthModelsWikiPage.csv
 
 # Operating system files

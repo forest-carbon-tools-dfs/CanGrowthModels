@@ -1,0 +1,91 @@
+name: Propose a new model
+description: Suggest a growth and yield model that is not yet in the registry.
+title: "New model: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The registry is a brief pointer to models, not the authoritative source. Please use **public** information only and give links so users can find current details. A maintainer will review and add the entry.
+  - type: input
+    id: model_name
+    attributes:
+      label: Model name or acronym
+      placeholder: e.g. VDYP7
+    validations:
+      required: true
+  - type: textarea
+    id: links
+    attributes:
+      label: Links
+      description: One per line as `type | title | URL`. Types are official_website, manual, software, source_code, publication, other. Please include the model's website and/or repository.
+      placeholder: |
+        official_website | MGM official website | https://mgm.ualberta.ca/
+        source_code | MGM repository | https://github.com/...
+    validations:
+      required: true
+  - type: checkboxes
+    id: jurisdictions
+    attributes:
+      label: Canadian provinces/territories where the model is used or applicable
+      options:
+        - label: AB
+        - label: BC
+        - label: SK
+        - label: MB
+        - label: ON
+        - label: QC
+        - label: NB
+        - label: NS
+        - label: PE
+        - label: NL
+        - label: YT
+        - label: NT
+        - label: NU
+  - type: input
+    id: region_detail
+    attributes:
+      label: Regions, ecosystems, or US states (optional)
+      description: Sub-regions of a province, specific areas, ecosystems, or US states the model also applies to.
+      placeholder: e.g. BC_interior; Maine
+  - type: dropdown
+    id: model_type
+    attributes:
+      label: Model type
+      options:
+        - unknown
+        - whole_stand
+        - individual_tree
+        - diameter_class
+        - hybrid
+        - other
+      default: 0
+  - type: dropdown
+    id: management_context
+    attributes:
+      label: Management context
+      description: unmanaged = natural-origin or fire-origin stands, or stands harvested long ago and now old; managed = harvested or replanted stands.
+      options:
+        - unknown
+        - unmanaged
+        - managed
+        - unmanaged_managed
+      default: 0
+  - type: textarea
+    id: summary
+    attributes:
+      label: Brief summary (optional)
+      description: Developers, organization, species, programming language, or other details you know. Keep it general.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Public source for the information above
+      description: URL(s) that support what you have written.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I used public information only and did not include private or restricted material.
+          required: true

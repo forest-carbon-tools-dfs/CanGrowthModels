@@ -1,0 +1,16 @@
+Package: CanGrowthModels
+Title: Canadian Forest Growth and Yield Model Registry
+Version: 0.1.0
+Description: Dependency manifest for the registry's validation scripts,
+    tests and Quarto site. This project is not an installable R package.
+License: GPL-3
+Encoding: UTF-8
+Imports:
+    htmltools,
+    leaflet,
+    readr,
+    rlang,
+    sf
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

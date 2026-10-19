@@ -1,0 +1,48 @@
+name: Suggest a new field
+description: Recommend an additional column for the registry.
+title: "New field: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        New fields apply to every model, so they should stay general enough to remain accurate as models change. A maintainer will discuss before any schema change.
+  - type: input
+    id: field_name
+    attributes:
+      label: Proposed field name
+      placeholder: e.g. open_source_licence
+    validations:
+      required: true
+  - type: dropdown
+    id: table
+    attributes:
+      label: Which table?
+      options:
+        - models (one value per model)
+        - model_coverage (per province/territory)
+        - model_links (per link)
+    validations:
+      required: true
+  - type: textarea
+    id: purpose
+    attributes:
+      label: What would it hold, and why would it help users?
+    validations:
+      required: true
+  - type: textarea
+    id: values
+    attributes:
+      label: Allowed values or examples
+      description: A fixed list of values, or example entries.
+  - type: textarea
+    id: source
+    attributes:
+      label: Where could the information be found for each model?
+      description: For example, the model's website or repository. Public sources only.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I did not include private or restricted material.
+          required: true

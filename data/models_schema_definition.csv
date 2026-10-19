@@ -1,19 +1,17 @@
 field_name,data_type,required,description,allowed_values,example
 model_id,text,yes,Unique stable lowercase slug identifying the model; one row per model.,,vdyp
 model_name,text,yes,Common name or acronym of the model.,,VDYP7
-developers,text,no,Individuals documented as contributing to model development; separate multiple names with ';'. Leave blank if not documented.,,Mathieu Fortin; Luc Langevin
-organization,text,no,Organization(s) documented as supporting model development; separate multiple values with ';'. Leave blank if not documented.,,BC Ministry of Forests
-jurisdictions,text,no,Provinces/territories where the source says the model applies; separate multiple values with ';'.,BC|AB|SK|MB|ON|QC|NB|NS|PE|NL|YT|NT|NU|Canada|other,BC
-model_type,controlled,no,Broad model class as stated in the source.,whole_stand|individual_tree|diameter_class|hybrid|other|unknown,whole_stand
-species,text,no,Species or species groups covered; separate multiple values with ';'. Use expanded lists instead of Eastern SPF or Western SPF.,,Balsam fir;black spruce;red spruce;white spruce;jack pine
-minimum_inputs,text,no,Minimum inputs needed to initialize or run the model; separate multiple values with ';'. Leave blank if not documented.,,site index;species;stem density
-outputs,text,no,Key model outputs; separate multiple values with ';'.,,volume;basal area
-management_options,text,no,Management actions the source says the model can represent (e.g. thinning; fertilization; pruning); separate multiple values with ';'. Leave blank if not stated.,,thinning;fertilization
-other_features,text,no,Other features the source says are represented (e.g. mortality; regeneration; climate; disturbance); separate multiple values with ';'. Leave blank if not stated.,,mortality;climate
-status,controlled,no,Lifecycle status if the source states it.,active|maintained|legacy|archived|unknown,unknown
-source_file,text,no,Optional filename of a supporting local Markdown document; use model_sources.csv to associate multiple documents.,,vdyp7_manual.md
-source_citation,text,no,Citation (authors; year; title) of the scanned source.,,
-source_year,integer,no,Publication year of the scanned source.,,2020
-verification_status,controlled,yes,Review state of this row.,unverified|verified,unverified
-notes,text,no,Uncertainties or ambiguities; do not guess values the source does not state.,,
-management_context,controlled,yes,"Management context represented: unmanaged or post-harvest managed stands; managed includes planting or natural regeneration after harvest; unmanaged_managed covers both contexts.",unmanaged|managed|unmanaged_managed|unknown,managed
+developers,text,no,Original developers of the model (individuals); separate multiple names with ';'. Leave blank if not known.,,Mathieu Fortin; Luc Langevin
+contributors,text,no,Individuals or organizations that added to the model's later development; separate multiple values with ';'. Leave blank if not known.,,Jane Doe; University of Alberta
+organization,text,no,Organization(s) that supported or directed the model's development; separate multiple values with ';'. Leave blank if not known.,,BC Ministry of Forests
+jurisdictions,controlled,no,Canadian provinces/territories where the model is used or applicable; separate multiple values with ';'. Only provinces and territories belong here: record sub-regions; ecosystems; and US states in region_detail of model_coverage.csv.,AB|BC|SK|MB|ON|QC|NB|NS|PE|NL|YT|NT|NU,BC;AB
+model_type,controlled,no,Broad model class.,whole_stand|individual_tree|diameter_class|hybrid|other|unknown,whole_stand
+species,text,no,Species or species groups covered; separate multiple values with ';'. Use expanded lists instead of Eastern SPF or Western SPF. A general summary only; see the model's own documentation for the authoritative list.,,Balsam fir;black spruce;red spruce;white spruce;jack pine
+minimum_inputs,text,no,Minimum inputs needed to initialize or run the model; separate multiple values with ';'. Leave blank if not known.,,site index;species;stem density
+outputs,text,no,Key model outputs; separate multiple values with ';'. Leave blank if not known.,,volume;basal area
+management_options,text,no,Management actions the model can represent (e.g. thinning; fertilization; pruning); separate multiple values with ';'. Leave blank if not known.,,thinning;fertilization
+other_features,text,no,Other features the model represents (e.g. mortality; regeneration; climate; disturbance); separate multiple values with ';'. Leave blank if not known.,,mortality;climate
+programming_language,text,no,Programming language(s) the model is written in; separate multiple values with ';'. Use unknown until determined.,,Fortran;R
+management_context,controlled,yes,"Stands the model is intended for: unmanaged = natural-origin or fire-origin stands, or stands harvested long ago and now old; managed = stands that have been harvested or replanted (e.g. after harvest or fire); unmanaged_managed = both. Use unknown until determined.",unmanaged|managed|unmanaged_managed|unknown,managed
+notes,text,no,Free-text qualifications or uncertainties. Do not guess values.,,
+last_reviewed,date,no,Date the maintainer last reviewed this model's entry.,YYYY-MM-DD,2026-10-19

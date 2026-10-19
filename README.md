@@ -4,97 +4,102 @@
 [![License: GPL-3.0-only](https://img.shields.io/badge/license-GPL--3.0--only-blue.svg)](LICENSE)
 [![Version: 0.1.0](https://img.shields.io/badge/version-0.1.0-blue.svg)](#citation)
 
-A curated registry of forest growth and yield models developed for or applicable to Canadian forests. The project is private-first; any public release requires an explicit decision by the maintainers.
+A curated registry of forest growth and yield models developed for or applicable to Canadian forests. It is a **pointer, not an authoritative source**: each entry gives a brief, general summary and links to the model's own website and repositories, where users can find current details. Models change over time and the registry is updated only periodically, so entries are kept general to reduce the chance of stating outdated or inaccurate facts. The project is private-first; any public release requires an explicit decision by the maintainers.
 
 Developed by Derek Sattler as work undertaken at Natural Resources Canada (NRCan).
 Contact: [derek.sattler@nrcan-rncan.gc.ca](mailto:derek.sattler@nrcan-rncan.gc.ca).
 
 ## Project Rules
 
-- Record model claims only from public or otherwise approved sources. Preserve citations and verification details with each record, following the schema.
-- Do not guess model status, species coverage, geographic applicability, or other facts. Use the schema's documented unknown or unverified values where evidence is incomplete.
+- Keep entries brief and general; point to the model's website, repository, manuals, and publications through `data/model_links.csv` rather than reproducing detail from them. Record facts only from public or otherwise approved sources.
+- Do not guess species, geographic applicability, or other facts. Leave optional values blank, and use `unknown` only where the schema allows it (for example `management_context`).
 - Do not commit credentials, access tokens, private source material, or local processing artifacts. Use environment variables for any future integrations that require credentials.
-- Treat `GYmodelPDFmanuals/` and `GYmodels_manual_md/` as local-only source material (git-ignored). Do not copy or commit their contents; AI scanning is limited to Markdown files you explicitly choose.
+- Source manuals and publications used while gathering information (PDFs and Markdown conversions) are kept **outside this repository** in a local folder (`C:/CanGrowthModels_sources/`). Do not copy them into this repository; AI use is limited to Markdown excerpts you explicitly choose.
 - Keep exactly one row per model in `data/models.csv`, identified by a unique,
-  stable `model_id`. Retain source citations and qualifications in that row;
-  associate additional local documents through `data/model_sources.csv`.
-- Record individual contributors in `developers` and supporting organizations
-  in `organization`. Leave undocumented values blank rather than inferring
-  developers from publication authors or organizations from publishers.
+  stable `model_id`.
+- `developers` are the original developers of a model, `organization` is the
+  organization that supported or directed its development, and `contributors`
+  are individuals or organizations that added to its later development. Leave
+  undocumented values blank rather than inferring them from publication authors
+  or publishers.
+- `jurisdictions` and `model_coverage.jurisdiction_code` hold Canadian provinces
+  and territories only. Use `region_detail` in `model_coverage.csv` for
+  sub-regions, specific areas, ecosystems, or US states a model also covers.
 - Version families may share one model card; keep version-specific capabilities
   and links explicitly labelled rather than applying one version's claims to all.
-- Keep preliminary document-to-model associations in `data/model_sources.csv`.
-  An association alone does not establish which claims a document supports.
-- Keep source data and source code under version control. Treat Quarto output and files under `derived/` as generated artifacts.
-- Review changes to registry records for source quality, accuracy, and licensing before accepting them.
+- Record the date of each maintainer review in `last_reviewed`.
+- Keep source data and source code under version control. Treat Quarto output (`_site/`, `.quarto/`) as a generated artifact.
+- Review changes to registry records for accuracy and licensing before accepting them.
 
 ## Project Layout
 
-- `data/models_schema_definition.csv`: field definitions and current data rules.
-- `data/models_template.csv`: header template for registry records.
-- `data/models.csv`, `data/model_coverage.csv`, `data/model_links.csv`: pilot
-  model summaries, separate geographic claims, and typed model links. Multiple
-  link rows per model allow separate website/download and related-publication
-  lists without embedding several URLs in one CSV cell.
-- `data/model_sources.csv`: maintainer-supplied Markdown filename associations.
-  Documents remain local-only; this mapping does not populate `source_file`
-  in provisional model rows or assert that a document verifies those rows.
-- [Data model and pipeline](docs/data-model-and-pipeline.md): table relationships,
-  column definitions, validation coverage, and the publishing workflow.
-- `R/`: validation, data-build, and coverage utilities. Run these from the project root because their paths are project-root-relative.
-- `tests/`: automated checks for the data contract and validation behavior.
+- `data/*_schema_definition.csv`: field definitions, required flags, and allowed
+  values for each table. These are the single source of truth read by the validator.
+- `data/models.csv`, `data/model_coverage.csv`, `data/model_links.csv`: brief
+  model summaries, the provinces/territories (with optional region) each model is
+  tied to for the map, and typed links to each model's website, repository, and
+  documentation. Multiple link rows per model avoid embedding several URLs in
+  one CSV cell.
+- [Registry guide](docs/pipeline-and-workflow.md): table relationships, column
+  definitions, the validation and render pipeline, the maintainer workflow for
+  editing the CSVs, and how collaborators and the public propose additions and
+  changes. [Contributing](CONTRIBUTING.md) is the short version;
+  [Project plan](docs/PROJECT_PLAN.md) also lives in `docs/`.
+- `.github/ISSUE_TEMPLATE/`: issue forms for proposing a new model, a change to
+  an existing model, or a new field. `.github/PULL_REQUEST_TEMPLATE.md` is the
+  checklist for collaborator pull requests.
+- `R/`: functions only (`registry.R` schema-driven validation, `site_helpers.R`
+  shared by the Quarto pages). `scripts/`: thin entry points run from the project
+  root, because paths are project-root-relative.
+- `tests/testthat/`: automated data-contract and validator tests
+  (`Rscript tests/testthat.R`). `.github/workflows/`: CI runs the tests and
+  renders the site. `DESCRIPTION` lists the R package dependencies (this is not
+  an installable package).
 - `_quarto.yml`, `index.qmd`, `models.qmd`, `map.qmd`: the static Quarto
-  catalogue and jurisdiction-level coverage map. Map logic is an R code chunk
-  in `map.qmd`; local manual Markdown is excluded.
+  catalogue and jurisdiction-level coverage map. The pages read `data/` directly;
+  map logic is an R code chunk in `map.qmd`.
 - `data/geospatial/canada/`: the Canada boundary shapefile and its Simplemaps
   CC BY 4.0 license notice.
-- `derived/`: generated website-ready data; do not edit or commit generated output.
 
 `CanGrowthModelsWikiPage.csv` is a retired, git-ignored seed file, not a pipeline
-input. Previously imported information retains its original Wikipedia provenance
-and review status without depending on that local CSV.
+input. Some early entries were seeded from a Wikipedia page; the per-row citation
+fields that recorded this have been removed, so review Wikipedia's reuse (CC BY-SA)
+requirements before any public release.
 
 ## Local Checks
 
-For routine CSV edits, adding models, and renaming columns, see the
-[CSV update workflow](CSV_UPDATE_WORKFLOW.md).
+For routine CSV edits, adding models, renaming columns, and contributing, see the
+[registry guide](docs/pipeline-and-workflow.md).
 
-With R (including `readr`, `dplyr`, `htmltools`, `rlang`, `sf`, and `leaflet`)
+With R (including `readr`, `htmltools`, `rlang`, `sf`, `leaflet`, and `testthat`)
 and Quarto installed, run from the project root with `Rscript` and `quarto` on
 your PATH:
 
 ```powershell
-Rscript R/validate_CanGYmodels.R
-Rscript R/validate_model_coverage.R
-Rscript R/validate_model_links.R
-Rscript R/validate_model_sources.R
-Rscript R/build_CanGYmodel_data.R
+Rscript scripts/validate_registry.R
+Rscript tests/testthat.R
 quarto render
 ```
 
 To change the map, edit the R code chunk in `map.qmd`. In RStudio, open
 `CanGrowthModels.Rproj` and use the page's **Render** button, or run
 `quarto render map.qmd` in the RStudio Terminal for a focused map render.
-Both use the project pre-render steps to validate the source data and rebuild
-the generated coverage file. Run `quarto render` to render the full site.
+Both run the project pre-render step, which validates the source data first.
+Run `quarto render` to render the full site.
 
-Quarto automatically runs the four validators and the data build before
+Quarto automatically runs the registry validator before
 rendering. The catalogue filters in the browser without a server. The map
-colors a province or territory when one or more coverage claims are recorded
-and opens those claims on click; the fill is not an exact model footprint. A
-province match may represent only a subregion, as qualified on the model card
-and map popup. A calibration claim can also describe a testing-only variant
-and does not by itself mean the model is recommended for planning or decisions.
-Programming language and open-source status are not yet part of the
-schema; related details may appear in source-record notes, but code access
-alone does not establish an open-source licence. Model details show developers,
-supporting organizations, species, minimum inputs, outputs, and silvicultural interventions;
-coverage claims retain coastal/interior
-qualifiers where supplied. Some species lists are explicitly partial, so
-a missing search match does not establish that a model excludes a species.
-There is no public deployment.
-Validation still covers only part of the schema; complete rules and
-automated tests remain for the data-contract stage.
+colors a province or territory when at least one model is recorded for it and
+opens the list of models on click; the fill is not an exact model footprint. A
+province match may represent only a region, ecosystem, or adjoining US state, as
+noted in the popup and on the model card. The programming language is recorded
+where known; open-source status and licensing are not, so see each model's
+website and repository. Some species
+lists are partial, so a missing search match does not establish that a model
+excludes a species. There is no public deployment.
+The validator checks every column against its schema definition (required values,
+types, controlled vocabularies, keys, and cross-table references) but cannot
+confirm that an entry is accurate or current.
 
 ## Copyright and License
 

@@ -5,11 +5,7 @@ project:
     - models.qmd
     - map.qmd
   pre-render:
-    - Rscript R/validate_CanGYmodels.R
-    - Rscript R/validate_model_coverage.R
-    - Rscript R/validate_model_links.R
-    - Rscript R/validate_model_sources.R
-    - Rscript R/build_CanGYmodel_data.R
+    - Rscript scripts/validate_registry.R
 
 website:
   title: "Canadian Forest Growth & Yield Model Registry"

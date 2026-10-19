@@ -1,0 +1,60 @@
+name: Suggest a change to an existing model
+description: Recommend a correction or addition to a model that is already in the registry.
+title: "Update: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please use **public** information only and give a source URL. A maintainer will review and update the entry.
+  - type: input
+    id: model
+    attributes:
+      label: Model name (or model_id)
+      placeholder: e.g. VDYP7 / vdyp
+    validations:
+      required: true
+  - type: dropdown
+    id: field
+    attributes:
+      label: What should change?
+      options:
+        - Developers
+        - Contributors
+        - Organization
+        - Provinces/territories (jurisdictions or coverage)
+        - Region, ecosystem, or US state
+        - Stand scope
+        - Model type
+        - Species
+        - Minimum inputs
+        - Outputs
+        - Management options
+        - Other features
+        - Programming language
+        - Management context
+        - Notes
+        - A link (add, fix, or remove)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed value or correction
+      description: For a link, give `type | title | URL`.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Public source supporting the change
+      description: URL(s) to the model's website, repository, manual, or publication.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I used public information only and did not include private or restricted material.
+          required: true
