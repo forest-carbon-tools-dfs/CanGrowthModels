@@ -2,57 +2,64 @@ CANADIAN FOREST GROWTH & YIELD MODEL REGISTRY
 
 ## Goal
 
-Maintain a private-first, source-traceable registry of Canadian forest growth and yield models. Researchers should be able to filter models by species, stand conditions, and geography, inspect supporting sources, and use an interactive map to see model applicability. Public release requires maintainer approval.
+Maintain a private-first registry that helps researchers discover Canadian forest growth and yield models and find where to learn more. The registry is a **pointer, not the authoritative source**: each entry is a brief, general summary plus links to the model's website, repositories, manuals, and publications. Researchers can filter models by species, management context, and geography, and use an interactive map to see which models are recorded for each province or territory. Models evolve and the registry is updated only periodically, so entries are deliberately general. Public release requires maintainer approval.
 
-## Current Status (2026-10-16)
+## Current Status (2026-10-19)
 
-- The latest local render validates 22 model rows, 34 coverage claims, 32 typed links, and six maintainer-supplied Markdown filename associations. The associations do not establish which claims a document supports.
-- Quarto renders `index.qmd`, `models.qmd`, and `map.qmd`, excluding local manuals. Pre-render runs four R validators and rebuilds separate website-ready model, coverage, and link files. Browser-side catalogue filters cover model type, management context, jurisdiction, and species keywords.
-- A jurisdiction-level Leaflet map is implemented in `map.qmd`. It reads the Canada province/territory shapefile in `data/geospatial/canada/` and the generated coverage CSV; clicking a jurisdiction opens its claims. A filled province or territory is not an exact model footprint or a recommendation.
-- The bundled Canada boundaries include a Simplemaps CC BY 4.0 attribution notice. The map has been rendered and locally checked; the repository remains private and there is no public deployment. Generated site output is not committed.
+- The registry has three tables: `models` (24 rows), `model_coverage` (28 rows, province/territory plus optional region, drives the map), and `model_links` (32 rows).
+- The schema was simplified: per-claim provenance and verification (`source_file`, `source_citation`, `source_year`, `source_reference`, `coverage_basis`, `species_scope`, `validation_evidence`, `verification_status`, `status`) and the `model_sources` table were removed. `contributors` and `last_reviewed` were added. See `docs/pipeline-and-workflow.md`.
+- Quarto renders `index.qmd`, `models.qmd`, and `map.qmd`. Pre-render runs one schema-driven validator (`scripts/validate_registry.R`, built on `R/registry.R`); the pages read `data/` directly. Browser-side catalogue filters cover model type, management context, jurisdiction, and species keywords.
+- Automated data-contract tests (`tests/testthat/`) and a GitHub Actions workflow (`.github/workflows/`) are in place; the workflow has not yet been run on GitHub.
+- A jurisdiction-level Leaflet map is implemented in `map.qmd`. It reads the Canada province/territory shapefile in `data/geospatial/canada/` and `data/model_coverage.csv`; clicking a jurisdiction lists the models recorded for it, with any region noted. A filled province or territory is not an exact model footprint or a recommendation.
+- Source PDFs and their Markdown conversions used while gathering information are kept outside the repository (`C:/CanGrowthModels_sources/`).
+- The bundled Canada boundaries include a Simplemaps CC BY 4.0 attribution notice. The repository remains private and there is no public deployment. Generated site output is not committed.
 
-Still outstanding: most model and link facts remain unverified; `source_file` is required by the schema despite blank values in provisional model rows. Programming language and open-source/licensing fields are not yet structured. Automated data-contract tests, CI, contributor workflow, and public release are not implemented. Eco-region mapping is not implemented.
+Still outstanding: many optional fields are blank pending further information gathering; `programming_language` is `unknown` for all models until determined; open-source/licensing is not recorded (users are pointed to each model's website and repository); the data licence, eco-region mapping, and public release are not decided or implemented.
+
+Open data-shape decisions:
+
+- `model_coverage.model_name` repeats `models.model_name`; the validator warns if they drift. Dropping it and joining by `model_id` would remove that risk.
+- `models.jurisdictions` overlaps `model_coverage`; the map uses coverage only.
+- Semicolon-separated cells (species, outputs, inputs) limit filtering; consider long tables if species search needs to become exact.
+- Decide whether a downloadable SQLite snapshot is wanted; it is the natural reason to reintroduce a build step that produces something other than copies of the CSVs.
 
 ## Implementation Roadmap
 
-### 1. Stabilize the data contract and pilot records
+### 1. Stabilize the data contract and entries
 
-- Review the model, coverage, link, and document-association schemas together. Keep source-file associations distinct from evidence for individual claims; claim-by-claim provenance is deferred.
-- Add source-backed programming language and open-source/licensing fields; do not infer either from the presence of a software or source-code link.
-- Resolve the provisional-row `source_file` rule without inventing scanned documents. Complete validation for required values, vocabularies, dates, references, and URL format, with automated tests. Keep link reachability separate from structural validation.
-- Review provisional records and external links before public release; keep unsupported facts unknown and records unverified until checked. Do not require claim-level manual tracing for the current pilot.
-- Confirm how subregional claims such as North-eastern BC should be displayed when the map geometry is only provincial.
+- Keep `models.csv`, `model_coverage.csv`, and `model_links.csv` in line with the schema definitions; the validator and tests report any differences.
+- Fill optional fields (species, minimum inputs, outputs, management options, other features, management context) as information is gathered; use `unknown` only where the schema allows it. Set `last_reviewed` when an entry is reviewed.
+- Ensure every model has at least one link to its website or repository, since links are how users find current details. Keep link reachability separate from structural validation.
 
-### 2. Build the static catalogue (pilot complete)
+### 2. Build the static catalogue (complete)
 
-- Keep model rows, coverage claims, and typed links separate in the data build and render one model card with grouped links and qualified coverage details.
-- Retain the working browser filters and visible unknown/unverified states. Species lists may be partial, and jurisdiction matches do not imply province-wide suitability or a recommendation for planning.
-- Consider separate model detail pages only if the growing catalogue warrants them; they are not needed for the pilot.
+- Render one model card with its summary, coverage (with region and stand scope where given), and grouped links.
+- Retain the browser filters. Species lists may be partial, and jurisdiction matches do not imply province-wide suitability or a recommendation for planning.
+- Consider separate model detail pages or pagination only if the growing catalogue warrants them.
 
-### 3. Add the map (jurisdiction-level pilot complete)
+### 3. Add the map (jurisdiction-level complete)
 
-- The pilot uses the bundled, attributed Canada province/territory boundaries and the existing `model_coverage.csv` claims. Map behavior is implemented in the R chunk in `map.qmd`; no standalone map-update script is required.
-- Keep subregional qualifications in claim details when the geometry does not support a defensible polygon. A jurisdiction match alone is not an endorsement or an exact model footprint.
-- Add an ecological-region layer only where model sources support a documented regional match. Ecozones/ecoregions are display units, not automatic evidence of model validity.
+- Province/territory polygons come from the bundled, attributed boundary file; coverage rows come from `model_coverage.csv`. Map behavior is implemented in the R chunk in `map.qmd`.
+- Sub-regions, ecosystems, and US states are recorded in `region_detail` and shown in popups, not drawn. An ecological-region layer would be a separate addition with documented regional boundaries.
 - Before public deployment, review the map's first-load payload and simplify geometry if needed. Preserve the boundary attribution and license notice.
 
 ### 4. Automate and invite contributions
 
-- Add CI to run all validators and render the Quarto site on changes.
-- Add contributor guidance and issue/PR templates for proposing models, sources, coverage claims, and corrections.
-- Test the workflow with a contributor-style change before broad data entry.
+- CI (`.github/workflows/validate-and-render.yml`) runs the tests and renders the site; confirm it passes on the first push.
+- Contributor guidance (`CONTRIBUTING.md`), issue forms, and a pull request template are written. Public users propose changes through issue forms; collaborators use pull requests. Test the flow with a contributor-style change before public release, and decide the data licence for contributions.
 
 ### 5. Publish when approved
 
-- Keep GitHub private while the data, licensing, and review process mature.
+- Keep GitHub private while the data and review process mature.
+- Review third-party reuse terms for any seeded content (for example the retired Wikipedia-derived seed) before public release.
 - Enable GitHub Pages only after maintainer approval and a successful CI-rendered build. Treat public release as an explicit decision, not an automatic consequence of merging.
 
 ## Immediate Next Step
 
-Continue carefully scoped pilot data and link entry while resolving the `source_file` rule for provisional rows and adding data-contract tests. As the coverage schema changes, update its validator, the `map.qmd` popup fields, and documentation together. Add programming-language, code-access, and licensing fields only as evidence is supplied; freely available code is not automatically open source. Claim-by-claim tracing to local manuals can wait. Decide whether a downloadable SQLite snapshot is needed alongside browser filters. Do not process manuals or deploy publicly without approval.
+Continue filling in links and optional fields model by model (ensure every model has a website or repository link), re-running the validator and tests after edits. Then push to test CI, try the issue forms and pull request template with a contributor-style change, and decide the data licence before any public release.
 
 ## Scope and Cost Controls
 
-- Do not open or process files under `GYmodelPDFmanuals/`. Ask before any bulk manual processing, additional large boundary-data download, paid service, or public deployment.
-- Prefer small pilot records and local validation/render checks before bulk population or elaborate mapping.
-- Do not commit credentials, local-only manuals, or generated Quarto output.
+- Source manuals live outside the repository in `C:/CanGrowthModels_sources/`; do not open or process them without an explicit instruction. Ask before any bulk manual processing, additional large boundary-data download, paid service, or public deployment.
+- Prefer small edits and local validation/render checks before bulk population or elaborate mapping.
+- Do not commit credentials, source manuals, or generated Quarto output.
