@@ -185,15 +185,31 @@ check_registry_references <- function(tables) {
     ))
   }
 
-  official_types <- c("official_website", "source_code", "github", "software")
+  official_types <- c("official_website", "model_download", "source_code")
   has_official <- unique(links$model_id[
     !is.na(links$model_id) & links$link_type %in% official_types
   ])
   no_official <- setdiff(model_ids, has_official)
   if (length(no_official) > 0L) {
     warnings <- c(warnings, paste0(
-      "models with no website, repository or software link: ",
+      "models with no website, download or source code link: ",
       paste(no_official, collapse = ", ")
+    ))
+  }
+
+  # Models claiming public_download availability should have a model_download link.
+  models <- tables$models
+  has_download <- unique(links$model_id[
+    !is.na(links$model_id) & links$link_type == "model_download"
+  ])
+  public_download_ids <- models$model_id[
+    !is.na(models$availability) & models$availability == "public_download"
+  ]
+  no_download <- setdiff(public_download_ids, has_download)
+  if (length(no_download) > 0L) {
+    warnings <- c(warnings, paste0(
+      "models marked public_download with no model_download link: ",
+      paste(no_download, collapse = ", ")
     ))
   }
 

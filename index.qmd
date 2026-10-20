@@ -7,7 +7,8 @@ title: "Canadian Forest Growth & Yield Model Registry"
 This private-first catalogue has one entry per model, with a short summary,
 the jurisdictions where it is used, and links to the model's website and
 repository. Browse the [model catalogue](models.qmd) to filter by model type,
-management context, species keyword, and province or territory, or use the
+management context, species keyword, province or territory, availability,
+output type, or whether tools exist to help run it, or use the
 [coverage map](map.qmd) to see which models are recorded for each jurisdiction.
 
 **This registry is a starting point, not the authoritative source.** Models

@@ -13,8 +13,9 @@ Maintain a private-first registry that helps researchers discover Canadian fores
 - A jurisdiction-level Leaflet map is implemented in `map.qmd`. It reads the Canada province/territory shapefile in `data/geospatial/canada/` and `data/model_coverage.csv`; clicking a jurisdiction lists the models recorded for it, with any region noted. A filled province or territory is not an exact model footprint or a recommendation.
 - Source PDFs and their Markdown conversions used while gathering information are kept outside the repository (`C:/CanGrowthModels_sources/`).
 - The bundled Canada boundaries include a Simplemaps CC BY 4.0 attribution notice. The repository remains private and there is no public deployment. Generated site output is not committed.
+- The registry data in `data/` is licensed under GPL-3.0-only (decided); third-party geospatial data retains its own licence. Site metadata (site-url, sitemap, Open Graph/Twitter cards) is configured for the future GitHub Pages address; register with Google Search Console after public release.
 
-Still outstanding: many optional fields are blank pending further information gathering; `programming_language` is `unknown` for all models until determined; open-source/licensing is not recorded (users are pointed to each model's website and repository); the data licence, eco-region mapping, and public release are not decided or implemented.
+Still outstanding: many optional fields are blank pending further information gathering; `programming_language` is `unknown` for all models until determined; open-source/licensing is not recorded (users are pointed to each model's website and repository); eco-region mapping and public release are not implemented.
 
 Open data-shape decisions:
 
@@ -54,7 +55,7 @@ Open data-shape decisions:
 
 ## Immediate Next Step
 
-Continue filling in links and optional fields model by model (ensure every model has a website or repository link), re-running the validator and tests after edits. Then push to test CI, try the issue forms and pull request template with a contributor-style change, and decide the data licence before any public release.
+Continue filling in links and optional fields model by model (ensure every model has a website or repository link), re-running the validator and tests after edits. Then push to test CI, try the issue forms and pull request template with a contributor-style change, and proceed to public release preparation.
 
 ## Scope and Cost Controls
 

@@ -9,6 +9,16 @@ project:
 
 website:
   title: "Canadian Forest Growth & Yield Model Registry"
+  # Site URL must be updated if the repository moves to another organization or custom domain
+  site-url: "https://forest-carbon-tools-dfs.github.io/CanGrowthModels/"
+  description: "A registry of forest growth and yield models for Canada with coverage map and links to each model's website, downloads, and tools."
+  open-graph: true
+  twitter-card: true
+  repo-url: https://github.com/forest-carbon-tools-dfs/CanGrowthModels
+  repo-actions: [issue]
+  page-footer:
+    left: "Licensed under GPL-3.0-only"
+    right: "Natural Resources Canada"
   navbar:
     left:
       - href: index.qmd
@@ -20,6 +30,7 @@ website:
 
 format:
   html:
+    lang: en
     theme:
       - cosmo
       - brand

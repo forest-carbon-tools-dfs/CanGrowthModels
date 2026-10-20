@@ -13,13 +13,14 @@ make_tables <- function() {
       model_type = "whole_stand", species = NA, minimum_inputs = NA,
       outputs = NA, management_options = NA, other_features = NA,
       programming_language = "unknown",
+      availability = "unknown", interface = NA, output_types = NA,
       management_context = "unknown", notes = NA, last_reviewed = "2026-10-19",
       stringsAsFactors = FALSE
     ),
     model_coverage = data.frame(
       coverage_id = "c1", model_id = "m1",
       jurisdiction_code = "BC", region_detail = "BC_interior",
-      stand_scope = NA, stringsAsFactors = FALSE
+      ecozones = NA, stand_scope = NA, stringsAsFactors = FALSE
     ),
     model_links = data.frame(
       link_id = "l1", model_id = "m1", link_type = "official_website",
@@ -73,7 +74,7 @@ test_that("models missing links or coverage produce warnings", {
   refs <- check_registry_references(tables)
   expect_length(refs$errors, 0)
   expect_true(any(grepl("models with no link: .*m2", refs$warnings)))
-  expect_true(any(grepl("models with no website, repository or software link: .*m2", refs$warnings)))
+  expect_true(any(grepl("models with no website, download or source code link: .*m2", refs$warnings)))
   expect_true(any(grepl("models with no coverage row", refs$warnings)))
 })
 
@@ -110,4 +111,21 @@ test_that("unknown model references, bad URLs, dates and columns are errors", {
   expect_true(any(grepl("accessed_date.*YYYY-MM-DD", errors)))
   expect_true(any(grepl("last_reviewed.*YYYY-MM-DD", errors)))
   expect_true(any(grepl("columns not in the schema definition: status", errors)))
+})
+
+test_that("the retired 'github' link_type is rejected", {
+  tables <- make_tables()
+  tables$model_links$link_type <- "github"
+  errors <- check_all(tables)
+  expect_true(any(grepl("link_type.*github", errors)))
+})
+
+test_that("a public_download model with no model_download link produces a warning", {
+  tables <- make_tables()
+  tables$models$availability <- "public_download"
+  # The only link row is still official_website, so no model_download link exists.
+  refs <- check_registry_references(tables)
+  expect_true(any(grepl(
+    "models marked public_download with no model_download link: .*m1", refs$warnings
+  )))
 })

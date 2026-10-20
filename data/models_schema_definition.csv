@@ -7,10 +7,13 @@ organization,text,no,Organization(s) that supported or directed the model's deve
 model_type,controlled,no,Broad model class.,whole_stand|individual_tree|diameter_class|hybrid|other|unknown,whole_stand
 species,text,no,Species or species groups covered; separate multiple values with ';'. Use expanded lists instead of Eastern SPF or Western SPF. A general summary only; see the model's own documentation for the authoritative list.,,Balsam fir;black spruce;red spruce;white spruce;jack pine
 minimum_inputs,text,no,Minimum inputs needed to initialize or run the model; separate multiple values with ';'. Leave blank if not known.,,site index;species;stem density
-outputs,text,no,Key model outputs; separate multiple values with ';'. Leave blank if not known.,,volume;basal area
+outputs,text,no,Key model outputs; free-text detail; separate multiple values with ';'. Leave blank if not known. See 'output_types' for the standardized categories that drive catalogue filtering.,,volume;basal area
 management_options,text,no,Management actions the model can represent (e.g. thinning; fertilization; pruning); separate multiple values with ';'. Leave blank if not known.,,thinning;fertilization
 other_features,text,no,Other features the model represents (e.g. mortality; regeneration; climate; disturbance); separate multiple values with ';'. Leave blank if not known.,,mortality;climate
 programming_language,text,no,Programming language(s) the model is written in; separate multiple values with ';'. Use unknown until determined.,,Fortran;R
+availability,controlled,yes,How the model itself can be obtained. Use unknown until determined.,public_download|on_request|restricted|not_available|unknown,public_download
+interface,controlled,no,How users run the model; separate multiple values with ';'. Leave blank if not known.,r_package|python_package|desktop_application|web_application|command_line|spreadsheet|other|unknown,r_package;command_line
+output_types,controlled,no,Standardized output categories used by the catalogue filter; separate multiple values with ';'. Leave blank if not known; keep detail in 'outputs'.,merchantable_volume|total_volume|basal_area|biomass|other,merchantable_volume;basal_area
 management_context,controlled,yes,"Stands the model is intended for: unmanaged = natural-origin or fire-origin stands, or stands harvested long ago and now old; managed = stands that have been harvested or replanted (e.g. after harvest or fire); unmanaged_managed = both. Use unknown until determined.",unmanaged|managed|unmanaged_managed|unknown,managed
 notes,text,no,Free-text qualifications or uncertainties. Do not guess values.,,
 last_reviewed,date,no,Date the maintainer last reviewed this model's entry.,YYYY-MM-DD,2026-10-19

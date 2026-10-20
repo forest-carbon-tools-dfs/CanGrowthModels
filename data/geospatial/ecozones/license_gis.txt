@@ -1,0 +1,12 @@
+Source: National Ecological Framework for Canada, Agriculture and Agri-Food
+Canada (AAFC).
+
+Contains information licensed under the Open Government Licence - Canada.
+Licence: https://open.canada.ca/en/open-government-licence-canada
+
+This folder's ecozones.gpkg and province_ecozones.csv are derived from the
+GeoPackage in source/ (the AAFC ecozones clipped to the Canada land boundary,
+with the largely unforested Arctic Cordillera, Northern Arctic and Southern
+Arctic ecozones removed; otherwise unchanged) by scripts/prepare_ecozones.R:
+ecozone names corrected, features dissolved to one per ecozone, and geometry
+simplified. See that script for the exact processing steps.

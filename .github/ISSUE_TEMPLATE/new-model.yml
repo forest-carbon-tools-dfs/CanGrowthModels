@@ -17,10 +17,10 @@ body:
     id: links
     attributes:
       label: Links
-      description: One per line as `type | title | URL`. Types are official_website, manual, software, source_code, publication, github, other. Please include the model's website and/or repository.
+      description: One per line as `type | title | URL`. Types are official_website, model_download, run_tool, source_code, manual, publication, other. Please include the model's website and where it can be obtained.
       placeholder: |
         official_website | MGM official website | https://mgm.ualberta.ca/
-        github | MGM repository | https://github.com/...
+        run_tool | MGM R package | https://github.com/...
     validations:
       required: true
   - type: checkboxes
@@ -70,6 +70,29 @@ body:
         - managed
         - unmanaged_managed
       default: 0
+  - type: dropdown
+    id: availability
+    attributes:
+      label: Availability
+      description: How the model itself can be obtained.
+      options:
+        - unknown
+        - public_download
+        - on_request
+        - restricted
+        - not_available
+      default: 0
+  - type: checkboxes
+    id: output_types
+    attributes:
+      label: Output types (optional)
+      description: Standardized output categories; select any that apply.
+      options:
+        - label: merchantable_volume
+        - label: total_volume
+        - label: basal_area
+        - label: biomass
+        - label: other
   - type: textarea
     id: summary
     attributes:

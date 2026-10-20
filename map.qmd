@@ -2,11 +2,15 @@
 title: "Coverage map"
 ---
 
-Click a province or territory to see the models recorded for it. A filled
-jurisdiction has at least one model; the fill does not show an exact model
-footprint or imply a recommendation. Where a model applies only to part of a
-jurisdiction, the region is noted in the popup. Coverage is summarized here and
-may be out of date; confirm details on each model's website.
+Two views of the same coverage data are available from the layer control at
+the top right. **Provinces and territories** (default): click a jurisdiction
+to see the models recorded for it. **Ecozones**: click an ecozone to see the
+models recorded for a province or territory it overlaps. A filled area has at
+least one model; the fill does not show an exact model footprint or imply a
+recommendation. The largely unforested Arctic ecozones (Arctic Cordillera,
+Northern Arctic and Southern Arctic) are not shown. Where a model applies only to part of a jurisdiction, the
+region is noted in the popup. Coverage is summarized here and may be out of
+date; confirm details on each model's website.
 
 ```{=html}
 <style>
@@ -26,11 +30,40 @@ library(leaflet)
 library(htmltools)
 source("R/registry.R")
 source("R/site_helpers.R")
+source("R/geo.R")
 
 canada <- st_read("data/geospatial/canada/ca.shp", quiet = TRUE)
+ecozones <- st_read("data/geospatial/ecozones/ecozones.gpkg", quiet = TRUE)
+province_ecozones <- read_registry_csv("data/geospatial/ecozones/province_ecozones.csv")
 coverage <- read_registry_table("model_coverage")
 models <- read_registry_table("models")
 model_names <- stats::setNames(models$model_name, models$model_id)
+
+# Provinces/territories each ecozone overlaps (data/geospatial/ecozones/province_ecozones.csv).
+ecozone_provinces <- split(province_ecozones$jurisdiction_code, province_ecozones$ecozone_code)
+
+# Per-row ecozone claims and whether each coverage row is province-wide (blank ecozones).
+coverage_ecozones_list <- lapply(coverage$ecozones, split_multi)
+coverage_is_provincewide <- lengths(coverage_ecozones_list) == 0L
+
+# Coverage rows for one ecozone: province-wide rows for a jurisdiction it
+# overlaps, plus rows that list it explicitly.
+claims_for_ecozone <- function(ecozone_code) {
+  jurisdictions <- ecozone_provinces[[ecozone_code]]
+  if (is.null(jurisdictions)) {
+    jurisdictions <- character()
+  }
+  provincewide <- coverage_is_provincewide & coverage$jurisdiction_code %in% jurisdictions
+  explicit <- vapply(coverage_ecozones_list, function(x) ecozone_code %in% x, logical(1))
+
+  provincewide_rows <- coverage[provincewide, , drop = FALSE]
+  provincewide_rows$scope <- "province-wide"
+  explicit_rows <- coverage[explicit, , drop = FALSE]
+  explicit_rows$scope <- "listed"
+
+  claims <- rbind(provincewide_rows, explicit_rows)
+  claims[order(model_names[claims$model_id]), , drop = FALSE]
+}
 
 canada$jurisdiction_code <- substring(canada$id, 3L)
 if (any(!grepl("^CA[A-Z]{2}$", canada$id)) || anyDuplicated(canada$jurisdiction_code)) {
@@ -78,6 +111,44 @@ popup_for <- function(jurisdiction_code, jurisdiction_name) {
   ))
 }
 
+popup_for_ecozone <- function(ecozone_code, ecozone_name) {
+  claims <- claims_for_ecozone(ecozone_code)
+
+  if (nrow(claims) == 0) {
+    return(as.character(tags$div(
+      tags$h4(ecozone_name),
+      tags$p("No models recorded.")
+    )))
+  }
+
+  claim_items <- lapply(seq_len(nrow(claims)), function(i) {
+    claim <- claims[i, ]
+    label <- paste0(
+      shown(model_names[[claim$model_id]]), " \u2014 ", claim$jurisdiction_code,
+      if (identical(claim$scope, "province-wide")) " (province-wide)"
+    )
+    details <- if (!is.na(claim$region_detail) && nzchar(claim$region_detail)) {
+      paste0("Region: ", claim$region_detail)
+    }
+
+    tags$li(
+      tags$strong(label),
+      if (!is.null(details)) tagList(tags$br(), details)
+    )
+  })
+
+  as.character(tags$div(
+    tags$h4(ecozone_name),
+    tags$p(paste(
+      "Models recorded for a province or territory this ecozone overlaps;",
+      "regional qualifiers apply. Province-wide entries are listed for every",
+      "ecozone the province overlaps; they may not apply throughout this",
+      "ecozone."
+    )),
+    tags$ul(class = "mb-0", tagList(claim_items))
+  ))
+}
+
 coverage_codes <- unique(coverage$jurisdiction_code)
 canada$has_claims <- canada$jurisdiction_code %in% coverage_codes
 canada$model_count <- vapply(canada$jurisdiction_code, function(code) {
@@ -94,9 +165,26 @@ popups <- vapply(seq_len(nrow(canada)), function(i) {
   popup_for(canada$jurisdiction_code[[i]], canada$name[[i]])
 }, character(1))
 
-leaflet(canada, options = leafletOptions(minZoom = 2, maxZoom = 7)) |>
+ecozones$model_count <- vapply(ecozones$ecozone_code, function(code) {
+  length(unique(claims_for_ecozone(code)$model_id))
+}, integer(1))
+ecozones$has_claims <- ecozones$model_count > 0
+ecozones$fill_color <- ifelse(ecozones$has_claims, "#477b70", "#d8dedb")
+ecozones$click_label <- paste0(
+  ecozones$name_en,
+  " - ",
+  ecozones$model_count,
+  ifelse(ecozones$model_count == 1, " model", " models")
+)
+ecozone_popups <- vapply(seq_len(nrow(ecozones)), function(i) {
+  popup_for_ecozone(ecozones$ecozone_code[[i]], ecozones$name_en[[i]])
+}, character(1))
+
+leaflet(options = leafletOptions(minZoom = 2, maxZoom = 7)) |>
   setView(lng = -96, lat = 59, zoom = 3) |>
   addPolygons(
+    data = canada,
+    group = "Provinces and territories",
     layerId = ~jurisdiction_code,
     label = ~click_label,
     popup = popups,
@@ -113,13 +201,40 @@ leaflet(canada, options = leafletOptions(minZoom = 2, maxZoom = 7)) |>
       bringToFront = TRUE
     )
   ) |>
+  addPolygons(
+    data = ecozones,
+    group = "Ecozones",
+    layerId = ~ecozone_code,
+    label = ~click_label,
+    popup = ecozone_popups,
+    popupOptions = popupOptions(maxWidth = 420, minWidth = 240),
+    color = "#ffffff",
+    weight = 1,
+    opacity = 1,
+    fillColor = ~fill_color,
+    fillOpacity = 0.85,
+    highlightOptions = highlightOptions(
+      weight = 2,
+      color = "#263d38",
+      fillOpacity = 0.95,
+      bringToFront = TRUE
+    )
+  ) |>
+  # One shared legend: addLegend's `group` option does not hide/show a legend
+  # when switching *base* layers (only overlay groups), so the wording below
+  # is kept generic enough to apply to both the province and ecozone views.
   addLegend(
     position = "bottomleft",
     colors = c("#477b70", "#d8dedb"),
     labels = c("Model(s) recorded", "No model recorded"),
     title = "Registry coverage",
     opacity = 0.85
+  ) |>
+  addLayersControl(
+    baseGroups = c("Provinces and territories", "Ecozones"),
+    options = layersControlOptions(collapsed = FALSE)
   )
 ```
 
 Boundary data: [Simplemaps](https://simplemaps.com), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Ecozones: National Ecological Framework for Canada (AAFC), [Open Government Licence – Canada](https://open.canada.ca/en/open-government-licence-canada).

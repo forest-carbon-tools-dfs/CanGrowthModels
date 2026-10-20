@@ -31,6 +31,9 @@ body:
         - Management options
         - Other features
         - Programming language
+        - Availability
+        - Interface
+        - Output types
         - Management context
         - Notes
         - A link (add, fix, or remove)
@@ -41,7 +44,7 @@ body:
     id: proposed
     attributes:
       label: Proposed value or correction
-      description: "For a link, give `type | title | URL` where type is one of: official_website, manual, software, source_code, publication, github, other."
+      description: "For a link, give `type | title | URL` where type is one of: official_website, model_download, run_tool, source_code, manual, publication, other."
     validations:
       required: true
   - type: textarea

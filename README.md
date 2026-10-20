@@ -60,6 +60,14 @@ Contact: [derek.sattler@nrcan-rncan.gc.ca](mailto:derek.sattler@nrcan-rncan.gc.c
   map logic is an R code chunk in `map.qmd`.
 - `data/geospatial/canada/`: the Canada boundary shapefile and its Simplemaps
   CC BY 4.0 license notice.
+- `data/geospatial/ecozones/`: the simplified ecozone boundaries
+  (`ecozones.gpkg`, excluding the largely unforested Arctic Cordillera,
+  Northern Arctic and Southern Arctic ecozones) and province/territory-ecozone overlap lookup
+  (`province_ecozones.csv`) behind the map's ecozone view, the unmodified
+  source GeoPackage clipped to the Canada land boundary (`source/`), and the
+  Open Government Licence – Canada
+  notice (`license_gis.txt`). Derived by `scripts/prepare_ecozones.R`, which
+  is a one-time, re-runnable script, not part of the render pipeline.
 
 `CanGrowthModelsWikiPage.csv` is a retired, git-ignored seed file, not a pipeline
 input. Some early entries were seeded from a Wikipedia page; the per-row citation
@@ -92,9 +100,9 @@ rendering. The catalogue filters in the browser without a server. The map
 colors a province or territory when at least one model is recorded for it and
 opens the list of models on click; the fill is not an exact model footprint. A
 province match may represent only a region, ecosystem, or adjoining US state, as
-noted in the popup and on the model card. The programming language is recorded
-where known; open-source status and licensing are not, so see each model's
-website and repository. Some species
+noted in the popup and on the model card. The programming language, availability,
+and interface are recorded where known; open-source status and licensing are
+not, so see each model's website and repository. Some species
 lists are partial, so a missing search match does not establish that a model
 excludes a species. There is no public deployment.
 The validator checks every column against its schema definition (required values,
@@ -106,11 +114,13 @@ confirm that an entry is accurate or current.
 Copyright (C) 2026 His Majesty the King in Right of Canada, as represented by
 the Minister of Natural Resources.
 
-The project-authored software is licensed under the GNU General Public License,
-version 3 only (`GPL-3.0-only`). See [LICENSE](LICENSE) for the full terms.
-The software is provided without warranty, as described in the license.
-Referenced models, third-party software, and source materials retain their own
-copyrights and licensing terms; this license does not grant rights to them.
+The project-authored software and the registry data in `data/` are licensed
+under the GNU General Public License, version 3 only (`GPL-3.0-only`).
+See [LICENSE](LICENSE) for the full terms. Bundled third-party geospatial data
+retains its own licence; see [data/geospatial/canada/license_gis.txt](data/geospatial/canada/license_gis.txt).
+The software and data are provided without warranty, as described in the license.
+Referenced models, other third-party software, and source materials retain their
+own copyrights and licensing terms; this license does not grant rights to them.
 
 ## Citation
 

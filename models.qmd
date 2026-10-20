@@ -2,7 +2,7 @@
 title: "Models"
 ---
 
-Filter this catalogue by **model type**, **management context**, **province or territory**, or a **species keyword**. This registry is a starting point, not the authoritative source: models change over time and entries here are updated only periodically, so use the model website and repository links to confirm current details. The species search matches text, not a standardized species taxonomy; species lists are general summaries, so no match does not prove a model excludes a species. Jurisdiction matches refer only to recorded coverage, which can be limited to a region, ecosystem, or US state noted for that jurisdiction; read each coverage entry before interpreting a match as geographic applicability. When an entry covers multiple model versions, a filter match may describe only one version; check the model notes and link titles before applying it to another version.
+Filter this catalogue by **model type**, **management context**, **province or territory**, **availability**, **output type**, whether it has **tools to help run it**, or a **species keyword**. This registry is a starting point, not the authoritative source: models change over time and entries here are updated only periodically, so use the model website and repository links to confirm current details. The species search matches text, not a standardized species taxonomy; species lists are general summaries, so no match does not prove a model excludes a species. Jurisdiction matches refer only to recorded coverage, which can be limited to a region, ecosystem, or US state noted for that jurisdiction; read each coverage entry before interpreting a match as geographic applicability. When an entry covers multiple model versions, a filter match may describe only one version; check the model notes and link titles before applying it to another version.
 
 ```{=html}
 <div class="row g-2 mb-3" id="catalogue-filters">
@@ -21,6 +21,20 @@ Filter this catalogue by **model type**, **management context**, **province or t
   <div class="col-md-3">
     <label for="species-filter">Species keyword</label>
     <input id="species-filter" class="form-control" type="search" placeholder="e.g., spruce">
+  </div>
+  <div class="col-md-3">
+    <label for="output-type-filter">Output type</label>
+    <select id="output-type-filter" class="form-select"><option value="">All output types</option></select>
+  </div>
+  <div class="col-md-3">
+    <label for="availability-filter">Availability</label>
+    <select id="availability-filter" class="form-select"><option value="">All availability</option></select>
+  </div>
+  <div class="col-md-3 d-flex align-items-end">
+    <div class="form-check">
+      <input id="has-tools-filter" class="form-check-input" type="checkbox">
+      <label class="form-check-label" for="has-tools-filter">Has tools to help run it</label>
+    </div>
   </div>
 </div>
 <p id="catalogue-count" role="status" aria-live="polite"></p>
@@ -43,9 +57,17 @@ link_details <- function(resources) {
     resource <- resources[i, ]
     tags$li(
       tags$a(href = resource$url, resource$title, rel = "noopener noreferrer"),
-      paste0(" (", gsub("_", " ", resource$link_type), ")")
+      if (is_github_link(resource$url)) github_badge() else NULL
     )
   })
+}
+
+# Grouped sub-sections of a model's links, in the order defined by link_group_spec.
+link_sections <- function(resources) {
+  groups <- group_model_links(resources)
+  tagList(lapply(groups, function(group) {
+    tagList(tags$h4(group$label), tags$ul(tagList(link_details(group$rows))))
+  }))
 }
 
 model_cards <- lapply(order(models$model_id), function(i) {
@@ -62,6 +84,9 @@ model_cards <- lapply(order(models$model_id), function(i) {
       field("Organization", model$organization),
       field("Model type", model$model_type),
       field("Programming language", model$programming_language),
+      field("Availability", gsub("_", " ", model$availability)),
+      field("Interface", gsub("_", " ", model$interface)),
+      field("Output types", gsub("_", " ", model$output_types)),
       field("Species", model$species),
       field("Minimum inputs", model$minimum_inputs),
       field("Outputs", model$outputs),
@@ -96,6 +121,9 @@ model_cards <- lapply(order(models$model_id), function(i) {
       !is.na(claims$jurisdiction_code)
     ]), collapse = "|"),
     `data-species` = paste(na.omit(model$species), collapse = " "),
+    `data-outputs` = paste(split_multi(model$output_types), collapse = "|"),
+    `data-availability` = paste(na.omit(model$availability), collapse = "|"),
+    `data-has-tools` = if (any(resources$link_type == "run_tool")) "yes" else "no",
     tags$div(
       class = "card-body",
       tags$h2(class = "card-title", id = id, shown(model$model_name)),
@@ -105,11 +133,7 @@ model_cards <- lapply(order(models$model_id), function(i) {
       tags$h3("Geographic coverage"),
       if (nrow(claims) > 0) tags$ul(tagList(claim_details)) else tags$p("Not recorded"),
       tags$h3("Model websites, related documents/tools and downloads"),
-      if (nrow(resources) > 0) {
-        tags$ul(tagList(link_details(resources)))
-      } else {
-        tags$p("Not recorded")
-      }
+      if (nrow(resources) > 0) link_sections(resources) else tags$p("Not recorded")
     )
   )
 })
@@ -125,10 +149,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const context = document.getElementById("management-context-filter");
   const jurisdiction = document.getElementById("jurisdiction-filter");
   const species = document.getElementById("species-filter");
+  const outputType = document.getElementById("output-type-filter");
+  const availability = document.getElementById("availability-filter");
+  const hasTools = document.getElementById("has-tools-filter");
   const count = document.getElementById("catalogue-count");
 
   for (const [select, key] of [
-    [type, "type"], [context, "context"], [jurisdiction, "jurisdiction"]
+    [type, "type"], [context, "context"], [jurisdiction, "jurisdiction"],
+    [outputType, "outputs"], [availability, "availability"]
   ]) {
     const values = new Set(cards.flatMap(card => card.dataset[key].split("|").filter(Boolean)));
     for (const value of [...values].sort()) {
@@ -140,19 +168,21 @@ document.addEventListener("DOMContentLoaded", () => {
     let visible = 0;
     for (const card of cards) {
       const matches = [
-        [type, "type"], [context, "context"], [jurisdiction, "jurisdiction"]
+        [type, "type"], [context, "context"], [jurisdiction, "jurisdiction"],
+        [outputType, "outputs"], [availability, "availability"]
       ].every(([select, key]) =>
         !select.value || card.dataset[key].split("|").includes(select.value)
       );
       const speciesMatch = card.dataset.species.toLocaleLowerCase()
         .includes(species.value.trim().toLocaleLowerCase());
-      card.hidden = !(matches && speciesMatch);
+      const toolsMatch = !hasTools.checked || card.dataset.hasTools === "yes";
+      card.hidden = !(matches && speciesMatch && toolsMatch);
       if (!card.hidden) visible++;
     }
     count.textContent = `${visible} of ${cards.length} models shown`;
   }
 
-  for (const input of [type, context, jurisdiction, species]) {
+  for (const input of [type, context, jurisdiction, species, outputType, availability, hasTools]) {
     input.addEventListener("input", filterCards);
   }
   filterCards();

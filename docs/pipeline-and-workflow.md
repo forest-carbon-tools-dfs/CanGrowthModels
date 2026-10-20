@@ -32,6 +32,7 @@ outdated or inaccurate facts.
 | `data/model_links.csv` | Links to websites, repositories, software, manuals, and publications, one row per link | Maintainers |
 | `data/*_schema_definition.csv` | Column definitions, data types, required flags, allowed values, examples; **read by the validator** | Maintainers |
 | `data/geospatial/canada/` | Canada province/territory boundary shapefile and Simplemaps license notice | Maintainers |
+| `data/geospatial/ecozones/` | Ecozone boundary geopackage (`ecozones.gpkg`), the province x ecozone overlap lookup (`province_ecozones.csv`), the unmodified source GeoPackage (`source/`, AAFC ecozones clipped to the Canada land boundary, Arctic ecozones removed), and the Open Government Licence - Canada notice; derived by `scripts/prepare_ecozones.R` | Maintainers |
 
 The Quarto pages read `data/` directly; there is no generated `derived/` copy.
 Local source manuals used while gathering information are kept outside the
@@ -62,6 +63,7 @@ erDiagram
         text model_id FK
         controlled jurisdiction_code
         text region_detail
+        controlled ecozones
         text stand_scope
     }
     MODEL_LINKS {
@@ -112,10 +114,13 @@ the validator rejects blank values. Species lists use expanded names rather than
 | `model_type` | controlled | No | Broad model class. | `whole_stand`, `individual_tree`, `diameter_class`, `hybrid`, `other`, `unknown` | `whole_stand` |
 | `species` | text | No | Species or groups covered (general summary). Multi-value. | — | `Balsam fir;black spruce` |
 | `minimum_inputs` | text | No | Minimum inputs to run the model. Multi-value. | — | `site index;species` |
-| `outputs` | text | No | Key outputs. Multi-value. | — | `volume;basal area` |
+| `outputs` | text | No | Key outputs; free-text detail. Multi-value. See `output_types` for the standardized categories that drive catalogue filtering. | — | `volume;basal area` |
 | `management_options` | text | No | Management actions the model can represent. Multi-value. | — | `thinning;fertilization` |
 | `other_features` | text | No | Other represented features (mortality, regeneration, climate, disturbance). Multi-value. | — | `mortality;climate` |
 | `programming_language` | text | No | Programming language(s) the model is written in. Multi-value. Use `unknown` until determined. | — | `Fortran;R` |
+| `availability` | controlled | Yes | How the model itself can be obtained. Use `unknown` until determined. | `public_download`, `on_request`, `restricted`, `not_available`, `unknown` | `public_download` |
+| `interface` | controlled | No | How users run the model. Multi-value. | `r_package`, `python_package`, `desktop_application`, `web_application`, `command_line`, `spreadsheet`, `other`, `unknown` | `r_package;command_line` |
+| `output_types` | controlled | No | Standardized output categories used by the catalogue filter; keep free-text detail in `outputs`. Multi-value. | `merchantable_volume`, `total_volume`, `basal_area`, `biomass`, `other` | `merchantable_volume;basal_area` |
 | `management_context` | controlled | Yes | Stands the model is intended for. `unmanaged` = natural-origin or fire-origin stands, or stands harvested long ago and now old; `managed` = harvested or replanted stands; `unmanaged_managed` = both. Use `unknown` until determined. | `unmanaged`, `managed`, `unmanaged_managed`, `unknown` | `managed` |
 | `notes` | text | No | Free-text qualifications or uncertainties. | — | — |
 | `last_reviewed` | date | No | Date the maintainer last reviewed this entry. | `YYYY-MM-DD` | `2026-10-19` |
@@ -131,19 +136,26 @@ built from this table.
 | `model_id` | text | Yes | Must match `models.model_id`. | — | `mgm` |
 | `jurisdiction_code` | controlled | Yes | Canadian province/territory the model is tied to; the only record of a model's provinces/territories. | `AB`, `BC`, `SK`, `MB`, `ON`, `QC`, `NB`, `NS`, `PE`, `NL`, `YT`, `NT`, `NU` | `AB` |
 | `region_detail` | text | No | Sub-region, specific area, ecosystem or ecoregion, or US state. Blank for province-wide coverage. | — | `BC_interior` |
+| `ecozones` | controlled | No | Ecozones within this jurisdiction the model applies to, when its documentation names them; multi-value. Blank means province-wide or unknown, and drives the map's ecozone view through `data/geospatial/ecozones/province_ecozones.csv`. | `taiga_plains`, `taiga_shield`, `boreal_shield`, `atlantic_maritime`, `mixedwood_plains`, `boreal_plains`, `prairies`, `taiga_cordillera`, `boreal_cordillera`, `pacific_maritime`, `montane_cordillera`, `hudson_plains` | `boreal_shield;atlantic_maritime` |
 | `stand_scope` | text | No | Stand conditions the model is applied to in this jurisdiction. | — | `Pure and mixed-species stands` |
 
 ### 2.3 `data/model_links.csv`
 
-One row per link. Links are how users find current model details. All of a
-model's links appear together on its card under *Model websites, related
-documents/tools and downloads*, each labelled with its type.
+One row per link. Links are how users find current model details. On the model
+card, a model's links are grouped into ordered sub-sections under *Model
+websites, related documents/tools and downloads*: **Model website**
+(`official_website`), **Get the model** (`model_download`, `source_code`),
+**Tools to help run it** (`run_tool`), **Documentation and publications**
+(`manual`, `publication`), and **Other links** (`other`); empty sub-sections
+are omitted. Whether a link happens to be hosted on GitHub is detected from its
+URL (`github.com` or `*.github.io`) and shown as a small "GitHub" badge, not
+from `link_type`.
 
 | Column | Type | Required | Definition | Allowed values | Example |
 | --- | --- | --- | --- | --- | --- |
 | `link_id` | text | Yes | Unique identifier for this link. | — | `mgm_official_website` |
 | `model_id` | text | Yes | Must match `models.model_id`. | — | `mgm` |
-| `link_type` | controlled | Yes | Kind of resource. Use `github` for resources hosted on GitHub and `source_code` for repositories hosted elsewhere. | `official_website`, `manual`, `software`, `source_code`, `publication`, `other`, `github` | `official_website` |
+| `link_type` | controlled | Yes | Purpose of the linked resource. `model_download` = where to obtain the model itself (download page, installer, executable, or request form); `run_tool` = tools that help prepare inputs for or run the model (e.g. R packages, wrappers, scripts); `source_code` = the model's own source code repository. | `official_website`, `model_download`, `run_tool`, `source_code`, `manual`, `publication`, `other` | `official_website` |
 | `title` | text | Yes | Text shown for the hyperlink. | — | `MGM official website` |
 | `url` | url | Yes | Public address beginning with `http://` or `https://`. | — | `https://mgm.ualberta.ca/` |
 | `accessed_date` | date | No | Date the link was last checked. | `YYYY-MM-DD` | `2026-10-06` |
@@ -167,13 +179,22 @@ flowchart TD
         REVIEW["Maintainer gathers brief facts and links<br/>using the schema definitions"]
     end
 
+    subgraph GEOPREP["One-time geospatial prep (manual re-run)"]
+        SRC["geospatial/ecozones/source/<br/>(unmodified AAFC GeoPackage, clipped to land)"]
+        PREP["scripts/prepare_ecozones.R"]
+        SRC --> PREP
+    end
+
     subgraph DATA["data/ (version-controlled)"]
         SCHEMA["*_schema_definition.csv"]
         M["models.csv"]
         C["model_coverage.csv"]
         L["model_links.csv"]
         G["geospatial/canada/ca.shp"]
+        EZ["geospatial/ecozones/ecozones.gpkg<br/>+ province_ecozones.csv"]
     end
+
+    PREP --> EZ
 
     SCHEMA -.->|"guides"| REVIEW
     REVIEW --> M & C & L
@@ -187,24 +208,27 @@ flowchart TD
 
     subgraph SITE["Quarto website"]
         Q["models.qmd<br/>one card per model_id"]
-        MAP["map.qmd<br/>Leaflet coverage map"]
+        MAP["map.qmd<br/>Leaflet coverage map:<br/>provinces/territories and ecozones views"]
         OUT["_site/ (rendered HTML)"]
     end
 
     V --> Q
     V --> MAP
     M & C & L --> Q --> OUT
-    C & G --> MAP --> OUT
+    C & G & EZ --> MAP --> OUT
 ```
 
 | File | Purpose |
 | --- | --- |
 | `R/registry.R` | Schema-driven checks: columns, required values, types, controlled values, unique keys, `model_id` references. |
 | `R/site_helpers.R` | Shared display helpers for the pages. |
+| `R/geo.R` | `check_coverage_ecozones()`: flags coverage rows whose `ecozones` are outside the jurisdiction's overlap in `province_ecozones.csv`. Exercised by `tests/testthat/test-ecozones.R`; not yet wired into `validate_registry.R` (see [§7](#7-known-gaps-and-open-decisions)). |
 | `scripts/validate_registry.R` | Runs the validator; Quarto runs it before every render. Any error stops the render. |
+| `scripts/prepare_ecozones.R` | One-time, re-runnable: drops the largely unforested Arctic Cordillera, Northern Arctic and Southern Arctic ecozones, dissolves and simplifies the rest of the source ecozone GeoPackage, and writes `data/geospatial/ecozones/ecozones.gpkg` and the `province_ecozones.csv` overlap lookup used by the map's ecozone view. Re-run only if the source GeoPackage, the excluded ecozones or the simplification tolerance changes. |
 | `tests/testthat/test-registry.R` | Data-contract tests (committed data passes; schema and data headers agree; each rule fails on bad input). |
+| `tests/testthat/test-ecozones.R` | Checks `ecozones.gpkg` and `province_ecozones.csv` contents and `check_coverage_ecozones()`. |
 | `models.qmd` | One card per model with filters (type, management context, jurisdiction, species keyword). |
-| `map.qmd` | Leaflet map; clicking a province/territory lists its models with region and stand scope. A filled area is not a model footprint. |
+| `map.qmd` | Leaflet map with two base layers: "Provinces and territories" (clicking lists its models with region and stand scope) and "Ecozones" (clicking lists models tied to that ecozone, including province-wide entries from overlapping provinces). A filled area is not a model footprint. |
 | `.github/workflows/validate-and-render.yml` | CI: runs the tests and renders the site on pushes and pull requests. |
 
 ### Running the checks
@@ -251,9 +275,9 @@ contain commas, and separate multiple values with semicolons.
 ### Adding a model
 
 1. Add one row to `data/models.csv`. Fill the required fields (`model_id`,
-   `model_name`, `management_context`); set `management_context` to `unknown` and
-   `programming_language` to `unknown` until determined; set `last_reviewed` to
-   today's date.
+   `model_name`, `management_context`, `availability`); set `management_context`
+   and `availability` to `unknown`, and `programming_language` to `unknown`,
+   until determined; set `last_reviewed` to today's date.
 2. Add one row per province/territory to `data/model_coverage.csv`, each with a
    unique `coverage_id` and the same `model_id`. Use `region_detail` for a
    sub-region (e.g. `BC_interior`), ecosystem, or US state.
@@ -270,8 +294,10 @@ links; the validator lists any `model_id` that no longer exists.
 | Field | When information is incomplete |
 | --- | --- |
 | `management_context` | Required; use `unknown`. |
+| `availability` | Required; use `unknown`. |
 | `programming_language` | Use `unknown`. |
 | `model_type` | `unknown` is allowed. |
+| `interface`, `output_types` | May stay blank until determined. |
 | `jurisdiction_code` | Canadian codes only; US states and regions go in `region_detail`. |
 | Link `title`, `url` | Required; a real HTTP(S) URL. |
 | Other optional fields | May stay blank. |
@@ -394,7 +420,8 @@ Every column in every table is checked against its `*_schema_definition.csv`.
 | Primary key unique (`model_id`, `coverage_id`, `link_id`) | Error |
 | `model_id` in coverage and links exists in `models.csv` | Error |
 | Models with no row in model_links | Warning |
-| Models with no link whose link_type is one of official_website, source_code, github, software | Warning |
+| Models with no link whose link_type is one of official_website, model_download, source_code | Warning |
+| Models marked `availability = public_download` with no `model_download` link | Warning |
 | Models with no row in model_coverage (not shown on the map) | Warning |
 
 Not checked: link reachability, and whether any value is accurate or current.
@@ -403,14 +430,22 @@ Not checked: link reachability, and whether any value is accurate or current.
 
 ## 7. Known gaps and open decisions
 
-- **Map geography is jurisdiction-level.** Regions, ecosystems, and US states stay
-  in `region_detail` and are not drawn.
+- **Map geography is jurisdiction-level, plus an ecozone view.** Regions and
+  US states stay in `region_detail` and are not drawn. The ecozone view
+  (`map.qmd`) shows a province-wide model on every ecozone its province
+  overlaps, per `data/geospatial/ecozones/province_ecozones.csv`; this may
+  over-represent coverage where the model documentation did not actually
+  intend the whole province. `R/geo.R`'s `check_coverage_ecozones()` flags
+  `ecozones` values inconsistent with the jurisdiction's overlap but is only
+  exercised by `tests/testthat/test-ecozones.R` so far; wiring it into
+  `scripts/validate_registry.R` is a follow-up.
 - **No provenance or verification fields.** By design; `last_reviewed` records
   when an entry was last reviewed, and links point to authoritative material.
-- **Data licence.** The software is GPL-3.0-only; the licence for the registry
-  *data* (and for contributed submissions) is not yet stated. Decide before
-  public release, for example by adding a data licence file, and note it in
-  `CONTRIBUTING.md`.
+- **Data licence.** The registry data in `data/` is licensed under GPL-3.0-only,
+  the same as the software. Bundled third-party geospatial data (Canada boundaries)
+  retains its own CC BY 4.0 licence; see `data/geospatial/canada/license_gis.txt`.
+  Ecozone boundaries (AAFC) are licensed under the Open Government Licence -
+  Canada; see `data/geospatial/ecozones/license_gis.txt`.
 - **Wikipedia-seeded entries.** Some early entries were seeded from a Wikipedia
   page (CC BY-SA); review reuse requirements before public release.
 - **CI not yet exercised on GitHub.** The same commands pass locally.

@@ -40,4 +40,4 @@ field are in [docs/pipeline-and-workflow.md](docs/pipeline-and-workflow.md).
   territories only; use `region_detail` for sub-regions, ecosystems, or US
   states.
 - Do not commit credentials, source manuals, or generated site output.
-- Data licensing for contributions has not yet been finalized; see the guide.
+- Contributions are accepted under the GPL-3.0-only licence of this project and its data registry.
