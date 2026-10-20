@@ -1,6 +1,6 @@
 # ============================================================
 # Canadian Forest Growth & Yield Model Registry
-# Schema-driven validation of the four registry tables.
+# Schema-driven validation of the three registry tables.
 #
 # The *_schema_definition.csv files in data/ are the single source of truth
 # for required columns, required values, data types and controlled values.
@@ -174,14 +174,35 @@ check_registry_references <- function(tables) {
   }
 
   coverage <- tables$model_coverage
-  names_by_id <- stats::setNames(tables$models$model_name, tables$models$model_id)
-  drift <- !is.na(coverage$model_id) & coverage$model_id %in% model_ids &
-    !is.na(coverage$model_name) &
-    coverage$model_name != names_by_id[coverage$model_id]
-  if (any(drift)) {
+
+  # Check for models with no links, no official links, and no coverage.
+  links <- tables$model_links
+  models_with_links <- unique(stats::na.omit(links$model_id))
+  no_links <- setdiff(model_ids, models_with_links)
+  if (length(no_links) > 0L) {
     warnings <- c(warnings, paste0(
-      "model_coverage.model_name differs from models.model_name for: ",
-      paste(unique(coverage$model_id[drift]), collapse = ", ")
+      "models with no link: ", paste(no_links, collapse = ", ")
+    ))
+  }
+
+  official_types <- c("official_website", "source_code", "github", "software")
+  has_official <- unique(links$model_id[
+    !is.na(links$model_id) & links$link_type %in% official_types
+  ])
+  no_official <- setdiff(model_ids, has_official)
+  if (length(no_official) > 0L) {
+    warnings <- c(warnings, paste0(
+      "models with no website, repository or software link: ",
+      paste(no_official, collapse = ", ")
+    ))
+  }
+
+  models_with_coverage <- unique(stats::na.omit(coverage$model_id))
+  no_coverage <- setdiff(model_ids, models_with_coverage)
+  if (length(no_coverage) > 0L) {
+    warnings <- c(warnings, paste0(
+      "models with no coverage row (not shown on the map): ",
+      paste(no_coverage, collapse = ", ")
     ))
   }
 

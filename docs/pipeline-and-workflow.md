@@ -45,7 +45,7 @@ repository and are not part of the pipeline.
 
 ```mermaid
 erDiagram
-    MODELS ||--o{ MODEL_COVERAGE : "is tied to jurisdictions"
+    MODELS ||--o{ MODEL_COVERAGE : "is tied to jurisdiction codes"
     MODELS ||--o{ MODEL_LINKS : "has web resources"
 
     MODELS {
@@ -60,7 +60,6 @@ erDiagram
     MODEL_COVERAGE {
         text coverage_id PK
         text model_id FK
-        text model_name
         controlled jurisdiction_code
         text region_detail
         text stand_scope
@@ -79,7 +78,7 @@ erDiagram
 - **Pointer, not source.** Keep entries brief and general; rely on links for
   detail. Do not reproduce detail from manuals or publications.
 - **One row per model.** Version-specific qualifications go in `notes` or in
-  labelled links rather than in duplicate model rows.
+  labelled link titles rather than in duplicate model rows.
 - **People and organizations are separate.** `developers` are the original
   developers; `organization` is the organization that supported or directed
   development; `contributors` are individuals or organizations that added to
@@ -110,7 +109,6 @@ the validator rejects blank values. Species lists use expanded names rather than
 | `developers` | text | No | Original developers (individuals). Multi-value. | — | `Mathieu Fortin; Luc Langevin` |
 | `contributors` | text | No | Individuals or organizations that added to later development. Multi-value. | — | `Jane Doe; University of Alberta` |
 | `organization` | text | No | Organization(s) that supported or directed development. Multi-value. | — | `BC Ministry of Forests` |
-| `jurisdictions` | controlled | No | Canadian provinces/territories where the model is used or applicable. Multi-value; provinces and territories only. | `AB`, `BC`, `SK`, `MB`, `ON`, `QC`, `NB`, `NS`, `PE`, `NL`, `YT`, `NT`, `NU` | `BC;AB` |
 | `model_type` | controlled | No | Broad model class. | `whole_stand`, `individual_tree`, `diameter_class`, `hybrid`, `other`, `unknown` | `whole_stand` |
 | `species` | text | No | Species or groups covered (general summary). Multi-value. | — | `Balsam fir;black spruce` |
 | `minimum_inputs` | text | No | Minimum inputs to run the model. Multi-value. | — | `site index;species` |
@@ -131,8 +129,7 @@ built from this table.
 | --- | --- | --- | --- | --- | --- |
 | `coverage_id` | text | Yes | Unique identifier for this row. | — | `mgm_ab` |
 | `model_id` | text | Yes | Must match `models.model_id`. | — | `mgm` |
-| `model_name` | text | Yes | Display name for map popups; keep identical to `models.model_name`. | — | `MGM` |
-| `jurisdiction_code` | controlled | Yes | Canadian province/territory the model is tied to. | same codes as `jurisdictions` | `AB` |
+| `jurisdiction_code` | controlled | Yes | Canadian province/territory the model is tied to; the only record of a model's provinces/territories. | `AB`, `BC`, `SK`, `MB`, `ON`, `QC`, `NB`, `NS`, `PE`, `NL`, `YT`, `NT`, `NU` | `AB` |
 | `region_detail` | text | No | Sub-region, specific area, ecosystem or ecoregion, or US state. Blank for province-wide coverage. | — | `BC_interior` |
 | `stand_scope` | text | No | Stand conditions the model is applied to in this jurisdiction. | — | `Pure and mixed-species stands` |
 
@@ -146,11 +143,10 @@ documents/tools and downloads*, each labelled with its type.
 | --- | --- | --- | --- | --- | --- |
 | `link_id` | text | Yes | Unique identifier for this link. | — | `mgm_official_website` |
 | `model_id` | text | Yes | Must match `models.model_id`. | — | `mgm` |
-| `link_type` | controlled | Yes | Kind of resource. | `official_website`, `manual`, `software`, `source_code`, `publication`, `other` | `official_website` |
+| `link_type` | controlled | Yes | Kind of resource. Use `github` for resources hosted on GitHub and `source_code` for repositories hosted elsewhere. | `official_website`, `manual`, `software`, `source_code`, `publication`, `other`, `github` | `official_website` |
 | `title` | text | Yes | Text shown for the hyperlink. | — | `MGM official website` |
 | `url` | url | Yes | Public address beginning with `http://` or `https://`. | — | `https://mgm.ualberta.ca/` |
 | `accessed_date` | date | No | Date the link was last checked. | `YYYY-MM-DD` | `2026-10-06` |
-| `notes` | text | No | Link context, including version-specific applicability. | — | `URL supplied by registry maintainer` |
 
 ### 2.4 Schema definition files
 
@@ -203,7 +199,7 @@ flowchart TD
 
 | File | Purpose |
 | --- | --- |
-| `R/registry.R` | Schema-driven checks: columns, required values, types, controlled values, unique keys, `model_id` references, `model_name` drift. |
+| `R/registry.R` | Schema-driven checks: columns, required values, types, controlled values, unique keys, `model_id` references. |
 | `R/site_helpers.R` | Shared display helpers for the pages. |
 | `scripts/validate_registry.R` | Runs the validator; Quarto runs it before every render. Any error stops the render. |
 | `tests/testthat/test-registry.R` | Data-contract tests (committed data passes; schema and data headers agree; each rule fails on bad input). |
@@ -276,7 +272,7 @@ links; the validator lists any `model_id` that no longer exists.
 | `management_context` | Required; use `unknown`. |
 | `programming_language` | Use `unknown`. |
 | `model_type` | `unknown` is allowed. |
-| `jurisdictions`, coverage `jurisdiction_code` | Canadian codes only; US states and regions go in `region_detail`. |
+| `jurisdiction_code` | Canadian codes only; US states and regions go in `region_detail`. |
 | Link `title`, `url` | Required; a real HTTP(S) URL. |
 | Other optional fields | May stay blank. |
 
@@ -316,7 +312,7 @@ validates it, checks it against the model's own public pages, and sets
   restricted material.
 - Keep entries brief and general. Do not guess; leave a field blank or
   `unknown` rather than infer a value.
-- Provinces and territories only in `jurisdictions`/`jurisdiction_code`; put
+- Provinces and territories only in `jurisdiction_code`; put
   regions, ecosystems, and US states in `region_detail`.
 - Contributions are accepted under the repository's licence terms (see
   [Open decisions](#7-known-gaps-and-open-decisions) for the data licence).
@@ -397,7 +393,9 @@ Every column in every table is checked against its `*_schema_definition.csv`.
 | `controlled` values are in the allowed list (multi-value cells split on `;`) | Error |
 | Primary key unique (`model_id`, `coverage_id`, `link_id`) | Error |
 | `model_id` in coverage and links exists in `models.csv` | Error |
-| `model_coverage.model_name` equals `models.model_name` | Warning |
+| Models with no row in model_links | Warning |
+| Models with no link whose link_type is one of official_website, source_code, github, software | Warning |
+| Models with no row in model_coverage (not shown on the map) | Warning |
 
 Not checked: link reachability, and whether any value is accurate or current.
 
@@ -418,5 +416,3 @@ Not checked: link reachability, and whether any value is accurate or current.
 - **CI not yet exercised on GitHub.** The same commands pass locally.
 - **No tests of rendered pages.** Tests cover the data contract, not the
   catalogue filters or map popups.
-- **Duplicated `model_name` in coverage.** Dropping it and joining by `model_id`
-  would remove the drift warning.

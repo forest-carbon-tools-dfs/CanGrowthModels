@@ -21,7 +21,7 @@ body:
         - Developers
         - Contributors
         - Organization
-        - Provinces/territories (jurisdictions or coverage)
+        - Provinces/territories (coverage)
         - Region, ecosystem, or US state
         - Stand scope
         - Model type
@@ -41,7 +41,7 @@ body:
     id: proposed
     attributes:
       label: Proposed value or correction
-      description: For a link, give `type | title | URL`.
+      description: "For a link, give `type | title | URL` where type is one of: official_website, manual, software, source_code, publication, github, other."
     validations:
       required: true
   - type: textarea

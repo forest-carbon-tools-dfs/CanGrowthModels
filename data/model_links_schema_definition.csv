@@ -1,8 +1,7 @@
 field_name,data_type,required,description,allowed_values,example
 link_id,text,yes,Unique stable identifier for this link record.,,mgm_official_website
 model_id,text,yes,Stable model identifier matching data/models.csv.,,mgm
-link_type,controlled,yes,Kind of model-related resource linked.,official_website|manual|software|source_code|publication|other|github,official_website
+link_type,controlled,yes,"Kind of model-related resource linked. Use github for resources hosted on GitHub and source_code for repositories hosted elsewhere.",official_website|manual|software|source_code|publication|other|github,official_website
 title,text,yes,Human-readable hyperlink text.,,MGM official website
 url,url,yes,Public HTTP or HTTPS URL.,,https://mgm.ualberta.ca/
 accessed_date,date,no,Date the link was last checked.,YYYY-MM-DD,2026-10-06
-notes,text,no,Link context including version-specific applicability.,,URL supplied by registry maintainer

@@ -6,8 +6,8 @@ Maintain a private-first registry that helps researchers discover Canadian fores
 
 ## Current Status (2026-10-19)
 
-- The registry has three tables: `models` (24 rows), `model_coverage` (28 rows, province/territory plus optional region, drives the map), and `model_links` (32 rows).
-- The schema was simplified: per-claim provenance and verification (`source_file`, `source_citation`, `source_year`, `source_reference`, `coverage_basis`, `species_scope`, `validation_evidence`, `verification_status`, `status`) and the `model_sources` table were removed. `contributors` and `last_reviewed` were added. See `docs/pipeline-and-workflow.md`.
+- The registry has three tables: `models` (24 rows), `model_coverage` (30 rows, province/territory plus optional region, drives the map), and `model_links` (32 rows).
+- The schema was simplified: per-claim provenance and verification (`source_file`, `source_citation`, `source_year`, `source_reference`, `coverage_basis`, `species_scope`, `validation_evidence`, `verification_status`, `status`) and the `model_sources` table were removed. `contributors` and `last_reviewed` were added. The duplicate `models.jurisdictions` and `model_coverage.model_name` columns were also dropped; `model_coverage.jurisdiction_code` is now the single source of a model's provinces/territories. See `docs/pipeline-and-workflow.md`.
 - Quarto renders `index.qmd`, `models.qmd`, and `map.qmd`. Pre-render runs one schema-driven validator (`scripts/validate_registry.R`, built on `R/registry.R`); the pages read `data/` directly. Browser-side catalogue filters cover model type, management context, jurisdiction, and species keywords.
 - Automated data-contract tests (`tests/testthat/`) and a GitHub Actions workflow (`.github/workflows/`) are in place; the workflow has not yet been run on GitHub.
 - A jurisdiction-level Leaflet map is implemented in `map.qmd`. It reads the Canada province/territory shapefile in `data/geospatial/canada/` and `data/model_coverage.csv`; clicking a jurisdiction lists the models recorded for it, with any region noted. A filled province or territory is not an exact model footprint or a recommendation.
@@ -18,8 +18,6 @@ Still outstanding: many optional fields are blank pending further information ga
 
 Open data-shape decisions:
 
-- `model_coverage.model_name` repeats `models.model_name`; the validator warns if they drift. Dropping it and joining by `model_id` would remove that risk.
-- `models.jurisdictions` overlaps `model_coverage`; the map uses coverage only.
 - Semicolon-separated cells (species, outputs, inputs) limit filtering; consider long tables if species search needs to become exact.
 - Decide whether a downloadable SQLite snapshot is wanted; it is the natural reason to reintroduce a build step that produces something other than copies of the CSVs.
 

@@ -9,7 +9,7 @@ make_tables <- function() {
   list(
     models = data.frame(
       model_id = "m1", model_name = "Model One", developers = NA,
-      contributors = NA, organization = NA, jurisdictions = "BC;PE",
+      contributors = NA, organization = NA,
       model_type = "whole_stand", species = NA, minimum_inputs = NA,
       outputs = NA, management_options = NA, other_features = NA,
       programming_language = "unknown",
@@ -17,14 +17,14 @@ make_tables <- function() {
       stringsAsFactors = FALSE
     ),
     model_coverage = data.frame(
-      coverage_id = "c1", model_id = "m1", model_name = "Model One",
+      coverage_id = "c1", model_id = "m1",
       jurisdiction_code = "BC", region_detail = "BC_interior",
       stand_scope = NA, stringsAsFactors = FALSE
     ),
     model_links = data.frame(
       link_id = "l1", model_id = "m1", link_type = "official_website",
       title = "Site", url = "https://example.org", accessed_date = "2026-10-06",
-      notes = NA, stringsAsFactors = FALSE
+      stringsAsFactors = FALSE
     )
   )
 }
@@ -55,7 +55,26 @@ test_that("schema definitions parse cleanly and match the data files", {
 })
 
 test_that("a valid in-memory registry has no errors", {
-  expect_length(check_all(make_tables()), 0)
+  result <- check_all(make_tables())
+  expect_length(result, 0)
+  # Also verify that a valid registry produces no warnings
+  tables <- make_tables()
+  refs <- check_registry_references(tables)
+  expect_length(refs$warnings, 0)
+})
+
+test_that("models missing links or coverage produce warnings", {
+  tables <- make_tables()
+  # Add a second model with no links and no coverage
+  m2 <- tables$models
+  m2$model_id <- "m2"
+  m2$model_name <- "Model Two"
+  tables$models <- rbind(tables$models, m2)
+  refs <- check_registry_references(tables)
+  expect_length(refs$errors, 0)
+  expect_true(any(grepl("models with no link: .*m2", refs$warnings)))
+  expect_true(any(grepl("models with no website, repository or software link: .*m2", refs$warnings)))
+  expect_true(any(grepl("models with no coverage row", refs$warnings)))
 })
 
 test_that("duplicate keys, bad controlled values and blank required fields are errors", {
@@ -71,12 +90,10 @@ test_that("duplicate keys, bad controlled values and blank required fields are e
   expect_true(any(grepl("model_links.title.*blank", errors)))
 })
 
-test_that("only Canadian provinces and territories are accepted as jurisdictions", {
+test_that("only Canadian provinces and territories are accepted as jurisdiction codes", {
   tables <- make_tables()
-  tables$models$jurisdictions <- "BC;PEI;Maine"
   tables$model_coverage$jurisdiction_code <- "BC_interior"
   errors <- check_all(tables)
-  expect_true(any(grepl("models.jurisdictions.*PEI, Maine", errors)))
   expect_true(any(grepl("jurisdiction_code.*BC_interior", errors)))
 })
 

@@ -22,7 +22,7 @@ Contact: [derek.sattler@nrcan-rncan.gc.ca](mailto:derek.sattler@nrcan-rncan.gc.c
   are individuals or organizations that added to its later development. Leave
   undocumented values blank rather than inferring them from publication authors
   or publishers.
-- `jurisdictions` and `model_coverage.jurisdiction_code` hold Canadian provinces
+- `model_coverage.jurisdiction_code` holds Canadian provinces
   and territories only. Use `region_detail` in `model_coverage.csv` for
   sub-regions, specific areas, ecosystems, or US states a model also covers.
 - Version families may share one model card; keep version-specific capabilities

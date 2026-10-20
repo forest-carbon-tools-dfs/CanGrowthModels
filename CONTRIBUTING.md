@@ -36,7 +36,7 @@ field are in [docs/pipeline-and-workflow.md](docs/pipeline-and-workflow.md).
 
 - Use public information only and keep entries brief and general.
 - Do not guess; leave a field blank or `unknown` where the guide allows.
-- `jurisdictions` and `jurisdiction_code` hold Canadian provinces and
+- `model_coverage.jurisdiction_code` holds Canadian provinces and
   territories only; use `region_detail` for sub-regions, ecosystems, or US
   states.
 - Do not commit credentials, source manuals, or generated site output.

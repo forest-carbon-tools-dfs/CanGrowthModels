@@ -29,6 +29,8 @@ source("R/site_helpers.R")
 
 canada <- st_read("data/geospatial/canada/ca.shp", quiet = TRUE)
 coverage <- read_registry_table("model_coverage")
+models <- read_registry_table("models")
+model_names <- stats::setNames(models$model_name, models$model_id)
 
 canada$jurisdiction_code <- substring(canada$id, 3L)
 if (any(!grepl("^CA[A-Z]{2}$", canada$id)) || anyDuplicated(canada$jurisdiction_code)) {
@@ -41,6 +43,7 @@ popup_for <- function(jurisdiction_code, jurisdiction_name) {
     ,
     drop = FALSE
   ]
+  claims <- claims[order(model_names[claims$model_id]), , drop = FALSE]
 
   if (nrow(claims) == 0) {
     return(as.character(tags$div(
@@ -61,7 +64,7 @@ popup_for <- function(jurisdiction_code, jurisdiction_name) {
     )
 
     tags$li(
-      tags$strong(shown(claim$model_name)),
+      tags$strong(shown(model_names[[claim$model_id]])),
       if (length(details) > 0) {
         tagList(tags$br(), paste(details, collapse = " | "))
       }

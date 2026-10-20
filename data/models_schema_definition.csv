@@ -4,7 +4,6 @@ model_name,text,yes,Common name or acronym of the model.,,VDYP7
 developers,text,no,Original developers of the model (individuals); separate multiple names with ';'. Leave blank if not known.,,Mathieu Fortin; Luc Langevin
 contributors,text,no,Individuals or organizations that added to the model's later development; separate multiple values with ';'. Leave blank if not known.,,Jane Doe; University of Alberta
 organization,text,no,Organization(s) that supported or directed the model's development; separate multiple values with ';'. Leave blank if not known.,,BC Ministry of Forests
-jurisdictions,controlled,no,Canadian provinces/territories where the model is used or applicable; separate multiple values with ';'. Only provinces and territories belong here: record sub-regions; ecosystems; and US states in region_detail of model_coverage.csv.,AB|BC|SK|MB|ON|QC|NB|NS|PE|NL|YT|NT|NU,BC;AB
 model_type,controlled,no,Broad model class.,whole_stand|individual_tree|diameter_class|hybrid|other|unknown,whole_stand
 species,text,no,Species or species groups covered; separate multiple values with ';'. Use expanded lists instead of Eastern SPF or Western SPF. A general summary only; see the model's own documentation for the authoritative list.,,Balsam fir;black spruce;red spruce;white spruce;jack pine
 minimum_inputs,text,no,Minimum inputs needed to initialize or run the model; separate multiple values with ';'. Leave blank if not known.,,site index;species;stem density

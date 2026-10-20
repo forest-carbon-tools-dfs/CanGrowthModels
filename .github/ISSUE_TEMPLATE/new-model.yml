@@ -17,10 +17,10 @@ body:
     id: links
     attributes:
       label: Links
-      description: One per line as `type | title | URL`. Types are official_website, manual, software, source_code, publication, other. Please include the model's website and/or repository.
+      description: One per line as `type | title | URL`. Types are official_website, manual, software, source_code, publication, github, other. Please include the model's website and/or repository.
       placeholder: |
         official_website | MGM official website | https://mgm.ualberta.ca/
-        source_code | MGM repository | https://github.com/...
+        github | MGM repository | https://github.com/...
     validations:
       required: true
   - type: checkboxes
