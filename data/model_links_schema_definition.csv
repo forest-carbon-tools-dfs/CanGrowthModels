@@ -1,7 +1,7 @@
 field_name,data_type,required,description,allowed_values,example
 link_id,text,yes,Unique stable identifier for this link record.,,mgm_official_website
 model_id,text,yes,Stable model identifier matching data/models.csv.,,mgm
-link_type,controlled,yes,"Purpose of the linked resource. model_download = where to obtain the model itself (download page, installer, executable, or request form); run_tool = tools that help prepare inputs for or run the model (e.g. R packages, wrappers, scripts); source_code = the model's own source code repository. GitHub hosting is detected from the URL, not the type.",official_website|model_download|run_tool|source_code|manual|publication|other,official_website
+link_type,controlled,yes,"Purpose of the linked resource. model_download = where to obtain the model itself (download page, installer, executable, or request form); run_tool = tools that help prepare inputs for or run the model (e.g. R packages, wrappers, scripts); source_code = the model's own source code repository. GitHub hosting is detected from the URL, not the type.",official_website|model_download|run_tool|source_code|model_manual|publication|other,official_website
 title,text,yes,Human-readable hyperlink text.,,MGM official website
 url,url,yes,Public HTTP or HTTPS URL.,,https://mgm.ualberta.ca/
 accessed_date,date,no,Date the link was last checked.,YYYY-MM-DD,2026-10-06

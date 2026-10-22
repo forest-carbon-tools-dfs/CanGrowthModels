@@ -11,7 +11,7 @@ make_tables <- function() {
       model_id = "m1", model_name = "Model One", developers = NA,
       contributors = NA, organization = NA,
       model_type = "whole_stand", species = NA, minimum_inputs = NA,
-      outputs = NA, management_options = NA, other_features = NA,
+      management_options = NA, other_features = NA,
       programming_language = "unknown",
       availability = "unknown", interface = NA, output_types = NA,
       management_context = "unknown", notes = NA, last_reviewed = "2026-10-19",

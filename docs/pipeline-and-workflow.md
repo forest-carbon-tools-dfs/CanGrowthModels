@@ -146,7 +146,7 @@ card, a model's links are grouped into ordered sub-sections under *Model
 websites, related documents/tools and downloads*: **Model website**
 (`official_website`), **Get the model** (`model_download`, `source_code`),
 **Tools to help run it** (`run_tool`), **Documentation and publications**
-(`manual`, `publication`), and **Other links** (`other`); empty sub-sections
+(`model_manual`, `publication`), and **Other links** (`other`); empty sub-sections
 are omitted. Whether a link happens to be hosted on GitHub is detected from its
 URL (`github.com` or `*.github.io`) and shown as a small "GitHub" badge, not
 from `link_type`.
@@ -155,7 +155,7 @@ from `link_type`.
 | --- | --- | --- | --- | --- | --- |
 | `link_id` | text | Yes | Unique identifier for this link. | — | `mgm_official_website` |
 | `model_id` | text | Yes | Must match `models.model_id`. | — | `mgm` |
-| `link_type` | controlled | Yes | Purpose of the linked resource. `model_download` = where to obtain the model itself (download page, installer, executable, or request form); `run_tool` = tools that help prepare inputs for or run the model (e.g. R packages, wrappers, scripts); `source_code` = the model's own source code repository. | `official_website`, `model_download`, `run_tool`, `source_code`, `manual`, `publication`, `other` | `official_website` |
+| `link_type` | controlled | Yes | Purpose of the linked resource. `model_download` = where to obtain the model itself (download page, installer, executable, or request form); `run_tool` = tools that help prepare inputs for or run the model (e.g. R packages, wrappers, scripts); `source_code` = the model's own source code repository. | `official_website`, `model_download`, `run_tool`, `source_code`, `model_manual`, `publication`, `other` | `official_website` |
 | `title` | text | Yes | Text shown for the hyperlink. | — | `MGM official website` |
 | `url` | url | Yes | Public address beginning with `http://` or `https://`. | — | `https://mgm.ualberta.ca/` |
 | `accessed_date` | date | No | Date the link was last checked. | `YYYY-MM-DD` | `2026-10-06` |

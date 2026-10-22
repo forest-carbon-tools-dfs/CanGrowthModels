@@ -44,7 +44,7 @@ body:
     id: proposed
     attributes:
       label: Proposed value or correction
-      description: "For a link, give `type | title | URL` where type is one of: official_website, model_download, run_tool, source_code, manual, publication, other."
+      description: "For a link, give `type | title | URL` where type is one of: official_website, model_download, run_tool, source_code, model_manual, publication, other."
     validations:
       required: true
   - type: textarea

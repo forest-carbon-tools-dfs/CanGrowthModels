@@ -36,7 +36,7 @@ link_group_spec <- list(
   list(label = "Model website", types = c("official_website")),
   list(label = "Get the model", types = c("model_download", "source_code")),
   list(label = "Tools to help run it", types = c("run_tool")),
-  list(label = "Documentation and publications", types = c("manual", "publication")),
+  list(label = "Documentation and publications", types = c("model_manual", "publication")),
   list(label = "Other links", types = c("other"))
 )
 

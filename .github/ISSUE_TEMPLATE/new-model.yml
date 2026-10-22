@@ -17,7 +17,7 @@ body:
     id: links
     attributes:
       label: Links
-      description: One per line as `type | title | URL`. Types are official_website, model_download, run_tool, source_code, manual, publication, other. Please include the model's website and where it can be obtained.
+      description: One per line as `type | title | URL`. Types are official_website, model_download, run_tool, source_code, model_manual, publication, other. Please include the model's website and where it can be obtained.
       placeholder: |
         official_website | MGM official website | https://mgm.ualberta.ca/
         run_tool | MGM R package | https://github.com/...
