@@ -84,7 +84,8 @@ rather than guess. Field definitions and allowed values are in
 
 **If you do not have write access to this repository** (the usual case):
 
-1. Open the *Propose a new model* issue form (`.github/ISSUE_TEMPLATE/new-model.yml`).
+1. Open the [**Propose a new model** form](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new?template=new-model.yml)
+   (or go to **Issues → New issue** and choose *Propose a new model*).
 2. Give the model name, its links (one per line as `type | title | URL`, where
    `type` is `official_website`, `model_download`, `run_tool`, `source_code`,
    `model_manual`, `publication` or `other`), the Canadian provinces/territories
@@ -131,8 +132,8 @@ maintainer confirms it against a public page.
 
 **If you do not have write access to this repository:**
 
-1. Open the *Suggest a change to an existing model* issue form
-   (`.github/ISSUE_TEMPLATE/update-model.yml`).
+1. Open the [**Suggest a change to an existing model** form](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new?template=update-model.yml)
+   (or go to **Issues → New issue** and choose *Suggest a change to an existing model*).
 2. Name the model (its name or `model_id`) and choose what should change
    (a field, the provinces/territories, or a link).
 3. Give the proposed value. For a link, write `type | title | URL`. Add the

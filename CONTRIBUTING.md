@@ -7,30 +7,20 @@ model's own website and repositories.
 
 All contributions are reviewed by a maintainer before anything changes.
 
-## I want to propose something (public users)
+## Adding a model or correcting information
 
-Open an issue and choose a form:
+The steps are in the README, so there is one place to keep up to date:
 
-- **Propose a new model**
-- **Suggest a change to an existing model**
-- **Suggest a new field**
+- [How to add a model](README.md#how-to-add-a-model)
+- [How to correct existing registry information](README.md#how-to-correct-existing-registry-information)
 
-Please give a public URL that supports your suggestion. Do not paste private or
-restricted material. A maintainer will check it, update the data, and close the
-issue.
-
-## I have write or fork access (collaborators)
-
-Edit the CSV files in `data/` on a branch or fork, run the checks, and open a
-pull request:
-
-```powershell
-Rscript scripts/validate_registry.R
-Rscript tests/testthat.R
-```
-
-Step-by-step instructions for adding a model, changing values, and adding a
-field are in [docs/pipeline-and-workflow.md](docs/pipeline-and-workflow.md).
+In short: **everyone** can use the
+[issue forms](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new/choose)
+(*Propose a new model*, *Suggest a change to an existing model*, *Suggest a new
+field*) and give a public URL that supports the suggestion. People with write or
+fork access can instead edit the CSV files in `data/` on a branch, run the checks
+and open a pull request. The table relationships and the detailed workflow are
+in [docs/pipeline-and-workflow.md](docs/pipeline-and-workflow.md).
 
 ## Ground rules
 
