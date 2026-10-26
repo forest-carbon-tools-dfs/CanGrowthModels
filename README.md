@@ -74,6 +74,89 @@ input. Some early entries were seeded from a Wikipedia page; the per-row citatio
 fields that recorded this have been removed, so review Wikipedia's reuse (CC BY-SA)
 requirements before any public release.
 
+## How to add a model
+
+Every contribution is a proposal until a maintainer checks it against the
+model's own public pages. Use **public information only**, give a public URL as
+evidence, and leave a field blank (or `unknown` where the schema allows it)
+rather than guess. Field definitions and allowed values are in
+`data/*_schema_definition.csv`.
+
+**If you do not have write access to this repository** (the usual case):
+
+1. Open the *Propose a new model* issue form (`.github/ISSUE_TEMPLATE/new-model.yml`).
+2. Give the model name, its links (one per line as `type | title | URL`, where
+   `type` is `official_website`, `model_download`, `run_tool`, `source_code`,
+   `model_manual`, `publication` or `other`), the Canadian provinces/territories
+   where it applies, and anything else you know (model type, availability,
+   output types, brief summary).
+3. Add the public URL(s) that support what you wrote and tick the confirmation
+   box. A maintainer will transcribe the entry into the CSVs and close the issue.
+
+**If you are a collaborator or maintainer** (you can edit the CSVs on a branch
+or fork), add the model in three files, from the project root:
+
+1. `data/models.csv`: add **one row** with a unique, stable `model_id`. Fill
+   what the sources state; use `unknown` for `management_context`,
+   `availability` and `programming_language` until determined. Set
+   `last_reviewed` to today's date (`YYYY-MM-DD`).
+2. `data/model_coverage.csv`: add **one row per province/territory** with a
+   unique `coverage_id` (convention `<model_id>_<code>`, e.g. `rsyc_ab`) and the
+   same `model_id`. Put sub-regions, ecosystems and US states in
+   `region_detail`. Fill `ecozones` only when the documentation names them;
+   blank means province-wide.
+3. `data/model_links.csv`: add **one row per link** with a unique `link_id`
+   (convention `<model_id>_<short_slug>`), the same `model_id`, a `link_type`
+   (the purpose of the link: see the list above), a `title`, an HTTP(S) `url`
+   and today's date as `accessed_date`. Every model needs at least one link, and
+   a `public_download` model needs a `model_download` link.
+4. Run both checks and fix anything they report:
+
+   ```powershell
+   Rscript scripts/validate_registry.R
+   Rscript tests/testthat.R
+   ```
+
+5. Commit on a branch and open a pull request using the template, naming the
+   public page(s) that support the entry.
+
+See [Adding a model](docs/pipeline-and-workflow.md#adding-a-model) and
+[Contributing](docs/pipeline-and-workflow.md#5-contributing) in the registry
+guide for the full details.
+
+## How to correct existing registry information
+
+Corrections go through the same review: a change is a proposal until a
+maintainer confirms it against a public page.
+
+**If you do not have write access to this repository:**
+
+1. Open the *Suggest a change to an existing model* issue form
+   (`.github/ISSUE_TEMPLATE/update-model.yml`).
+2. Name the model (its name or `model_id`) and choose what should change
+   (a field, the provinces/territories, or a link).
+3. Give the proposed value. For a link, write `type | title | URL`. Add the
+   public URL that supports the correction and tick the confirmation box.
+
+**If you are a collaborator or maintainer:**
+
+1. Find the row in the right file: `data/models.csv` (model facts),
+   `data/model_coverage.csv` (provinces/territories, regions, ecozones), or
+   `data/model_links.csv` (links). Keep **one row per model** in `models.csv` and
+   **one row per link** in `model_links.csv`.
+2. Edit only the cell(s) the public source supports. Do not change `model_id`
+   (if you must, update every row in coverage and links that refers to it).
+   Allowed values are in the matching `*_schema_definition.csv`.
+3. For a link you checked or changed, set `accessed_date` to today. For a model
+   you re-reviewed, set `last_reviewed` to today. To remove a link, delete its
+   row; a model should keep at least one link.
+4. Run `Rscript scripts/validate_registry.R` and `Rscript tests/testthat.R`.
+5. Commit on a branch and open a pull request. State which public page supports
+   the change.
+
+A passing validator checks structure and allowed values only; it cannot confirm
+that an entry is accurate or current.
+
 ## Local Checks
 
 For routine CSV edits, adding models, renaming columns, and contributing, see the

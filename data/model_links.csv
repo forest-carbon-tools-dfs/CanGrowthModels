@@ -72,3 +72,6 @@ tadam_download_palm,tadam,model_download,TADAM for Palm (ZIP),https://web.unbc.c
 tadam_download_dll,tadam,model_download,TADAM Windows DLLs (ZIP),https://web.unbc.ca/~garcia/growth&yield/tadam/TadamDLL.zip,2026-10-21
 osm_download,osm-acd,model_download,Open Stand Model downloads (with Acadian and NL variants),https://www.forusresearch.com/downloads/osm/index.html,2026-10-21
 cbmSampleYieldCurves_source,cbmSampleYieldCurves,source_code,cbmSampleYieldCurves R package source (GitHub; currently private),https://github.com/forest-carbon-tools-dfs/cbmSampleYieldCurves,2026-10-21
+NationalModelUng2009_github,NationalModelUng2009,official_website,NationalModelUng2009 - GitHub repository,https://github.com/dfelixsattler/NationalModelUng2009,2026-10-26
+NationalModelUng2009_download,NationalModelUng2009,model_download,NationalModelUng2009 R package (GitHub),https://github.com/dfelixsattler/NationalModelUng2009,2026-10-26
+NationalModelUng2009_ung_2009,NationalModelUng2009,publication,"Ung et al. 2009, The Forestry Chronicle 85(1): 57-64",https://doi.org/10.5558/tfc85057-1,2026-10-26
