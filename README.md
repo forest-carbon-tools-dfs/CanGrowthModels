@@ -82,6 +82,9 @@ evidence, and leave a field blank (or `unknown` where the schema allows it)
 rather than guess. Field definitions and allowed values are in
 `data/*_schema_definition.csv`.
 
+**All available forms** (new model, change to an existing model, new field):
+[choose a template](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new/choose).
+
 **If you do not have write access to this repository** (the usual case):
 
 1. Open the [**Propose a new model** form](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new?template=new-model.yml)

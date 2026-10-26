@@ -28,19 +28,19 @@ body:
     attributes:
       label: Canadian provinces/territories where the model is used or applicable
       options:
-        - label: AB
-        - label: BC
-        - label: SK
-        - label: MB
-        - label: ON
-        - label: QC
-        - label: NB
-        - label: NS
-        - label: PE
-        - label: NL
-        - label: YT
-        - label: NT
-        - label: NU
+        - label: "AB"
+        - label: "BC"
+        - label: "SK"
+        - label: "MB"
+        - label: "ON"
+        - label: "QC"
+        - label: "NB"
+        - label: "NS"
+        - label: "PE"
+        - label: "NL"
+        - label: "YT"
+        - label: "NT"
+        - label: "NU"
   - type: input
     id: region_detail
     attributes:
