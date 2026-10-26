@@ -23,11 +23,11 @@ body:
         - Organization
         - Provinces/territories (coverage)
         - Region, ecosystem, or US state
+        - Ecozones
         - Stand scope
         - Model type
         - Species
         - Minimum inputs
-        - Outputs
         - Management options
         - Other features
         - Programming language

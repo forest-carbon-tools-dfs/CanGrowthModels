@@ -111,16 +111,15 @@ the validator rejects blank values. Species lists use expanded names rather than
 | `developers` | text | No | Original developers (individuals). Multi-value. | — | `Mathieu Fortin; Luc Langevin` |
 | `contributors` | text | No | Individuals or organizations that added to later development. Multi-value. | — | `Jane Doe; University of Alberta` |
 | `organization` | text | No | Organization(s) that supported or directed development. Multi-value. | — | `BC Ministry of Forests` |
-| `model_type` | controlled | No | Broad model class. | `whole_stand`, `individual_tree`, `diameter_class`, `hybrid`, `other`, `unknown` | `whole_stand` |
+| `model_type` | controlled | No | Broad model class. | `whole_stand`, `individual_tree`, `distance_dependent`, `distance_independent`, `diameter_class`, `hybrid`, `other`, `unknown` | `whole_stand` |
 | `species` | text | No | Species or groups covered (general summary). Multi-value. | — | `Balsam fir;black spruce` |
 | `minimum_inputs` | text | No | Minimum inputs to run the model. Multi-value. | — | `site index;species` |
-| `outputs` | text | No | Key outputs; free-text detail. Multi-value. See `output_types` for the standardized categories that drive catalogue filtering. | — | `volume;basal area` |
 | `management_options` | text | No | Management actions the model can represent. Multi-value. | — | `thinning;fertilization` |
 | `other_features` | text | No | Other represented features (mortality, regeneration, climate, disturbance). Multi-value. | — | `mortality;climate` |
 | `programming_language` | text | No | Programming language(s) the model is written in. Multi-value. Use `unknown` until determined. | — | `Fortran;R` |
 | `availability` | controlled | Yes | How the model itself can be obtained. Use `unknown` until determined. | `public_download`, `on_request`, `restricted`, `not_available`, `unknown` | `public_download` |
-| `interface` | controlled | No | How users run the model. Multi-value. | `r_package`, `python_package`, `desktop_application`, `web_application`, `command_line`, `spreadsheet`, `other`, `unknown` | `r_package;command_line` |
-| `output_types` | controlled | No | Standardized output categories used by the catalogue filter; keep free-text detail in `outputs`. Multi-value. | `merchantable_volume`, `total_volume`, `basal_area`, `biomass`, `other` | `merchantable_volume;basal_area` |
+| `interface` | controlled | No | How users run the model. Multi-value. | `r_package`, `python_package`, `desktop_application`, `web_application`, `command_line`, `spreadsheet`, `capsis`, `other`, `unknown` | `r_package;command_line` |
+| `output_types` | controlled | No | Standardized output categories used by the catalogue filter; keep free-text detail in `notes`. Multi-value. | `merchantable_volume`, `total_volume`, `basal_area`, `biomass`, `log_volume`, `economics`, `other` | `merchantable_volume;basal_area` |
 | `management_context` | controlled | Yes | Stands the model is intended for. `unmanaged` = natural-origin or fire-origin stands, or stands harvested long ago and now old; `managed` = harvested or replanted stands; `unmanaged_managed` = both. Use `unknown` until determined. | `unmanaged`, `managed`, `unmanaged_managed`, `unknown` | `managed` |
 | `notes` | text | No | Free-text qualifications or uncertainties. | — | — |
 | `last_reviewed` | date | No | Date the maintainer last reviewed this entry. | `YYYY-MM-DD` | `2026-10-19` |

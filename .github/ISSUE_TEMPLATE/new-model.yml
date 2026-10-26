@@ -55,6 +55,8 @@ body:
         - unknown
         - whole_stand
         - individual_tree
+        - distance_dependent
+        - distance_independent
         - diameter_class
         - hybrid
         - other
@@ -92,6 +94,8 @@ body:
         - label: total_volume
         - label: basal_area
         - label: biomass
+        - label: log_volume
+        - label: economics
         - label: other
   - type: textarea
     id: summary
