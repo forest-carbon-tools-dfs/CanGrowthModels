@@ -1,0 +1,3929 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Models – Canadian Forest Growth &amp; Yield Model Registry</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<meta property="og:title" content="Models – Canadian Forest Growth &amp; Yield Model Registry">
+<meta property="og:description" content="A registry of forest growth and yield models for Canada with coverage map and links to each model’s website, downloads, and tools.">
+<meta property="og:site_name" content="Canadian Forest Growth &amp; Yield Model Registry">
+<meta name="twitter:title" content="Models – Canadian Forest Growth &amp; Yield Model Registry">
+<meta name="twitter:description" content="A registry of forest growth and yield models for Canada with coverage map and links to each model’s website, downloads, and tools.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Canadian Forest Growth &amp; Yield Model Registry</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./models.html" aria-current="page"> 
+<span class="menu-text">Models</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./map.html"> 
+<span class="menu-text">Coverage map</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Models</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Filter this catalogue by <strong>model type</strong>, <strong>management context</strong>, <strong>province or territory</strong>, <strong>availability</strong>, <strong>output type</strong>, whether it has <strong>tools to help run it</strong>, or a <strong>species keyword</strong>. This registry is a starting point, not the authoritative source: models change over time and entries here are updated only periodically, so use the model website and repository links to confirm current details. The species search matches text, not a standardized species taxonomy; species lists are general summaries, so no match does not prove a model excludes a species. Jurisdiction matches refer only to recorded coverage, which can be limited to a region, ecosystem, or US state noted for that jurisdiction; read each coverage entry before interpreting a match as geographic applicability. When an entry covers multiple model versions, a filter match may describe only one version; check the model notes and link titles before applying it to another version.</p>
+<div class="row g-2 mb-3" id="catalogue-filters">
+  <div class="col-md-3">
+    <label for="model-type-filter">Model type</label>
+    <select id="model-type-filter" class="form-select"><option value="">All types</option></select>
+  </div>
+  <div class="col-md-3">
+    <label for="management-context-filter">Management context</label>
+    <select id="management-context-filter" class="form-select"><option value="">All contexts</option></select>
+  </div>
+  <div class="col-md-3">
+    <label for="jurisdiction-filter">Coverage jurisdiction</label>
+    <select id="jurisdiction-filter" class="form-select"><option value="">All jurisdictions</option></select>
+  </div>
+  <div class="col-md-3">
+    <label for="species-filter">Species keyword</label>
+    <input id="species-filter" class="form-control" type="search" placeholder="e.g., spruce">
+  </div>
+  <div class="col-md-3">
+    <label for="output-type-filter">Output type</label>
+    <select id="output-type-filter" class="form-select"><option value="">All output types</option></select>
+  </div>
+  <div class="col-md-3">
+    <label for="availability-filter">Availability</label>
+    <select id="availability-filter" class="form-select"><option value="">All availability</option></select>
+  </div>
+  <div class="col-md-3 d-flex align-items-end">
+    <div class="form-check">
+      <input id="has-tools-filter" class="form-check-input" type="checkbox">
+      <label class="form-check-label" for="has-tools-filter">Has tools to help run it</label>
+    </div>
+  </div>
+</div>
+<p id="catalogue-count" role="status" aria-live="polite"></p>
+<pre><code>Warning: Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.
+Unknown or uninitialised column: `outputs`.</code></pre>
+<article class="card mb-3 model-card" data-type="individual_tree;distance_independent" data-context="unmanaged_managed" data-jurisdiction="QC" data-species="Boreal Conifers; Mixtures of conifers and hardwoods; Temperate Hardwoods; Early?successional Species" data-outputs="merchantable_volume" data-availability="on_request" data-has-tools="yes">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="artemis">ARTEMIS</h2>
+    <p>
+      Model ID: 
+      artemis
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Mathieu Fortin; Luc Langevin
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Hugues Power; Isabelle Auger
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Direction de la recherche forestiere (DRF), Ministry of Natural Resources and Forests (MRNF) in Quebec
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree;distance_independent
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          on request
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          capsis
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Boreal Conifers; Mixtures of conifers and hardwoods; Temperate Hardwoods; Early?successional Species
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          ; Diameter at breast height (DBH); Tree count; vegetation potential;stand age or cohort age; one of site index, top height or height-dbh pair for at least one cohort
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          stochastic distance-independent
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged_managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Run on the Capsis platform (graphical, assisted-script or unassisted-script mode). Not among the models in the public Capsis web release; the Capsis download page says to contact a model's author for models not distributed there. Distance-independent individual-tree model with 25 versions, one per potential vegetation; designed for Quebec forests.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>QC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Natural and partially disturbed forests
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://capsis.cirad.fr/capsis/help_fr/artemis" rel="noopener noreferrer">ARTEMIS on Capsis</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Tools to help run it</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/CWFC-CCFB/CFSStandGrowth4R.git" rel="noopener noreferrer">CFSStandGrowth4R Meta-model repository built using ARTEMIS</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+      <li>
+        <a href="https://capsis.cirad.fr/capsis/download" rel="noopener noreferrer">Capsis download from CIRAD</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="unmanaged_managed" data-jurisdiction="AB|BC|SK|MB|ON|QC|NB|NS|PE|NL" data-species="Coniferous forests; Deciduous forests; Mixedwood forests" data-outputs="merchantable_volume|biomass" data-availability="on_request" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="cbmSampleYieldCurves">CBMSAMPLEYIELDCURVES</h2>
+    <p>
+      Model ID: 
+      cbmSampleYieldCurves
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Derek Sattler
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Canadian Forest Service, NRCan
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          R
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          on request
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          r package
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume;biomass
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Coniferous forests; Deciduous forests; Mixedwood forests
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Broad productivity class
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          thinning
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          convert yield tables to cbm input tables
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged_managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          R package that generates yield curves for multiple regions of Canada from regional growth models implemented as meta-models. Designed to work with CBM3/CBM4. The GitHub repository is currently private and will be made public.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>AB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>BC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>SK</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>MB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>ON</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>QC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NS</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>PE</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NL</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/forest-carbon-tools-dfs/cbmSampleYieldCurves" rel="noopener noreferrer">cbmSampleYieldCurves meta-model for canadian forests</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/forest-carbon-tools-dfs/cbmSampleYieldCurves" rel="noopener noreferrer">cbmSampleYieldCurves R package source (GitHub; currently private)</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="unknown" data-context="unknown" data-jurisdiction="QC" data-species="Tolerant hardwoods;Boreal hardwoods;Balsam fir;black spruce;red spruce;white spruce;jack pine" data-outputs="" data-availability="unknown" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="cohorte">COHORTE</h2>
+    <p>
+      Model ID: 
+      cohorte
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Tolerant hardwoods;Boreal hardwoods;Balsam fir;black spruce;red spruce;white spruce;jack pine
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>QC (Great Lakes-St.Lawrence)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Uneven-aged; managed selection system
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://isfort.uqo.ca/wp-content/uploads/2020/11/Doyon-et-al.-2005.-COHORTE-Modele-de-croissance-et-devolution-de-la-qualite-adapte-a-lapplication-de-coupes-partielles.pdf" rel="noopener noreferrer">COHORTE model source (PDF)</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="unknown" data-context="unknown" data-jurisdiction="ON" data-species="Balsam fir;black spruce;red spruce;white spruce;jack pine" data-outputs="" data-availability="unknown" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="cropplanner">CropPlanner</h2>
+    <p>
+      Model ID: 
+      cropplanner
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Balsam fir;black spruce;red spruce;white spruce;jack pine
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>ON (Boreal)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Even-aged; plantation; precommercial and commercial thinnings
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://ostrnrcan-dostrncan.canada.ca/entities/publication/2c947dd5-0087-43b2-b6c1-579605dedb78" rel="noopener noreferrer">CropPlanner: a stand density management decision-support software suite (Newton 2021)</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="unknown" data-context="unknown" data-jurisdiction="BC" data-species="" data-outputs="" data-availability="unknown" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="forecast">FORECAST</h2>
+    <p>
+      Model ID: 
+      forecast
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Kimmins
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>BC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://www.sciencedirect.com/science/article/pii/S0304380099001386" rel="noopener noreferrer">Kimmins, Mailly &amp; Seely (1999) FORECAST article</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Other links</h4>
+    <ul>
+      <li>
+        <a href="https://k2project.wordpress.com/the-models/forecast/" rel="noopener noreferrer">FORECAST model description (K2 project)</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="individual_tree;distance_independent" data-context="unmanaged_managed" data-jurisdiction="BC" data-species="IDF;ICH;SBS;SBPS zone species" data-outputs="merchantable_volume" data-availability="public_download" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="fvs_bc">FVS BC (Prognosis-BC)</h2>
+    <p>
+      Model ID: 
+      fvs_bc
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          ESSA Technologies
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Donald Robinson
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree;distance_independent
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          Fortran
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume
+        </li>
+        <li>
+          <strong>Species: </strong>
+          IDF;ICH;SBS;SBPS zone species
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          species;stem density (observed or simulated tree list);DBH;BEC zone;aspect;slope;elevation;plot size
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          planting;regeneration;pruning;thinning;pest extensions
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          pest extensions
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged_managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>BC (BC_interior)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://www.essa.com/explore-essa/tools/fvsprognosis/#1512257082652-03302ff9-5098" rel="noopener noreferrer">Forest Vegetation Simulator - ESSA</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://www.essa.com/wp-content/uploads/2023/04/FVSbc.exe_.zip" rel="noopener noreferrer">FVSbc.exe (ESSA downloads table)</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="individual_tree;distance_independent" data-context="unmanaged_managed" data-jurisdiction="ON" data-species="" data-outputs="merchantable_volume" data-availability="public_download" data-has-tools="yes">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="fvs_ontario">FVS Ontario</h2>
+    <p>
+      Model ID: 
+      fvs_ontario
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          ESSA Technologies
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Donald Robinson
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Ontario Ministry of Natural Resources and Forestry
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree;distance_independent
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          Fortran
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          species;stem density (observed or simulated tree list);DBH;aspect;slope;elevation;plot size;Site index;Inventory year;Forest Type Code
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          planting;regeneration;pruning;thinning;pest extensions
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          pest extensions
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged_managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>ON (Boreal forest region)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>ON (Great Lakes-St. Lawrence forest region)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://www.essa.com/explore-essa/tools/fvsprognosis/#1512257082652-03302ff9-5098" rel="noopener noreferrer">FVS Ontario tools page - ESSA</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://www.essa.com/wp-content/uploads/2023/04/FVSon.exe_.zip" rel="noopener noreferrer">FVS Ontario executable archive - ESSA</a>
+      </li>
+      <li>
+        <a href="https://github.com/USDAForestService/ForestVegetationSimulator/tree/main/canada/on" rel="noopener noreferrer">FVS Ontario variant code - USDA Forest Service</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+    <h4 class="anchored">Tools to help run it</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/dfelixsattler/runRforFVSontario.git" rel="noopener noreferrer">FVS Ontario Github Repository</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://research.fs.usda.gov/treesearch/30982" rel="noopener noreferrer">Development of FVSOntario - US Forest Service</a>
+      </li>
+      <li>
+        <a href="https://www.sciencedirect.com/science/article/pii/S0304380006002341" rel="noopener noreferrer">FVS Ontario calibration study</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="unmanaged_managed" data-jurisdiction="AB" data-species="Aspen group;Black spruce group;Pine group;White spruce group" data-outputs="merchantable_volume|total_volume" data-availability="public_download" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="gypsy">GYPSY</h2>
+    <p>
+      Model ID: 
+      gypsy
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Shongming Huang; Shawn X. Meng; Yuqing Yang
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Government of Alberta
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          spreadsheet
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume;total volume
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Aspen group;Black spruce group;Pine group;White spruce group
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Top height; Total age; Density; Percent stocking; Species; (Basal area)
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged_managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Excel implementations (Yield Table Generator and PASS Tool) require the GYPSY 2009 COM DLL; SAS code is available on request.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>AB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Pure and mixed-species stands
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://www.alberta.ca/growth-and-yield-projection-system" rel="noopener noreferrer">GYPSY - Alberta growth and yield projection system</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://www.alberta.ca/system/files/custom_downloaded_images/gypsy-ytg-2017.zip" rel="noopener noreferrer">Excel GYPSY Yield Table Generator (ZIP)</a>
+      </li>
+      <li>
+        <a href="https://www.alberta.ca/system/files/custom_downloaded_images/gypsy-pt-2017.zip" rel="noopener noreferrer">Excel GYPSY PASS Tool (ZIP)</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="individual_tree;distance_independent" data-context="unmanaged_managed" data-jurisdiction="AB|BC|MB|SK" data-species="white spruce;black spruce;aspen;lodgepole pine; jack pine;others" data-outputs="merchantable_volume" data-availability="on_request" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="mgm">MGM</h2>
+    <p>
+      Model ID: 
+      mgm
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          S.J. Titus; Phil Comeau; Mike Bokalo
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Kirk Johnson
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          University of Alberta
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree;distance_independent
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          on request
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          spreadsheet
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume
+        </li>
+        <li>
+          <strong>Species: </strong>
+          white spruce;black spruce;aspen;lodgepole pine; jack pine;others
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          site index;species;stem density (observed tree list or simulated tree list);average height;the standard deviation of height;average DBH;the standard deviation of DBH;Ecoregion
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged_managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Download requires subscribing to the MGM mailing list (name, email, phone, organization). Runs in Microsoft Excel.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>AB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Pure and mixed-species stands
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>BC (bc_northeast;BWBS;SBS)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Pure and mixed-species stands
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>MB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Pure and mixed-species stands
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>SK</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Pure and mixed-species stands
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://mgm.ualberta.ca/" rel="noopener noreferrer">MGM - Mixedwood Growth Model</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://mgm.ualberta.ca/mgm21/download-requirements/" rel="noopener noreferrer">MGM download (mailing-list subscription required)</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://www.mdpi.com/1999-4907/4/1/1" rel="noopener noreferrer">Forests (2013) article associated with MGM</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="unmanaged_managed" data-jurisdiction="MB" data-species="" data-outputs="merchantable_volume" data-availability="unknown" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="mgypsy">M_GYPSY</h2>
+    <p>
+      Model ID: 
+      mgypsy
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Shawn X. Meng
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Government of Manitoba
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged_managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>MB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Pure and mixed-species stands
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Other links</h4>
+    <ul>
+      <li>
+        <a href="https://www.gov.mb.ca/nrnd/forest/pubs/forest_lands/5yr_report2022.pdf" rel="noopener noreferrer">mGYPSY - Manitoba growth and yield projection system</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="unknown" data-jurisdiction="ON" data-species="" data-outputs="merchantable_volume" data-availability="unknown" data-has-tools="yes">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="mist">MIST (Modeling and Inventory Support Tool)</h2>
+    <p>
+      Model ID: 
+      mist
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Ontario Ministry of Natural Resources and Forestry
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          site index;top height;basal area
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          SFU stratification;ecosite stratification
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          succession;edaphic factor effects;ecosite productivity variation
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          No official Ontario page found. The only public implementation found is the community R package MISTR (run_tool link).
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>ON</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Tools to help run it</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/ptompalski/MISTR.git" rel="noopener noreferrer">MISTR source code</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="unknown" data-jurisdiction="AB|BC|SK|MB|ON|QC|NB|NS|PE|NL|YT|NT" data-species="25 Canadian tree species" data-outputs="merchantable_volume|basal_area" data-availability="public_download" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="NationalModelUng2009">National stand-volume models of Ung et al. (2009), Nat1 and Nat2</h2>
+    <p>
+      Model ID: 
+      NationalModelUng2009
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          C.-H. Ung; P.Y. Bernier; X.J. Guo; M.-C. Lambert
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Canadian Forest Service, NRCan
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          R
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          r package
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume;basal area
+        </li>
+        <li>
+          <strong>Species: </strong>
+          25 Canadian tree species
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          stand age; degree-days above 0 C (dd0); mean annual precipitation (map, mm); species
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          R implementation of the two national stand-volume models of Ung et al. (2009). Predicts gross merchantable volume (m3/ha) from age and climate; Nat1 also predicts dominant height and basal area. The paper intended the models for short (&lt;10 year) projections. Parameters are published to only 4 decimals. Climate is descriptive, not for future scenarios. Nat1 has an optional bias correction that is not part of the published model. The package is experimental and MIT-licensed.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-26
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>AB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>BC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>SK</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>MB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>ON</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>QC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NS</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>PE</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NL</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>YT</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NT</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/dfelixsattler/NationalModelUng2009" rel="noopener noreferrer">NationalModelUng2009 - GitHub repository</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/dfelixsattler/NationalModelUng2009" rel="noopener noreferrer">NationalModelUng2009 R package (GitHub)</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://doi.org/10.5558/tfc85057-1" rel="noopener noreferrer">Ung et al. 2009, The Forestry Chronicle 85(1): 57-64</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="unmanaged" data-jurisdiction="QC" data-species="39 species in 5 groups: shade-tolerant hardwoods;shade-intolerant hardwoods;shade-tolerant softwoods;shade-intolerant softwoods;balsam fir" data-outputs="merchantable_volume|basal_area" data-availability="on_request" data-has-tools="yes">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="natura">Natura</h2>
+    <p>
+      Model ID: 
+      natura
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          David Pothier;Isabelle Auger
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Direction de la recherche forestiere (DRF), Ministry of Natural Resources and Forests (MRNF) in Quebec
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          on request
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          capsis
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume;basal area
+        </li>
+        <li>
+          <strong>Species: </strong>
+          39 species in 5 groups: shade-tolerant hardwoods;shade-intolerant hardwoods;shade-tolerant softwoods;shade-intolerant softwoods;balsam fir
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          tree list (inventory file);ecological type
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          spruce budworm defoliation;senescence
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Run on the Capsis platform. Not among the models in the public Capsis web release; the Capsis download page says to contact a model's author for models not distributed there. Designed for natural stands or stands with light to moderate disturbance; effects of cuts cannot be simulated.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>QC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://capsis.cirad.fr/capsis/help_fr/natura" rel="noopener noreferrer">Natura simulator - Capsis</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Tools to help run it</h4>
+    <ul>
+      <li>
+        <a href="https://capsis.cirad.fr/capsis/download" rel="noopener noreferrer">Capsis platform download (needed to run Natura)</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://mrnf.gouv.qc.ca/nos-publications/natura-evaluation-modele-croissance-forestiere-echelle-peuplement/" rel="noopener noreferrer">Natura-2014: mise à jour et évaluation du modèle de croissance (Note de recherche forestière n° 147)</a>
+      </li>
+      <li>
+        <a href="https://mrnf.gouv.qc.ca/nos-publications/guide-utilisation-natura-2014-capsis/" rel="noopener noreferrer">Guide d'utilisation du simulateur Natura-2014 sur Capsis</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="individual_tree" data-context="unknown" data-jurisdiction="NB|NS|PE" data-species="" data-outputs="" data-availability="public_download" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="osm-acd">OSM-ACD</h2>
+    <p>
+      Model ID: 
+      osm-acd
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Chris Hennigar
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          FORUS; New Brunswick Dept. Nat. Res.
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          command line
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Biomass Growth Index;DBH;trees/ha;total tree height(null if not avail.);tree crown ratio(null if not avail.)
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>NB (Acadian forests, includes Maine)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NS (Acadian forests, includes Maine)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>PE (Acadian forests, includes Maine)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://www.forusresearch.com/downloads/osm/index.html" rel="noopener noreferrer">OSM platform - FORUS Research</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://www.forusresearch.com/downloads/osm/index.html" rel="noopener noreferrer">Open Stand Model downloads (with Acadian and NL variants)</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://www.forusresearch.com/downloads/osm/help/OSM.Variants/OSM.Variants.Acadian/OSM.Acadian.Help.htm" rel="noopener noreferrer">OSM.Acadian variant help</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Other links</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/OSM-Contributors" rel="noopener noreferrer">OSM-Contributors GitHub organization</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="individual_tree" data-context="unmanaged_managed" data-jurisdiction="NL" data-species="balsam fir;tamarack;Norway spruce;white spruce;black spruce;red spruce;jack pine;red pine;eastern white pine;red maple;yellow birch;paper birch;balsam poplar;quaking aspen;alder spp.;other softwood;other hardwood;unknown" data-outputs="" data-availability="public_download" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="osm-nl">OSM-NL</h2>
+    <p>
+      Model ID: 
+      osm-nl
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Chris Hennigar
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          FORUS; Newfoundland and Labrador Government
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          command line
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          balsam fir;tamarack;Norway spruce;white spruce;black spruce;red spruce;jack pine;red pine;eastern white pine;red maple;yellow birch;paper birch;balsam poplar;quaking aspen;alder spp.;other softwood;other hardwood;unknown
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Stand-level or plot-level inventory attributes;Tree-level inventory attributes
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged_managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Variant of the Open Stand Model framework, calibrated 2023-2024 by FORUS Research with the NL government. Not validated or accepted for forest management planning or carbon accounting; testing use only. Run with OSM.ConsoleApp.exe and a command file.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>NL</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://www.forusresearch.com/downloads/osm/index.html" rel="noopener noreferrer">Open Stand Model - FORUS Research</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://www.forusresearch.com/downloads/osm/index.html" rel="noopener noreferrer">OSM v2.26.1 with variants (Windows, Linux beta, portable)</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://www.forusresearch.com/downloads/osm/help/OSM.Variants/OSM.Variants.NL/OSM.Variants.NL.Help.htm" rel="noopener noreferrer">OSM NL variant help - testing only</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="unknown" data-jurisdiction="ON" data-species="Balsam fir;black spruce;red spruce;white spruce;jack pine;Tolerant hardwoods;Other Eastern softwoods" data-outputs="" data-availability="not_available" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="plonski">Plonski's normal yield tables</h2>
+    <p>
+      Model ID: 
+      plonski
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          not available
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Balsam fir;black spruce;red spruce;white spruce;jack pine;Tolerant hardwoods;Other Eastern softwoods
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Published yield tables; no model to download.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>ON (Boreal; Great Lakes-St.Lawrence)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Even-aged; unmanaged; plantation
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://ostrnrcan-dostrncan.canada.ca/entities/publication/f9298286-b688-4fee-9d58-4ccb21de35fd" rel="noopener noreferrer">Variable stocking version of Plonski's yield tables (Payandeh &amp; Wang 1996)</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="unknown" data-jurisdiction="QC" data-species="Balsam fir;black spruce;red spruce;white spruce;jack pine;Boreal hardwoods;Other Eastern softwoods" data-outputs="" data-availability="not_available" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="pothier_savard">Pothier &amp; Savard's empirical yield tables</h2>
+    <p>
+      Model ID: 
+      pothier_savard
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          not available
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Balsam fir;black spruce;red spruce;white spruce;jack pine;Boreal hardwoods;Other Eastern softwoods
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Published report of equations, parameters and yield tables; no software model to download.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>QC (Boreal; Great Lakes-St.Lawrence)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Even-aged; unmanaged stands
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://mrnf.gouv.qc.ca/nos-publications/actualisation-tables-production-principales-especes-forestieres/" rel="noopener noreferrer">Actualisation des tables de production pour les principales espèces forestières du Québec (catalogue page)</a>
+      </li>
+      <li>
+        <a href="https://mrnf.gouv.qc.ca/documents/forets/recherche/actualisation_tables_production_pothier_savard.pdf" rel="noopener noreferrer">Actualisation des tables de production (report, PDF)</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="other" data-context="unknown" data-jurisdiction="AB|BC|SK|MB|ON|QC|NB|NS|PE|NL|YT|NT" data-species="27 species-specific yield curves;3 multi-species models (coniferous;broadleaf;generic)" data-outputs="biomass" data-availability="public_download" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="rsyc">Remote Sensing-based Yield Curves (RSYC)</h2>
+    <p>
+      Model ID: 
+      rsyc
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          P. Tompalski
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          T. Hermosilla;S.K. Baral;M.A. Wulder;J.C. White
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Canadian Forest Service, NRCan
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          other
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          R
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          r package
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          biomass
+        </li>
+        <li>
+          <strong>Species: </strong>
+          27 species-specific yield curves;3 multi-species models (coniferous;broadleaf;generic)
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          tile ID;stand age;species
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Tile-specific curves (150 x 150 km tiles) derived from Landsat time series.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>AB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>BC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>SK</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>MB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>ON</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>QC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NB</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NS</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>PE</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NL</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>YT</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>NT</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/ptompalski/RSYC" rel="noopener noreferrer">RSYC - GitHub repository</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/ptompalski/RSYC" rel="noopener noreferrer">RSYC R package and model parameters (GitHub)</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://doi.org/10.1093/forestry/cpaf067" rel="noopener noreferrer">Tompalski et al. 2025, Forestry</a>
+      </li>
+      <li>
+        <a href="https://doi.org/10.1016/j.foreco.2024.121894" rel="noopener noreferrer">Tompalski et al. 2024, Forest Ecology and Management</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="individual_tree;distance_independent" data-context="unknown" data-jurisdiction="QC" data-species="Sugar maple;yellow birch;American beech;other hardwood species" data-outputs="merchantable_volume" data-availability="on_request" data-has-tools="yes">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="samare">SaMARE</h2>
+    <p>
+      Model ID: 
+      samare
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          M. Fortin;S. Bédard;J. DeBlois
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          F. Guillemette;F. Havreljuk;D. Haché
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Direction de la recherche forestière (DRF), Ministère des Forêts, de la Faune et des Parcs du Québec
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree;distance_independent
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          on request
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          capsis
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Sugar maple;yellow birch;American beech;other hardwood species
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          partial cutting (marking);automated cuts for Quebec forests
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Run on the Capsis platform (graphical, assisted-script or unassisted-script mode). Not among the models in the public Capsis web release; the Capsis download page says to contact a model's author for models not distributed there. Distance-independent tree model for sugar-maple-dominated stands. Developers are the 2006 version; contributors are the 2014 version.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>QC (Great Lakes-St.Lawrence)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Uneven-aged; managed selection system
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://capsis.cirad.fr/capsis/help_fr/samare2014" rel="noopener noreferrer">SaMARE 2014 - Capsis</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Tools to help run it</h4>
+    <ul>
+      <li>
+        <a href="https://capsis.cirad.fr/capsis/download" rel="noopener noreferrer">Capsis platform download (needed to run SaMARE)</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="individual_tree" data-context="unmanaged_managed" data-jurisdiction="BC" data-species="" data-outputs="merchantable_volume" data-availability="public_download" data-has-tools="yes">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="sortie">SORTIE-ND</h2>
+    <p>
+      Model ID: 
+      sortie
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Charles Canham
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Rasmus Astrup; Dave Coates; Sarah Beukema; Alana Clason
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Bulkley Valley Research Centre
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          desktop application
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged_managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Open-source individual-based forest simulator for studying neighbourhood processes; source code on GitHub. The rsortie R package (run_tool) requires the SORTIE-ND GUI to be installed.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>BC (Sub-Boreal Forests of Northern BC)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Even-aged; Uneven-aged
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://www.sortie-nd.org/" rel="noopener noreferrer">SORTIE-ND home page</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://www.sortie-nd.org/software/index.html" rel="noopener noreferrer">SORTIE-ND software downloads</a>
+      </li>
+      <li>
+        <a href="https://github.com/LMurphy186232/Core_Model" rel="noopener noreferrer">SORTIE-ND core model code (GitHub)</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+    <h4 class="anchored">Tools to help run it</h4>
+    <ul>
+      <li>
+        <a href="https://aclason.github.io/rsortie/index.html" rel="noopener noreferrer">RSORTIE</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://www.sortie-nd.org/help/manuals/help/index.html" rel="noopener noreferrer">SORTIE-ND user manual</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="unknown" data-jurisdiction="NB" data-species="Balsam fir;black spruce;red spruce;white spruce;jack pine;Tolerant hardwoods" data-outputs="" data-availability="unknown" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="staman">Staman</h2>
+    <p>
+      Model ID: 
+      staman
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          New Brunswick Dept. Nat. Res.
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Balsam fir;black spruce;red spruce;white spruce;jack pine;Tolerant hardwoods
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>NB (Acadian Forests)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Even-aged and uneven-aged
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://unbscholar.lib.unb.ca/items/2980ada2-eb4c-401b-acfa-71d4730ae6c0" rel="noopener noreferrer">Calibration of the STAMAN stand growth model to produce yield curves for spaced tolerant hardwood stands in New Brunswick (UNB Scholar)</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="managed" data-jurisdiction="BC" data-species="planted coastal Douglas-fir;interior lodgepole pine;white spruce" data-outputs="" data-availability="public_download" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="tadam">TADAM</h2>
+    <p>
+      Model ID: 
+      tadam
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Oscar Garcia
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          spreadsheet;other
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          planted coastal Douglas-fir;interior lodgepole pine;white spruce
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          initial stand conditions;thinning regime
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          thinning
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Implementations: Excel add-in, Palm PDA program, Windows DLL.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>BC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            pure stands of major commercial BC species
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://web.unbc.ca/~garcia/growth&amp;yield/tadam/" rel="noopener noreferrer">TADAM model website</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://web.unbc.ca/~garcia/growth&amp;yield/tadam/TadamXcl.zip" rel="noopener noreferrer">TADAM Excel add-in (ZIP)</a>
+      </li>
+      <li>
+        <a href="https://web.unbc.ca/~garcia/growth&amp;yield/tadam/TadamPalm.zip" rel="noopener noreferrer">TADAM for Palm (ZIP)</a>
+      </li>
+      <li>
+        <a href="https://web.unbc.ca/~garcia/growth&amp;yield/tadam/TadamDLL.zip" rel="noopener noreferrer">TADAM Windows DLLs (ZIP)</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="http://pubs.nrc-cnrc.gc.ca/tfc/tfc81575-4.html" rel="noopener noreferrer">TADAM-p and TADAM-s article</a>
+      </li>
+      <li>
+        <a href="http://cms1.gre.ac.uk/conferences/iufro/proceedings/growth_models.htm" rel="noopener noreferrer">Garcia background article on growth models</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Other links</h4>
+    <ul>
+      <li>
+        <a href="http://www.fbmis.info/" rel="noopener noreferrer">FBMIS - TADAM-df Volume 1 documentation site</a>
+      </li>
+      <li>
+        <a href="http://web.unbc.ca/%7Egarcia/publ/fchronErrata.htm" rel="noopener noreferrer">Errata for TADAM-p and TADAM-s article</a>
+      </li>
+      <li>
+        <a href="http://web.unbc.ca/%7Egarcia/unpub/wesbogy.pdf" rel="noopener noreferrer">WESBOGY presentation (PDF)</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="individual_tree" data-context="managed" data-jurisdiction="BC" data-species="lodgepole pine;white spruce" data-outputs="merchantable_volume|biomass" data-availability="public_download" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="tass">TASS III</h2>
+    <p>
+      Model ID: 
+      tass
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Ken Mitchell; Jim Goudie; Ken Polson
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Mario Diluca; Derek Sattler
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          BC Ministry of Forests
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          C
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          desktop application
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume;biomass
+        </li>
+        <li>
+          <strong>Species: </strong>
+          lodgepole pine;white spruce
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          site index;species;stem density (observed tree list or simulated tree list);BEC zone
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          planting;natural regeneration;thinning;harvesting;fertilization
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          crown dynamics;wood quality
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>BC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Pure stands of major commercial BC species; mixed stands limited to lodgepole pine/white spruce mixtures
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://www2.gov.bc.ca/gov/content/industry/forestry/managing-our-forest-resources/forest-inventory/growth-and-yield-modelling/tree-and-stand-simulator-tass" rel="noopener noreferrer">TASS - Tree and Stand Simulator</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://www2.gov.bc.ca/gov/content/industry/forestry/managing-our-forest-resources/forest-inventory/field-forms-and-software/software-download" rel="noopener noreferrer">TASS software downloads page</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="managed" data-jurisdiction="BC" data-species="eight even-aged coniferous species (not named);red alder;trembling aspen" data-outputs="merchantable_volume|biomass" data-availability="public_download" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="tipsy">TIPSY</h2>
+    <p>
+      Model ID: 
+      tipsy
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Ken Mitchell; Jim Goudie; Ken Polson
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Mario Diluca; Derek Sattler
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          BC Ministry of Forests
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          desktop application
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume;biomass
+        </li>
+        <li>
+          <strong>Species: </strong>
+          eight even-aged coniferous species (not named);red alder;trembling aspen
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          site index;species;stem density (observed tree list or simulated tree list);BEC zone
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          initial density;fertilization;spacing;commercial thinning
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          genetic improvement;repression;variable retention;windthrow
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          managed
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>BC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Even-aged single-species managed stands (yields generated by TASS III)
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://www2.gov.bc.ca/gov/content/industry/forestry/managing-our-forest-resources/forest-inventory/growth-and-yield-modelling/table-interpolation-program-for-stand-yields-tipsy" rel="noopener noreferrer">TIPSY - Table Interpolation for Stand Yields</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://www2.gov.bc.ca/gov/content/industry/forestry/managing-our-forest-resources/forest-inventory/field-forms-and-software/software-download#tipsy" rel="noopener noreferrer">TIPSY software download section</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="individual_tree;distance_independent" data-context="unknown" data-jurisdiction="ON" data-species="" data-outputs="" data-availability="on_request" data-has-tools="yes">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="trillium">Trillium</h2>
+    <p>
+      Model ID: 
+      trillium
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Ontario Ministry of Natural Resources and Forestry
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree;distance_independent
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          on request
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          capsis
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          stochastic;climate-sensitive
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Implemented as a Capsis module (distance-independent individual-based model developed from Ontario permanent sample plot data). Not among the models in the public Capsis web release; the Capsis download page says to contact a model's author for models not distributed there.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>ON</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Tools to help run it</h4>
+    <ul>
+      <li>
+        <a href="https://capsis.cirad.fr/capsis/download" rel="noopener noreferrer">Capsis platform download (needed to run Trillium)</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Other links</h4>
+    <ul>
+      <li>
+        <a href="https://capsis.cirad.fr/capsis/models" rel="noopener noreferrer">Trillium in the Capsis projects list</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="whole_stand" data-context="unmanaged" data-jurisdiction="BC" data-species="" data-outputs="merchantable_volume|biomass" data-availability="public_download" data-has-tools="yes">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="vdyp">VDYP7</h2>
+    <p>
+      Model ID: 
+      vdyp
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Jim Flewelling
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Government of BC Ministry of Forests
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          whole_stand
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          desktop application
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          merchantable volume;biomass
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          FIP/VRI inventory files (unadjusted or adjusted);age;utilization level
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unmanaged
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-21
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>BC</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Model website</h4>
+    <ul>
+      <li>
+        <a href="https://www2.gov.bc.ca/gov/content/industry/forestry/managing-our-forest-resources/forest-inventory/growth-and-yield-modelling/variable-density-yield-projection-vdyp" rel="noopener noreferrer">VDYP7 government website</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/bcgov/nr-vdyp.git" rel="noopener noreferrer">VDYP8 GitHub repository</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+      <li>
+        <a href="https://www2.gov.bc.ca/gov/content/industry/forestry/managing-our-forest-resources/forest-inventory/field-forms-and-software/software-download" rel="noopener noreferrer">VDYP7 installer (BC software download page)</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Tools to help run it</h4>
+    <ul>
+      <li>
+        <a href="https://github.com/forest-carbon-tools-dfs/bcVDYPMSYTyieldcurves.git" rel="noopener noreferrer">VDYP7 GitHub repository</a>
+        <span class="badge bg-dark ms-1">GitHub</span>
+      </li>
+    </ul>
+  </div>
+</article>
+<article class="card mb-3 model-card" data-type="individual_tree" data-context="unknown" data-jurisdiction="QC|ON" data-species="Tolerant hardwoods;Other eastern softwoods" data-outputs="" data-availability="public_download" data-has-tools="no">
+  <div class="card-body">
+    <h2 class="card-title anchored" id="zelig_cfs">Zelig-CFS</h2>
+    <p>
+      Model ID: 
+      zelig_cfs
+    </p>
+    <h3 class="anchored">Model information</h3>
+    <details>
+      <summary>Model details</summary>
+      <ul>
+        <li>
+          <strong>Developers: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Contributors: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Organization: </strong>
+          Canadian Forest Service, NRCan
+        </li>
+        <li>
+          <strong>Model type: </strong>
+          individual_tree
+        </li>
+        <li>
+          <strong>Programming language: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Availability: </strong>
+          public download
+        </li>
+        <li>
+          <strong>Interface: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Output types: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Species: </strong>
+          Tolerant hardwoods;Other eastern softwoods
+        </li>
+        <li>
+          <strong>Minimum inputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Outputs: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Silvicultural interventions: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Other features: </strong>
+          Not recorded
+        </li>
+        <li>
+          <strong>Management context: </strong>
+          unknown
+        </li>
+        <li>
+          <strong>Notes: </strong>
+          Distributed on NRCan's forest ecosystem and caribou modelling page, whose files cover northwestern Ontario caribou ranges; companion tools for input files, fertility factor and partial cuts are also listed.
+        </li>
+        <li>
+          <strong>Last reviewed: </strong>
+          2026-10-20
+        </li>
+      </ul>
+    </details>
+    <h3 class="anchored">Geographic coverage</h3>
+    <ul>
+      <li>
+        <strong>QC (Great Lakes-St.Lawrence)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Uneven-aged; managed
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>ON (northwestern Ontario caribou ranges)</strong>
+        <ul>
+          <li>
+            <strong>Stand scope: </strong>
+            Not recorded
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 class="anchored">Model websites, related documents/tools and downloads</h3>
+    <h4 class="anchored">Get the model</h4>
+    <ul>
+      <li>
+        <a href="https://apps-scf-cfs.rncan.gc.ca/calc/en/ecosysmodel" rel="noopener noreferrer">ZELIG-CFS models, applications and user guides (NRCan)</a>
+      </li>
+    </ul>
+    <h4 class="anchored">Documentation and publications</h4>
+    <ul>
+      <li>
+        <a href="https://apps-scf-cfs.rncan.gc.ca/calc/static/files/ecosysmodel/User_Guide_ZELIG-CFS.pdf" rel="noopener noreferrer">ZELIG-CFS user guide</a>
+      </li>
+      <li>
+        <a href="https://ostrnrcan-dostrncan.canada.ca/entities/publication/419bfeb0-47f4-46e1-bdff-74610d5bdb54" rel="noopener noreferrer">Development of the gap model ZELIG-CFS to predict the dynamics of North American mixed forest types with complex structures</a>
+      </li>
+    </ul>
+  </div>
+</article>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = [...document.querySelectorAll(".model-card")];
+  const type = document.getElementById("model-type-filter");
+  const context = document.getElementById("management-context-filter");
+  const jurisdiction = document.getElementById("jurisdiction-filter");
+  const species = document.getElementById("species-filter");
+  const outputType = document.getElementById("output-type-filter");
+  const availability = document.getElementById("availability-filter");
+  const hasTools = document.getElementById("has-tools-filter");
+  const count = document.getElementById("catalogue-count");
+
+  for (const [select, key] of [
+    [type, "type"], [context, "context"], [jurisdiction, "jurisdiction"],
+    [outputType, "outputs"], [availability, "availability"]
+  ]) {
+    const values = new Set(cards.flatMap(card => card.dataset[key].split("|").filter(Boolean)));
+    for (const value of [...values].sort()) {
+      select.add(new Option(value.replaceAll("_", " "), value));
+    }
+  }
+
+  function filterCards() {
+    let visible = 0;
+    for (const card of cards) {
+      const matches = [
+        [type, "type"], [context, "context"], [jurisdiction, "jurisdiction"],
+        [outputType, "outputs"], [availability, "availability"]
+      ].every(([select, key]) =>
+        !select.value || card.dataset[key].split("|").includes(select.value)
+      );
+      const speciesMatch = card.dataset.species.toLocaleLowerCase()
+        .includes(species.value.trim().toLocaleLowerCase());
+      const toolsMatch = !hasTools.checked || card.dataset.hasTools === "yes";
+      card.hidden = !(matches && speciesMatch && toolsMatch);
+      if (!card.hidden) visible++;
+    }
+    count.textContent = `${visible} of ${cards.length} models shown`;
+  }
+
+  for (const input of [type, context, jurisdiction, species, outputType, availability, hasTools]) {
+    input.addEventListener("input", filterCards);
+  }
+  filterCards();
+});
+</script>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/forest-carbon-tools-dfs\.github\.io\/CanGrowthModels\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Licensed under GPL-3.0-only</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions"><ul><li><a href="https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Natural Resources Canada</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
