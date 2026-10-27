@@ -6,11 +6,11 @@
 
 A registry of forest growth and yield models developed for or applicable to Canadian forests. Entries are brief pointers to each model's website, downloads, and publications; consult those sources for current details.
 
-**Status:** the repository is private while in development. There is no public deployment yet; public release requires maintainer approval.
+**[View the interactive coverage map](https://forest-carbon-tools-dfs.github.io/CanGrowthModels/map.html)**
 
 ## Start here
 
-- **Explore models:** browse the [registry data](data/) or [build the catalogue and map locally](docs/pipeline-and-workflow.md#running-the-checks).
+- **Explore models:** browse the [live model catalogue](https://forest-carbon-tools-dfs.github.io/CanGrowthModels/models.html) or the [registry data](data/).
 - **Edit the registry:** follow [CONTRIBUTING.md](CONTRIBUTING.md) for CSV edits, checks, and pull requests.
 - **Understand the data and pipeline:** see the [technical guide](docs/pipeline-and-workflow.md).
 - **Track remaining work:** see the [project plan](docs/PROJECT_PLAN.md).
@@ -19,7 +19,7 @@ A registry of forest growth and yield models developed for or applicable to Cana
 
 Collaborators are mainly from NRCan, but suggestions are welcome from anyone with knowledge of Canadian forest growth models. Every change requires maintainer review.
 
-**Form access:** while the repository is private, these forms require repository access. Once it is public, anyone with a GitHub account can submit a suggestion.
+**Form access:** anyone with a GitHub account can submit a suggestion using these forms.
 
 | I want to... | Form |
 | --- | --- |
@@ -29,7 +29,7 @@ Collaborators are mainly from NRCan, but suggestions are welcome from anyone wit
 
 Use public information and include a supporting URL. The forms guide you through what to provide; no CSV editing or local checks are needed.
 
-**No repository access or GitHub account?** Email [derek.sattler@nrcan-rncan.gc.ca](mailto:derek.sattler@nrcan-rncan.gc.ca) with the model name, your suggestion, and supporting public links. Collaborators can also use this contact to request access.
+**No GitHub account?** Email [derek.sattler@nrcan-rncan.gc.ca](mailto:derek.sattler@nrcan-rncan.gc.ca) with the model name, your suggestion, and supporting public links. Prospective collaborators can also use this contact to request write access.
 
 ## About the data
 
