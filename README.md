@@ -4,83 +4,32 @@
 [![License: GPL-3.0-only](https://img.shields.io/badge/license-GPL--3.0--only-blue.svg)](LICENSE)
 [![Version: 0.1.0](https://img.shields.io/badge/version-0.1.0-blue.svg)](#citation)
 
-A registry of forest growth and yield models developed for or applicable to Canadian forests. Each model has a brief summary and links to its website, downloads, publications (if available), so you can find current details at the source. The registry is updated periodically; check back for new models and tools.
+A registry of forest growth and yield models developed for or applicable to Canadian forests. Entries are brief pointers to each model's website, downloads, and publications; consult those sources for current details.
 
-Contact: [derek.sattler@nrcan-rncan.gc.ca](mailto:derek.sattler@nrcan-rncan.gc.ca)
+**Status:** the repository is private while in development. There is no public deployment yet; public release requires maintainer approval.
+
+## Start here
+
+- **Explore models:** browse the [registry data](data/) or [build the catalogue and map locally](docs/pipeline-and-workflow.md#running-the-checks).
+- **Edit the registry:** follow [CONTRIBUTING.md](CONTRIBUTING.md) for CSV edits, checks, and pull requests.
+- **Understand the data and pipeline:** see the [technical guide](docs/pipeline-and-workflow.md).
+- **Track remaining work:** see the [project plan](docs/PROJECT_PLAN.md).
 
 ## Contributing
 
-Every suggestion is reviewed by a maintainer before the registry changes.
+Collaborators are mainly from NRCan, but suggestions are welcome from anyone with knowledge of Canadian forest growth models. Every change requires maintainer review.
 
-**Ground rules**
+**Form access:** while the repository is private, these forms require repository access. Once it is public, anyone with a GitHub account can submit a suggestion.
 
-- Use **public information only**, and give the public URL that supports it.
-- Don't guess. Leave a field blank, or `unknown` where the schema allows it.
-- Keep entries brief and general; link to the model's own pages for detail.
-
-### What to provide
-
-Fill in what you can find on the model's own public pages. Only the first two rows are essential; leave the rest blank if you don't know.
-
-| Field | What to enter | Example |
-| --- | --- | --- |
-| Model name | The model's name or acronym. | `VDYP7` |
-| Web address(es) | The model's home page, and where to download it, its source code, manual or paper. | `https://mgm.ualberta.ca/` |
-| Provinces/territories | Where the model is used or applies. | `AB; BC` |
-| Availability | How the model itself can be obtained: `public_download`, `on_request`, `restricted`, `not_available` or `unknown`. | `public_download` |
-| Developers / organization | Who built it, and who supported it. | `BC Ministry of Forests` |
-| Model type | `whole_stand`, `individual_tree`, `distance_dependent`, `distance_independent`, `diameter_class`, `hybrid`, `other` or `unknown`. | `whole_stand` |
-| Interface | How it is run: `r_package`, `python_package`, `desktop_application`, `web_application`, `command_line`, `spreadsheet`, `capsis`, `other` or `unknown`. | `r_package` |
-| Outputs | `merchantable_volume`, `total_volume`, `basal_area`, `biomass`, `log_volume`, `economics` or `other`. Only if the source says which. | `basal_area` |
-| Species | Species or species groups covered. | `black spruce; jack pine` |
-| Programming language | If stated. | `Fortran` |
-| Supporting source | The public page that shows the above. | link |
-
-Separate several values with `;`. Every allowed value is defined in `data/*_schema_definition.csv`.
-
-### How to add a model
-
-**Anyone:** fill in the [**Propose a new model**](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new?template=new-model.yml) form (or see all forms: [choose a template](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new/choose)).
-
-**Collaborators** (write or fork access): on a branch, add rows to three files in `data/`.
-
-| File | Add |
+| I want to... | Form |
 | --- | --- |
-| `models.csv` | One row with a unique `model_id`. Set `last_reviewed` to today. |
-| `model_coverage.csv` | One row per province/territory (`coverage_id` = `<model_id>_<code>`). |
-| `model_links.csv` | One row per link (`link_id` = `<model_id>_<short_slug>`). Choose a `link_type` from the list in `model_links_schema_definition.csv` (for example `official_website`, `model_download`, `publication`). Set `accessed_date` to today. Give every model at least one link. |
+| Add a model | [Propose a new model](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new?template=new-model.yml) |
+| Correct or add information about a model | [Suggest a change to an existing model](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new?template=update-model.yml) |
+| Propose another registry field | [Suggest a new field](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new?template=new-field.yml) |
 
-Allowed values are listed in `data/*_schema_definition.csv`. Then [run the checks](#run-the-checks-collaborators-and-maintainers) and open a pull request that names your public source.
+Use public information and include a supporting URL. The forms guide you through what to provide; no CSV editing or local checks are needed.
 
-### How to correct existing registry information
-
-**Anyone:** fill in the [**Suggest a change to an existing model**](https://github.com/forest-carbon-tools-dfs/CanGrowthModels/issues/new?template=update-model.yml) form. Name the model, say what should change, and give the public source.
-
-**Collaborators:** on a branch, edit the cell or row in `data/models.csv`, `model_coverage.csv` or `model_links.csv`. Set `last_reviewed` (or the link's `accessed_date`) to today, [run the checks](#run-the-checks-collaborators-and-maintainers), and open a pull request that names your public source.
-
-More detail: [registry guide](docs/pipeline-and-workflow.md) and [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Run the checks (collaborators and maintainers)
-
-Only people editing the CSV files need this; if you use an issue form, skip it. From the project root, with R installed:
-
-```powershell
-Rscript scripts/validate_registry.R
-Rscript tests/testthat.R
-```
-
-Both must pass. The validator checks structure and allowed values; it cannot tell whether an entry is accurate or current. To build the catalogue and map, install Quarto and run `quarto render` (there is no public deployment yet).
-
-## What is where
-
-| Path | Contents |
-| --- | --- |
-| `data/` | The registry: `models.csv`, `model_coverage.csv`, `model_links.csv`, and a `*_schema_definition.csv` for each (the allowed values the validator reads). |
-| `docs/` | [Registry guide](docs/pipeline-and-workflow.md) (columns, pipeline, workflow) and [project plan](docs/PROJECT_PLAN.md). |
-| `R/`, `scripts/`, `tests/` | Validation code, entry-point scripts and tests. |
-| `*.qmd`, `_quarto.yml` | The Quarto catalogue and map. |
-| `.github/` | Issue forms, the pull request checklist and CI. |
-| `data/geospatial/` | Map boundaries (Canada, ecozones) and their licence notices. |
+**No repository access or GitHub account?** Email [derek.sattler@nrcan-rncan.gc.ca](mailto:derek.sattler@nrcan-rncan.gc.ca) with the model name, your suggestion, and supporting public links. Collaborators can also use this contact to request access.
 
 ## About the data
 
