@@ -6,11 +6,11 @@
 
 A registry of forest growth and yield models developed for or applicable to Canadian forests. Entries are brief pointers to each model's website, downloads, and publications; consult those sources for current details.
 
-**[View the interactive coverage map](https://forest-carbon-tools-dfs.github.io/CanGrowthModels/map.html)**
+**[Find a model (filterable catalogue)](https://forest-carbon-tools-dfs.github.io/CanGrowthModels/models.html)** | **[View the map](https://forest-carbon-tools-dfs.github.io/CanGrowthModels/map.html)**
 
 ## Start here
 
-- **Explore models:** browse the [live model catalogue](https://forest-carbon-tools-dfs.github.io/CanGrowthModels/models.html) or the [registry data](data/).
+- **Registry data:** browse the [source tables](data/).
 - **Edit the registry:** follow [CONTRIBUTING.md](CONTRIBUTING.md) for CSV edits, checks, and pull requests.
 - **Understand the data and pipeline:** see the [technical guide](docs/pipeline-and-workflow.md).
 - **Track remaining work:** see the [project plan](docs/PROJECT_PLAN.md).
