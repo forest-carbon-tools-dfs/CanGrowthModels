@@ -16,11 +16,12 @@ body:
   - type: textarea
     id: links
     attributes:
-      label: Links
-      description: One per line as `type | title | URL`. Types are official_website, model_download, run_tool, source_code, model_manual, publication, other. Please include the model's website and where it can be obtained.
+      label: Web addresses (links)
+      description: Paste the model's web addresses, one per line, with a few words on what each is (for example home page, download, source code, manual, or paper). A maintainer will sort them. Include where the model can be obtained, if you know.
       placeholder: |
-        official_website | MGM official website | https://mgm.ualberta.ca/
-        run_tool | MGM R package | https://github.com/...
+        Home page: https://mgm.ualberta.ca/
+        Download: https://...
+        Paper: https://doi.org/...
     validations:
       required: true
   - type: checkboxes
