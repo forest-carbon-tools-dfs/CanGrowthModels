@@ -89,7 +89,6 @@ model_cards <- lapply(order(models$model_id), function(i) {
       field("Output types", gsub("_", " ", model$output_types)),
       field("Species", model$species),
       field("Minimum inputs", model$minimum_inputs),
-      field("Outputs", model$outputs),
       field("Silvicultural interventions", model$management_options),
       field("Other features", model$other_features),
       field("Management context", model$management_context),

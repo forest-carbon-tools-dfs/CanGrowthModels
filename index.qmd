@@ -4,12 +4,12 @@ title: "Canadian Forest Growth & Yield Model Registry"
 
 # Explore Canadian forest growth and yield models
 
-This private-first catalogue has one entry per model, with a short summary,
-the jurisdictions where it is used, and links to the model's website and
-repository. Browse the [model catalogue](models.qmd) to filter by model type,
-management context, species keyword, province or territory, availability,
-output type, or whether tools exist to help run it, or use the
-[coverage map](map.qmd) to see which models are recorded for each jurisdiction.
+A registry of forest growth and yield models developed for or applicable to
+Canadian forests. Entries are brief pointers to each model's website,
+downloads, and publications; consult those sources for current details.
+
+Browse the filterable [model catalogue](models.qmd), or use the
+[coverage map](map.qmd) to explore recorded coverage by province or territory.
 
 **This registry is a starting point, not the authoritative source.** Models
 evolve (new species, new coverage areas, new versions) and this registry is
