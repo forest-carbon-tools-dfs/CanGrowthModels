@@ -8,10 +8,10 @@ A registry of forest growth and yield models developed for or applicable to Cana
 
 ## Start here
 
+- [**Find a model (filterable catalogue)**](https://forest-carbon-tools-dfs.github.io/CanGrowthModels/models.html) \| [**View the map**](https://forest-carbon-tools-dfs.github.io/CanGrowthModels/map.html)
 - **Registry data:** browse the [source tables](data/).
 - **Edit the registry:** follow [CONTRIBUTING.md](CONTRIBUTING.md) for CSV edits, checks, and pull requests.
 - **Understand the data and pipeline:** see the [technical guide](docs/pipeline-and-workflow.md).
-- **Track remaining work:** see the [project plan](docs/PROJECT_PLAN.md).
 
 ## Contributing
 
