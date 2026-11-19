@@ -11,6 +11,9 @@ _site/
 _freeze/
 *_cache/
 
+# Archive branch (stats-data) checked out as a worktree by the usage workflow
+/usage-data/
+
 # Local-only source manuals live outside the repository
 # (C:/CanGrowthModels_sources); keep accidental copies out of git.
 /GYmodelPDFmanuals/

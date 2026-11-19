@@ -6,7 +6,9 @@ Description: Dependency manifest for the registry's validation scripts,
 License: GPL-3
 Encoding: UTF-8
 Imports:
+    ggplot2,
     htmltools,
+    jsonlite,
     leaflet,
     readr,
     rlang,

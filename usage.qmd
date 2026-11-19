@@ -1,0 +1,83 @@
+---
+title: "Usage"
+execute:
+  warning: false
+  message: false
+---
+
+Repository usage for this registry, archived weekly. GitHub keeps only 14 days of traffic, so the history here comes from the `stats-data` branch. Views and clones come from GitHub's traffic API; repository owners' own visits are included, and counts are indicative rather than exact.
+
+```{r}
+#| include: false
+library(ggplot2)
+
+# Prefer a local checkout of the archive; otherwise read the published branch
+archive_url <- "https://raw.githubusercontent.com/forest-carbon-tools-dfs/CanGrowthModels/stats-data/"
+
+read_usage <- function(name) {
+  local <- file.path("usage-data", name)
+  source_path <- if (file.exists(local)) local else paste0(archive_url, name)
+  tryCatch(
+    readr::read_csv(source_path, show_col_types = FALSE, progress = FALSE),
+    error = function(e) NULL
+  )
+}
+
+# Line chart of one or more series over time, or a note when there is no data yet
+plot_usage <- function(data, series, ylab) {
+  if (is.null(data) || nrow(data) == 0) {
+    return(cat("*No data archived yet.*\n"))
+  }
+  long <- do.call(rbind, lapply(names(series), function(column) {
+    data.frame(date = as.Date(data$date), series = series[[column]], value = data[[column]])
+  }))
+  print(
+    ggplot(long, aes(date, value, colour = series)) +
+      geom_line() +
+      geom_point(size = 1) +
+      labs(x = NULL, y = ylab, colour = NULL) +
+      theme_minimal() +
+      theme(legend.position = "bottom")
+  )
+}
+```
+
+## Page views
+
+```{r}
+#| echo: false
+#| results: asis
+plot_usage(read_usage("traffic_views.csv"), c(count = "Views", uniques = "Unique visitors"), "Per day")
+```
+
+## Clones
+
+```{r}
+#| echo: false
+#| results: asis
+plot_usage(read_usage("traffic_clones.csv"), c(count = "Clones", uniques = "Unique cloners"), "Per day")
+```
+
+## Stars, forks and watchers
+
+```{r}
+#| echo: false
+#| results: asis
+plot_usage(read_usage("repo_snapshot.csv"), c(stars = "Stars", forks = "Forks", watchers = "Watchers"), "Total")
+```
+
+## Release downloads
+
+Counts uploaded release assets only; GitHub does not count source archives.
+
+```{r}
+#| echo: false
+#| results: asis
+downloads <- read_usage("release_downloads.csv")
+if (is.null(downloads) || nrow(downloads) == 0) {
+  cat("*No release assets yet.*\n")
+} else {
+  latest <- downloads[downloads$date == max(downloads$date), c("tag", "asset", "downloads")]
+  print(knitr::kable(latest))
+}
+```

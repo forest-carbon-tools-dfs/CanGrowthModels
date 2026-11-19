@@ -4,6 +4,7 @@ project:
     - index.qmd
     - models.qmd
     - map.qmd
+    - usage.qmd
   pre-render:
     - Rscript scripts/validate_registry.R
 
@@ -27,6 +28,8 @@ website:
         text: Models
       - href: map.qmd
         text: Coverage map
+      - href: usage.qmd
+        text: Usage
 
 format:
   html:
