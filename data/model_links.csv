@@ -16,6 +16,7 @@ mgm_publication_2013,mgm,publication,Forests (2013) article associated with MGM,
 mist_mistr,mist,run_tool,MISTR source code,https://github.com/ptompalski/MISTR.git,2026-10-20
 osm_website,osm-acd,official_website,OSM platform - FORUS Research,https://www.forusresearch.com/downloads/osm/index.html,2026-10-21
 osm_acadian_help,osm-acd,model_manual,OSM.Acadian variant help,https://www.forusresearch.com/downloads/osm/help/OSM.Variants/OSM.Variants.Acadian/OSM.Acadian.Help.htm,2026-10-21
+osm_webapi4r,osm-acd,run_tool,OSMWebAPI4R - R package for running OSM-ACD,https://github.com/CWFC-CCFB/OSMWebAPI4R.git,2026-11-26
 osm_nl_help,osm-nl,model_manual,OSM NL variant help - testing only,https://www.forusresearch.com/downloads/osm/help/OSM.Variants/OSM.Variants.NL/OSM.Variants.NL.Help.htm,2026-10-20
 osm_contributors_github,osm-acd,other,OSM-Contributors GitHub organization,https://github.com/OSM-Contributors,2026-10-21
 sortie_rsortie_github,sortie,run_tool,RSORTIE,https://aclason.github.io/rsortie/index.html,2026-10-20
