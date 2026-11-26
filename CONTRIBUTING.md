@@ -57,4 +57,5 @@ A column change affects more than its CSV:
 - Confirm IDs, coverage, link types, and review/access dates.
 - Confirm checks pass and the rendered card/map look right.
 - Merge the reviewed pull request; close the related issue with a link to it.
-  Merging does not itself approve public release or deployment.
+  Pushing or merging to `main` publishes the site automatically; obtain maintainer
+  approval for publication first.

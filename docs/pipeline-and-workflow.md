@@ -88,7 +88,10 @@ flowchart LR
   and the province/ecozone overlap lookup. Re-run only when the source,
   excluded ecozones, or simplification tolerance changes. The three largely
   unforested Arctic ecozones are excluded.
-- CI is configured to run tests and render the site on pushes and pull requests.
+- [validate-and-render.yml](../.github/workflows/validate-and-render.yml) runs
+  tests and renders the site on `main` pushes and pull requests. After a
+  successful `main` push build, it publishes that build's `_site/` artifact to
+  `gh-pages`, the branch served by GitHub Pages. Pull requests never publish.
 
 ### Running the checks
 
@@ -104,6 +107,9 @@ quarto render
 All three must pass. Open `_site/index.html` and inspect the affected card and map.
 If `Rscript` or `quarto` is not recognized, add its installation's `bin` folder
 to the terminal's PATH. Do not edit or commit `_site/` or `.quarto/`.
+
+These local checks do not publish. Push approved changes to `main` and wait for
+the workflow's `publish` job and the GitHub Pages deployment to update the live site.
 
 ---
 
@@ -143,7 +149,8 @@ A passing validation is not a factual review.
 - **Wikipedia-seeded entries.** Some early entries were seeded from a Wikipedia
   page (CC BY-SA); review reuse requirements before public release.
 - **Release checks.** Confirm CI passes on GitHub and test the contribution
-  flow before public release. Deployment requires maintainer approval.
+  flow before public release. Maintainer approval must precede pushes or merges
+  to `main`, which publish automatically.
 - **No tests of rendered pages.** Tests cover the data contract, not the
   catalogue filters or map popups.
 
