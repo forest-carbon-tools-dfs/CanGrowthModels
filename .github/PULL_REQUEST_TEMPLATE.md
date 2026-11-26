@@ -11,8 +11,8 @@
 
 ## Checklist
 
-- [ ] `Rscript scripts/validate_registry.R` passes
-- [ ] `Rscript tests/testthat.R` passes
+- [ ] Applicable local checks in `docs/pipeline-and-workflow.md` pass (CSV-only: registry validator)
+- [ ] CI data-contract tests and site render pass
 - [ ] Entries are brief and general; nothing guessed (`unknown` or blank where allowed)
 - [ ] Jurisdictions are Canadian province/territory codes; regions, ecosystems, and US states are in `region_detail`
 - [ ] Every new model has at least one link

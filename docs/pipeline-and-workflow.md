@@ -95,16 +95,36 @@ flowchart LR
 
 ### Running the checks
 
-Install R, Quarto, and the R packages listed in [DESCRIPTION](../DESCRIPTION).
-From the project root, run these in a terminal (including RStudio's Terminal):
+Use the smallest local check that covers the change:
+
+| Change | Local checks |
+| --- | --- |
+| Registry CSV rows only | Run the registry validator once; no local test suite or render. |
+| Schema or R logic | Run the validator and affected tests; expand to the full suite when needed. |
+| Quarto pages or display logic | Render the affected page and run any relevant tests. |
+| Documentation or agent instructions only | No registry tests or render; check links and agent frontmatter as applicable. |
+
+For a CSV-only change, use an existing R installation from the project root:
 
 ```powershell
-Rscript scripts\validate_registry.R
+Rscript --vanilla scripts\validate_registry.R
+```
+
+See the [short editing workflow](../.github/copilot-instructions.md) for scope,
+link classification, review dates, and handling unavailable local R.
+
+For broader changes, the full local checks are below. These need R, Quarto, and
+the R packages listed in [DESCRIPTION](../DESCRIPTION):
+
+```powershell
+Rscript --vanilla scripts\validate_registry.R
 Rscript tests\testthat.R
 quarto render
 ```
 
-All three must pass. Open `_site/index.html` and inspect the affected card and map.
+CI always runs the full tests and site render before publishing; do not repeat
+them locally for a routine CSV edit. For display changes, inspect the affected
+rendered card or map.
 If `Rscript` or `quarto` is not recognized, add its installation's `bin` folder
 to the terminal's PATH. Do not edit or commit `_site/` or `.quarto/`.
 

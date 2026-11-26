@@ -31,13 +31,17 @@ pull request. Forks are optional where repository permissions allow them.
 | [model_coverage.csv](data/model_coverage.csv) | One row per province/territory, with the same `model_id` and a unique `coverage_id` (for example, `<model_id>_<code>`). |
 | [model_links.csv](data/model_links.csv) | At least one public link, with the same `model_id` and a unique `link_id` (for example, `<model_id>_<short_slug>`). |
 
+The [short registry-editing workflow](.github/copilot-instructions.md) is written
+for both people and AI agents and is loaded automatically by Copilot.
+
 1. Create a branch; add rows above or edit the relevant existing rows.
 2. Follow the [schemas and entry conventions](docs/pipeline-and-workflow.md#2-column-definitions).
    Keep IDs stable; if a `model_id` changes, update every referring coverage and link row.
 3. Set the model's `last_reviewed` to the review date and each checked link's
    `accessed_date` to the date you checked it (`YYYY-MM-DD`).
-4. [Run the validator, tests, and local render](docs/pipeline-and-workflow.md#running-the-checks).
-   All must pass; inspect the affected model card and map.
+4. For CSV-only changes, run just the [registry validator](docs/pipeline-and-workflow.md#running-the-checks)
+   locally; CI runs the full tests and site render. Schema, code, and display
+   changes need the relevant local checks in that guide.
 5. Open a pull request describing the change, its public sources, and any related
    issue. Complete the [pull request checklist](.github/PULL_REQUEST_TEMPLATE.md).
 
